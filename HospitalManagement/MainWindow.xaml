@@ -10,7 +10,6 @@
         x:Name="AppWindow"
         WindowStartupLocation="CenterScreen"
         Height="700" Width="700"
-        Icon="C:\Users\Sebastian.Rajczyk\source\repos\HospitalManagement-main\HospitalManagement\HospitalManagement\Images\Logo\test-icon.png"
         MinHeight="{Binding WindowMinimumHeight}"
         MinWidth="{Binding WindowMinimumWidth}"
         Title="SAS">
@@ -69,8 +68,7 @@
                                         <!-- Icon -->
                                         <Button Width="40" Style="{StaticResource SystemIconButton}"
                                                 Command="{Binding MenuCommand}">
-                                            <Image Source="C:\Users\Sebastian.Rajczyk\source\repos\HospitalManagement-main\HospitalManagement\HospitalManagement\Images\Logo\test-icon.png"/>
-                                        </Button>
+                                       </Button>
 
                                         <!-- Title -->
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">

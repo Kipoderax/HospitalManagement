@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.Web.Server
 {
@@ -14,6 +11,8 @@ namespace HospitalManagement.Web.Server
         /// </summary>
         protected DataContext _Context;
 
+        private readonly IAuthRepository _authRepository;
+
         #endregion
 
         #region Constructor
@@ -22,28 +21,23 @@ namespace HospitalManagement.Web.Server
         /// Default constructor
         /// </summary>
         /// <param name="context">The injected context</param>
-        public HomeController(DataContext context)
+        /// <param name="authRepository">Repozytorium autentykacyjne</param>
+        public HomeController(DataContext context, IAuthRepository authRepository)
         {
             _Context = context;
+            _authRepository = authRepository;
         }
 
         #endregion
 
         public IActionResult Index()
         {
-            // Make sure we have the database
-            _Context.Database.EnsureCreated();
-
-            if (!_Context.Employees.Any())
+            Employee employee = new Employee()
             {
-                _Context.Employees.Add(new Employee
-                {
-                    Username = "Username"
-                });
+                Username = "Username"
+            };
 
-                _Context.SaveChanges();
-            }
-            
+            _authRepository.Register( employee, "password" );
 
             return View();
         }
