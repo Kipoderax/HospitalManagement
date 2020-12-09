@@ -8,11 +8,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\fontawesome-webfont.eot" />
+    <None Remove="Fonts\fontawesome-webfont.svg" />
+    <None Remove="Fonts\fontawesome-webfont.ttf" />
+    <None Remove="Fonts\fontawesome-webfont.woff" />
+    <None Remove="Fonts\fontawesome-webfont.woff2" />
+    <None Remove="Fonts\FontAwesome.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controls\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="PropertyChanged.Fody" Version="3.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\fontawesome-webfont.eot" />
+    <Resource Include="Fonts\fontawesome-webfont.svg" />
+    <Resource Include="Fonts\fontawesome-webfont.ttf" />
+    <Resource Include="Fonts\fontawesome-webfont.woff" />
+    <Resource Include="Fonts\fontawesome-webfont.woff2" />
+    <Resource Include="Fonts\FontAwesome.otf" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using Fasetto.Word;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace HospitalManagement
