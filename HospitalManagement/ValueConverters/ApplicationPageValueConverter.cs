@@ -17,6 +17,9 @@ namespace HospitalManagement
                 case ApplicationPage.Login:
                     return new LoginPage();
 
+                case ApplicationPage.Work:
+                    return new WorkPage();
+
                 default:
                     Debugger.Break();
                     return null;

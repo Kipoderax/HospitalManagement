@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        x:Name="AppWindow"
         WindowStartupLocation="CenterScreen"
-        Height="700" Width="700"
+        x:Name="AppWindow"
+        Height="600" Width="900"
         MinHeight="{Binding WindowMinimumHeight}"
         MinWidth="{Binding WindowMinimumWidth}"
         Title="SAS">
@@ -116,9 +116,41 @@
             />
     </WindowChrome.WindowChrome>
 
-    <Grid Background="{StaticResource ForegroundLightBrush}">
-        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
-    </Grid>
+    <Border Background="{StaticResource ForegroundLightBrush}">
+
+       <Grid>
+       
+           <Grid.RowDefinitions>
+              <RowDefinition Height="60"/>
+              <RowDefinition Height="*"/>
+           </Grid.RowDefinitions>
+          
+           <Border Background="Gray" Margin="0 0 0 2"/>
+        <Grid Grid.Row="1">
+           
+           
+           <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="300"/>
+              <ColumnDefinition Width="*"/>
+           </Grid.ColumnDefinitions>
+           
+           
+           <!-- TODO: Add image background -->
+           
+           <Frame Grid.Column="1"  Grid.Row="1"
+                  x:Name="MainFrame" 
+                  Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+           
+           <!-- Search Employees -->
+           <local:SearchEmployeesControl>
+              
+           </local:SearchEmployeesControl>
+           
+        </Grid>
+          
+          </Grid>
+
+    </Border>
     
 
 </Window>
