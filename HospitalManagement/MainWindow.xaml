@@ -134,16 +134,13 @@
               <ColumnDefinition Width="*"/>
            </Grid.ColumnDefinitions>
            
-           
-           <!-- TODO: Add image background -->
-           
            <Frame Grid.Column="1"  Grid.Row="1"
                   x:Name="MainFrame" 
                   Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
            
            <!-- Search Employees -->
            <local:SearchEmployeesControl>
-              
+              <local:EmployeeListControl />
            </local:SearchEmployeesControl>
            
         </Grid>
