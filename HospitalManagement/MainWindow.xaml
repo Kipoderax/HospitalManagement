@@ -135,11 +135,11 @@
               <ColumnDefinition Width="*"/>
            </Grid.ColumnDefinitions>
            
-           <Frame Grid.Column="1"  Grid.Row="1"
-                  x:Name="MainFrame" 
-                  Content="{Binding ApplicationViewModel.CurrentPage, 
+           <local:PageHost Grid.Column="1"  Grid.Row="1"
+                  DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                                      Source={x:Static local:ViewModelLocator.Instance},
-                                                     Converter={local:ApplicationPageValueConverter}}"/>
+                                                     Converter={local:ApplicationPageValueConverter}}"
+                           CurrentPage="{Binding}"/>
            
            <!-- Search Employees -->
            <local:SearchEmployeesControl 

@@ -10,6 +10,6 @@
       Title="Work">
 
     <Border>
-        
+        <TextBlock Text="Test Page" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Border>
 </local:BasePage>

@@ -45,6 +45,9 @@ namespace HospitalManagement.Core
             await RunCommand( () => LoginIsRunning, async () =>
              {
                  await Task.Delay( 2000 );
+
+                 // Go to work page
+                 IoC.Get<ApplicationViewModel>().GoToPage( ApplicationPage.Work );
              } );
         }
     }
