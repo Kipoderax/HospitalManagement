@@ -30,7 +30,7 @@ namespace HospitalManagement
         /// <returns></returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _converter ?? (_converter = new T());
+            return _converter ?? new T();
         } 
 
         #endregion

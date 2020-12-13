@@ -35,19 +35,16 @@ namespace HospitalManagement.Core
         /// </summary>
         public LoginViewModel ()
         {
-            LoginCommand = new RelayParametrizedCommand( async ( parameter ) => await Login( parameter ) );
+            LoginCommand = new RelayParametrizedCommand( async ( parameter ) => await LoginAsync( parameter ) );
         }
 
         #endregion
 
-        public async Task Login(object parameter)
+        public async Task LoginAsync(object parameter)
         {
             await RunCommand( () => LoginIsRunning, async () =>
              {
                  await Task.Delay( 2000 );
-
-                 // Never do it
-                 var pass = (parameter as IHavePassword).SecurePassword.UnSecure();
              } );
         }
     }

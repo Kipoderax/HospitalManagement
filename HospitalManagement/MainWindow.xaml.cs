@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using HospitalManagement.Core;
+using System.Windows;
 
 namespace HospitalManagement
 {

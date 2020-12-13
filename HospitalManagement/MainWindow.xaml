@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalManagement"
+        xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -136,7 +137,9 @@
            
            <Frame Grid.Column="1"  Grid.Row="1"
                   x:Name="MainFrame" 
-                  Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+                  Content="{Binding ApplicationViewModel.CurrentPage, 
+                                                     Source={x:Static local:ViewModelLocator.Instance},
+                                                     Converter={local:ApplicationPageValueConverter}}"/>
            
            <!-- Search Employees -->
            <local:SearchEmployeesControl>
