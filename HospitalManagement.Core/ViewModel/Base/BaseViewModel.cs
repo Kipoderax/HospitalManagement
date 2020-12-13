@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace HospitalManagement
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// A base view model that fires Property Changed events as needed

@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Windows.Media.Imaging;
-
-namespace HospitalManagement
+﻿namespace HospitalManagement.Core
 {
     /// <summary>
     /// The design-time data for a <see cref="EmployeeListItemViewModel"/>

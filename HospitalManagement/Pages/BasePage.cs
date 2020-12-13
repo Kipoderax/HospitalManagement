@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using HospitalManagement.Core;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -69,7 +70,7 @@ namespace HospitalManagement
                 Visibility = Visibility.Collapsed;
             
             // Listen out for the page loading
-            Loaded += BasePage_Loaded;
+            Loaded += BasePage_LoadedAsync;
 
             // Create a default view model
             ViewModel = new VM();
@@ -82,17 +83,17 @@ namespace HospitalManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void BasePage_Loaded(object sender, RoutedEventArgs e)
+        private async void BasePage_LoadedAsync(object sender, RoutedEventArgs e)
         {
             // Animate the page in
-            await AnimateIn();
+            await AnimateInAsync();
         }
 
         /// <summary>
         /// Animates in this page
         /// </summary>
         /// <returns></returns>
-        public async Task AnimateIn()
+        public async Task AnimateInAsync()
         {
             // Make sure we have something to do
             if (PageLoadAnimation == PageAnimation.None)
@@ -103,11 +104,27 @@ namespace HospitalManagement
                 case PageAnimation.SlideAndFadeInFromRight:
 
                     // Start the animation
-                    await this.SlideAndFadeInFromRight(SlideSeconds);
+                    await this.SlideAndFadeInFromRightAsync(SlideSeconds);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Animates out this page
+        /// </summary>
+        /// <returns></returns>
+        public async Task AnimateOutAsync ()
+        {
+            // Make sure we have something to do
+            if (PageUnloadAnimation == PageAnimation.None)
+                return;
+
+            switch (PageUnloadAnimation)
+            {
                 case PageAnimation.SlideAndFadeOutToLeft:
-                    break;
-                default:
+
+                    // Start the animation
+                    await this.SlideAndFadeOutFromLeftAsync( SlideSeconds );
                     break;
             }
         }

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace HospitalManagement
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// A helper for expressions

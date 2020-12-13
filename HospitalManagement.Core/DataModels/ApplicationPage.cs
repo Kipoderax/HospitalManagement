@@ -1,4 +1,4 @@
-﻿namespace HospitalManagement
+﻿namespace HospitalManagement.Core
 {
     /// <summary>
     /// A page of the application

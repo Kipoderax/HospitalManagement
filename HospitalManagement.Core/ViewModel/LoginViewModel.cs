@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace HospitalManagement
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// The View Model for a login screen

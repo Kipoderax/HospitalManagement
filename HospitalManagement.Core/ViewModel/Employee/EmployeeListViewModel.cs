@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HospitalManagement
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// A view model for overview employee list

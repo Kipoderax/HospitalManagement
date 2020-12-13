@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using HospitalManagement.Core;
+using System.Security;
 
 namespace HospitalManagement
 {

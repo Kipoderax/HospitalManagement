@@ -1,6 +1,4 @@
-﻿using System.Windows.Media;
-
-namespace HospitalManagement
+﻿namespace HospitalManagement.Core
 {
     /// <summary>
     /// A view model for each employee list item in the overview employee list

@@ -10,7 +10,13 @@ namespace HospitalManagement
     /// </summary>
     public static class PageAnimations
     {
-        public static async Task SlideAndFadeInFromRight(this Page page, float seconds)
+        /// <summary>
+        /// Slides a page in from the right
+        /// </summary>
+        /// <param name="page">The page to animate</param>
+        /// <param name="seconds">The time the animation will take</param>
+        /// <returns></returns>
+        public static async Task SlideAndFadeInFromRightAsync(this Page page, float seconds)
         {
             // Create the storyboard
             var sb = new Storyboard();
@@ -29,6 +35,33 @@ namespace HospitalManagement
 
             // Wait for it to finish
             await Task.Delay((int)seconds * 1000);
+        }
+
+        /// <summary>
+        /// Slides a page in from the left
+        /// </summary>
+        /// <param name="page">The page to animate</param>
+        /// <param name="seconds">The time the animation will take</param>
+        /// <returns></returns>
+        public static async Task SlideAndFadeOutFromLeftAsync ( this Page page, float seconds )
+        {
+            // Create the storyboard
+            var sb = new Storyboard();
+
+            // Add slide from right animation
+            sb.AddSlideFromLeft( seconds, page.WindowWidth );
+
+            // Add fade in animation
+            sb.AddFadeOut( seconds );
+
+            // Start animating
+            sb.Begin( page );
+
+            // Make page visible
+            page.Visibility = Visibility.Visible;
+
+            // Wait for it to finish
+            await Task.Delay( (int) seconds * 1000 );
         }
     }
 }

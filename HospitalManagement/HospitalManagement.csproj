@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HospitalManagement.Core\HospitalManagement.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Fonts\fontawesome-webfont.eot" />
     <Resource Include="Fonts\fontawesome-webfont.svg" />
     <Resource Include="Fonts\fontawesome-webfont.ttf" />

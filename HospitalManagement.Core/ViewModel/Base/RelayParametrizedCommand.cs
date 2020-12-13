@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace HospitalManagement
+namespace HospitalManagement.Core
 {
     public class RelayParametrizedCommand : ICommand
     {

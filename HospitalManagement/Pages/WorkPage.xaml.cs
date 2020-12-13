@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using HospitalManagement.Core;
 
 namespace HospitalManagement
 {
     /// <summary>
     /// Logika interakcji dla klasy WorkPage.xaml
     /// </summary>
-    public partial class WorkPage : Page
+    public partial class WorkPage : BasePage<LoginViewModel>
     {
         public WorkPage ()
         {
