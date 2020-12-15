@@ -33,7 +33,7 @@ namespace HospitalManagement
         /// <summary>
         /// The smallest width the window can go to
         /// </summary>
-        public double WindowMinimumWidth { get; set; } = 400;
+        public double WindowMinimumWidth { get; set; } = 750;
 
         /// <summary>
         /// The smallest height the window can go to
