@@ -56,11 +56,13 @@
                          <StackPanel Margin="8 0 0 0" VerticalAlignment="Center" >
                             <!-- Employee name -->
                             <TextBlock Text="{Binding Name}"
+                                       Padding="0 0 0 2"
                                        Foreground="{StaticResource WordBlueBrush}"
                                        FontFamily="{StaticResource LatoRegular}">
                                </TextBlock>
                             <!-- Employee details -->
                             <TextBlock Foreground="{StaticResource ForegroundDarkBrush}"
+                                       Padding="0 2 0 0"
                                        TextTrimming="CharacterEllipsis"
                                        FontFamily="{StaticResource LatoRegular}">
                                <Run Text="{Binding Who}"/><Run Text=" - "/><Run Text="{Binding Job}"/>

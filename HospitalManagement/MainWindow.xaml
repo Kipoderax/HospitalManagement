@@ -22,7 +22,7 @@
                     <ControlTemplate TargetType="{x:Type Window}">
                         
                         <!-- Outer border with the dropshadow margin -->
-                        <Border Margin="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
 
                             <!-- Main window outline -->
                             <Grid>
@@ -75,7 +75,7 @@
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">
                                             <TextBlock Style="{StaticResource Header}" 
                                                        FontFamily="{StaticResource LatoBold}"
-                                                       FontSize="{StaticResource FontSizeLarge}"
+                                                       FontSize="{StaticResource FontSizeXXLarge}"
                                                        Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Hospital Management'}"/>
                                         </Viewbox>
 
