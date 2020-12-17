@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HospitalManagement"
+             xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
              mc:Ignorable="d" 
              d:DesignWidth="300">
    
-    <Border Padding="5" Background="{StaticResource WordBlueBrush}">
+    <Border Padding="5" 
+            Background="{StaticResource WordBlueBrush}"
+            d:DataContext="{x:Static core:DutyListItemDesignModel.Instance}">
             <Grid>
                
                <!-- Employee short name like Aga G. -->
@@ -21,12 +24,14 @@
                        Panel.ZIndex="1"
                        BorderThickness="1">
                   
-                  <TextBlock Text="Aga G."
+                  <TextBlock
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
                              TextWrapping="Wrap"
                              Foreground="{StaticResource ForegroundLightBrush}"
-                             FontFamily="{StaticResource LatoRegular}"/>
+                             FontFamily="{StaticResource LatoRegular}">
+                     <Run Text="{Binding FirstName}"/> <Run Text="{Binding FirstLetterOfLastName}"/>
+                  </TextBlock>
                   
                </Border>
                
@@ -50,7 +55,7 @@
                         <!-- Duty Date -->
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="{StaticResource FontSizeLarge}"
-                                   Text="2020-12-12"
+                                   Text="{Binding StartShift, StringFormat='{}{0:yyyy-MM-dd}'}"
                                    Foreground="{StaticResource ForegroundVeryDarkBrush}"
                                    FontFamily="{StaticResource LatoRegular}"/>
                         <!-- Duty Time -->
@@ -58,14 +63,15 @@
                                    FontSize="{StaticResource FontSizeLarge}"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
-                                   Text="7:00 - 19:00"
                                    Foreground="{StaticResource ForegroundVeryDarkBrush}"
-                                   FontFamily="{StaticResource LatoRegular}"/>
+                                   FontFamily="{StaticResource LatoRegular}">
+                               <Run Text="{Binding StartShift, StringFormat='{}{0:HH:mm}'}"/><Run Text=" - "/><Run Text="{Binding EndShift, StringFormat='{}{0:HH:mm}'}"/>
+                        </TextBlock>
                         <!-- Duty Job Name -->
                         <TextBlock Grid.Column="2" 
                                    FontSize="{StaticResource FontSizeLarge}"
                                    VerticalAlignment="Center"
-                                   Text="Onkologia"
+                                   Text="{Binding JobName}"
                                    Foreground="{StaticResource ForegroundVeryDarkBrush}"
                                    FontFamily="{StaticResource LatoRegular}"/>
                      

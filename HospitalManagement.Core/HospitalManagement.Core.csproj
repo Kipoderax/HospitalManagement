@@ -63,6 +63,10 @@
     <Compile Include="ViewModel\Base\IHavePassword.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Base\RelayParametrizedCommand.cs" />
+    <Compile Include="ViewModel\Duty\Design\DutyListDesignModel.cs" />
+    <Compile Include="ViewModel\Duty\Design\DutyListItemDesignModel.cs" />
+    <Compile Include="ViewModel\Duty\DutyListItemViewModel.cs" />
+    <Compile Include="ViewModel\Duty\DutyListViewModel.cs" />
     <Compile Include="ViewModel\Employee\Design\EmployeeListDesignModel.cs" />
     <Compile Include="ViewModel\Employee\Design\EmployeeListItemDesignModel.cs" />
     <Compile Include="ViewModel\Employee\EmployeeListItemViewModel.cs" />
