@@ -5,7 +5,7 @@ namespace HospitalManagement
     /// <summary>
     /// Logika interakcji dla klasy WorkPage.xaml
     /// </summary>
-    public partial class WorkPage : BasePage<LoginViewModel>
+    public partial class WorkPage : BasePage<DutyListViewModel>
     {
         public WorkPage ()
         {

@@ -36,9 +36,14 @@
                              FontSize="{StaticResource FontSizeSmall}"/>
                     
                     <!-- Search button -->
-                    <Button Grid.Column="2"
+                    <Button Grid.Column="1"
                             Style="{StaticResource IconButton}" 
                             Content="{StaticResource FontAwesomeSearchIcon}"/>
+                    
+                    <!-- Setting button -->
+                    <Button Grid.Column="2"
+                            Style="{StaticResource IconButton}"
+                            Content="{StaticResource FontAwesomeCogIcon}"/>
                     
                  </Grid>
                  

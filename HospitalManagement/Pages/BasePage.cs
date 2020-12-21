@@ -1,14 +1,14 @@
 ﻿using HospitalManagement.Core;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows;
+using System.Threading.Tasks;
 
 namespace HospitalManagement
 {
     /// <summary>
     /// The base page for all pages to gain base functionality
     /// </summary>
-    public class BasePage : Page
+    public class BasePage : UserControl
     {
         #region Public Properties
 
@@ -105,7 +105,7 @@ namespace HospitalManagement
                 case PageAnimation.SlideAndFadeOutToLeft:
 
                     // Start the animation
-                    await this.SlideAndFadeOutFromLeftAsync( SlideSeconds );
+                    await this.SlideAndFadeOutToLeftAsync( SlideSeconds );
                     break;
             }
         }
@@ -134,8 +134,8 @@ namespace HospitalManagement
         /// The View Model associated with this page
         /// </summary>
         public VM ViewModel
-        { 
-            get { return viewModel; } 
+        {
+            get => viewModel;
             set
             {
                 // If nothing has changed, return

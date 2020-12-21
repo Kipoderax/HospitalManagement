@@ -7,8 +7,7 @@
       xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
       mc:Ignorable="d" 
       x:Name="Page"
-      d:DesignHeight="700" d:DesignWidth="700"
-      Title="LoginPage">
+      d:DesignHeight="700" d:DesignWidth="700">
 
     <Border Background="{StaticResource ForegroundDarkBrush}">
         <Grid>

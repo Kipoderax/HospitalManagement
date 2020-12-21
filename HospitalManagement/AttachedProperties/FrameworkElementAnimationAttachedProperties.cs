@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace HospitalManagement
 {
@@ -13,7 +14,7 @@ namespace HospitalManagement
         #region Public Properties
 
         /// <summary>
-        /// A flag indicating if this is set the first time this property has been loaded
+        /// A flag indicating if this is the first time this property has been loaded
         /// </summary>
         public bool FirstLoad { get; set; } = true;
 
@@ -32,10 +33,15 @@ namespace HospitalManagement
             // On first load...
             if (FirstLoad)
             {
-                // Create a single self-unhookable event
-                // for the elements Loaded events
-                void onLoaded ( object ss, RoutedEventArgs ee )
+                // Create a single self-unhookable event 
+                // for the elements Loaded event
+                RoutedEventHandler onLoaded = null;
+                onLoaded = async ( ss, ee ) =>
                 {
+                    // Slight delay after load is needed for some elements to get laid out
+                    // and their width/heights correctly calculated
+                    await Task.Delay( 5 );
+
                     // Unhook ourselves
                     element.Loaded -= onLoaded;
 
@@ -44,7 +50,7 @@ namespace HospitalManagement
 
                     // No longer in first load
                     FirstLoad = false;
-                }
+                };
 
                 // Hook into the Loaded event of the element
                 element.Loaded += onLoaded;
@@ -55,11 +61,11 @@ namespace HospitalManagement
         }
 
         /// <summary>
-        /// The animation method is fired when the value changes
+        /// The animation method that is fired when the value changes
         /// </summary>
         /// <param name="element">The element</param>
-        /// <param name="value">The value</param>
-        protected virtual void DoAnimation(FrameworkElement element, bool value) { }
+        /// <param name="value">The new value</param>
+        protected virtual void DoAnimation ( FrameworkElement element, bool value ) { }
     }
 
     /// <summary>
@@ -72,10 +78,75 @@ namespace HospitalManagement
         {
             if (value)
                 // Animate in
-                await element.SlideAndFadeInFromLeftAsync(FirstLoad ? 0 : 0.8f, keepMargin: false);
+                await element.SlideAndFadeInFromLeftAsync( FirstLoad ? 0 : 0.3f, keepMargin: false );
             else
                 // Animate out
-                await element.SlideAndFadeOutToLeftAsync( FirstLoad ? 0 : 0.8f, keepMargin: false );
+                await element.SlideAndFadeOutToLeftAsync( FirstLoad ? 0 : 0.3f, keepMargin: false );
+        }
+    }
+
+    /// <summary>
+    /// Animates a framework element sliding up from the bottom on show
+    /// and sliding out to the bottom on hide
+    /// </summary>
+    public class AnimateSlideInFromBottomProperty : AnimateBaseProperty<AnimateSlideInFromBottomProperty>
+    {
+        protected override async void DoAnimation ( FrameworkElement element, bool value )
+        {
+            if (value)
+                // Animate in
+                await element.SlideAndFadeInFromBottomAsync( FirstLoad ? 0 : 0.3f, keepMargin: false );
+            else
+                // Animate out
+                await element.SlideAndFadeOutToBottomAsync( FirstLoad ? 0 : 0.3f, keepMargin: false );
+        }
+    }
+
+
+    /// <summary>
+    /// Animates a framework element sliding up from the bottom on show
+    /// and sliding out to the bottom on hide
+    /// NOTE: Keeps the margin
+    /// </summary>
+    public class AnimateSlideInFromBottomMarginProperty : AnimateBaseProperty<AnimateSlideInFromBottomMarginProperty>
+    {
+        protected override async void DoAnimation ( FrameworkElement element, bool value )
+        {
+            if (value)
+                // Animate in
+                await element.SlideAndFadeInFromBottomAsync( FirstLoad ? 0 : 0.3f, keepMargin: true );
+            else
+                // Animate out
+                await element.SlideAndFadeOutToBottomAsync( FirstLoad ? 0 : 0.3f, keepMargin: true );
+        }
+    }
+
+    /// <summary>
+    /// Animates a framework element fading in on show
+    /// and fading out on hide
+    /// </summary>
+    public class AnimateFadeInProperty : AnimateBaseProperty<AnimateFadeInProperty>
+    {
+        protected override async void DoAnimation ( FrameworkElement element, bool value )
+        {
+            if (value)
+                // Animate in
+                await element.FadeInAsync( FirstLoad ? 0 : 0.3f );
+            else
+                // Animate out
+                await element.FadeOutAsync( FirstLoad ? 0 : 0.3f );
+        }
+    }
+
+    /// <summary>
+    /// Animates a framework element sliding it from right to left and repeating forever
+    /// </summary>
+    public class AnimateMarqueeProperty : AnimateBaseProperty<AnimateMarqueeProperty>
+    {
+        protected override void DoAnimation ( FrameworkElement element, bool value )
+        {
+            // Animate in
+            element.MarqueeAsync( FirstLoad ? 0 : 3f );
         }
     }
 }
