@@ -8,6 +8,8 @@ namespace HospitalManagement.Core
     /// </summary>
     public class DutyListDesignModel : DutyListViewModel
     {
+        public List<string> SectionNames { get; set; }
+
         #region Singleton
 
         /// <summary>
@@ -24,6 +26,8 @@ namespace HospitalManagement.Core
         /// </summary>
         public DutyListDesignModel ()
         {
+            SectionNames = new List<string>() { "", "Urolog", "Neurolog", "Kardiolog", "Laryngolog" };
+
             Items = new List<DutyListItemViewModel>
             {
                 new DutyListItemViewModel
