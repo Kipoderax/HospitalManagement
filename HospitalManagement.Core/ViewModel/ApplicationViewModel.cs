@@ -19,6 +19,11 @@ namespace HospitalManagement.Core
         /// </summary>
         public bool SideMenuVisible { get; set; } = false;
 
+        /// <summary>
+        /// True if the settings menu should be shown
+        /// </summary>
+        public bool SettingsMenuVisible { get; set; } = false;
+
         #endregion
 
         /// <summary>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HospitalManagement"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="400" d:DesignWidth="400">
    
    <UserControl.Template>
       <ControlTemplate TargetType="UserControl">
@@ -43,7 +43,9 @@
                     <!-- Setting button -->
                     <Button Grid.Column="2"
                             Style="{StaticResource IconButton}"
-                            Content="{StaticResource FontAwesomeCogIcon}"/>
+                            Content="{StaticResource FontAwesomeCogIcon}"
+                            Command="{Binding SettingsViewModel.OpenCommand,
+                                 Source={x:Static local:ViewModelLocator.Instance}}"/>
                     
                  </Grid>
                  

@@ -72,6 +72,7 @@
     <Compile Include="ViewModel\Employee\EmployeeListItemViewModel.cs" />
     <Compile Include="ViewModel\Employee\EmployeeListViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

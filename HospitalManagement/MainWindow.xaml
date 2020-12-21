@@ -121,12 +121,18 @@
 
        <Grid>
            
-           
            <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto"/>
               <ColumnDefinition Width="*"/>
            </Grid.ColumnDefinitions>
            
+          <!-- Settings page -->
+          <local:SettingsControl Grid.ColumnSpan="2"
+                                 Panel.ZIndex="2"
+                                 local:AnimateSlideInFromBottomMarginProperty.Value=
+                                 "{Binding ApplicationViewModel.SettingsMenuVisible,
+                                             Source={x:Static local:ViewModelLocator.Instance}}"/>
+          
            <local:PageHost Grid.Column="1"  Grid.Row="1"
                   DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                                      Source={x:Static local:ViewModelLocator.Instance},
