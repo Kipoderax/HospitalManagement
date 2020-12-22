@@ -4,76 +4,86 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HospitalManagement"
-             mc:Ignorable="d" >
+             xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
+             mc:Ignorable="d"
+             d:DataContext="{x:Static core:SettingsDesignModel.Instance}">
    
-    <Grid Background="{StaticResource ForegroundLightBrush}">
+   <Border Background="{StaticResource BackgroundLightBrush}"
+           Padding="15">
+      
+       <Grid Background="{StaticResource ForegroundLightBrush}">
        
-            <Grid.RowDefinitions>
-               <!-- Panel Title -->
-               <RowDefinition Height="Auto"/>
-               <!-- Main Content -->
-               <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+               <Grid.RowDefinitions>
+                  <!-- Panel Title -->
+                  <RowDefinition Height="Auto"/>
+                  <!-- Main Content -->
+                  <RowDefinition Height="*"/>
+               </Grid.RowDefinitions>
        
-       <!-- Panel Title -->
-       <Grid Height="50" Margin="0 0 0 20">
+          <!-- Panel Title -->
+          <Grid Height="50" Margin="0 0 0 20">
           
-          <!-- Back button -->
-          <Button Style="{StaticResource IconGrowButton}"
-                  Content="{StaticResource FontAwesomeArrowLeftIcon}"
-                  FontFamily="{StaticResource FontAwesome}"
-                  Foreground="{StaticResource BackgroundLightBrush}"
-                  Height="40"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Center"
-                  Command="{Binding CloseCommand}"/>
+             <!-- Back button -->
+             <Button Style="{StaticResource IconGrowButton}"
+                     Content="{StaticResource FontAwesomeArrowLeftIcon}"
+                     FontFamily="{StaticResource FontAwesome}"
+                     Foreground="{StaticResource BackgroundLightBrush}"
+                     Height="40"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Command="{Binding CloseCommand}"/>
           
-          <TextBlock FontSize="{StaticResource FontSizeLarge}"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center">
-             <!-- Cog icon -->
-             <Run FontFamily="{StaticResource FontAwesome}"
-                  Text="{StaticResource FontAwesomeCogIcon}"
-                  Foreground="{StaticResource WordOrangeBrush}"/>
-             <!-- Settings text -->
-             <Run Text="Jessica"
-                  FontFamily="{StaticResource LatoRegular}"
-                  Foreground="{StaticResource ForegroundVeryDarkBrush}"/>
-          </TextBlock>
+             <TextBlock FontSize="{StaticResource FontSizeLarge}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <!-- Cog icon -->
+                <Run FontFamily="{StaticResource FontAwesome}"
+                     Text="{StaticResource FontAwesomeCogIcon}"
+                     Foreground="{StaticResource WordOrangeBrush}"/>
+                <!-- Settings text -->
+                <Run Text="Jessica"
+                     FontFamily="{StaticResource LatoRegular}"
+                     Foreground="{StaticResource ForegroundVeryDarkBrush}"/>
+             </TextBlock>
           
-       </Grid>
+          </Grid>
        
-       <!-- Main Content -->
-       <Grid Grid.Row="1"
-             Width="700"
-             VerticalAlignment="Top">
+          <!-- Main Content -->
+          <Grid Grid.Row="1"
+                Width="700"
+                VerticalAlignment="Top">
           
-          <Grid.ColumnDefinitions>
+             <Grid.ColumnDefinitions>
+                <!-- Duty list -->
+                <ColumnDefinition Width="300"/>
+                <!-- Personal details -->
+                <ColumnDefinition Width="*"/>
+             </Grid.ColumnDefinitions>
+          
              <!-- Duty list -->
-             <ColumnDefinition Width="300"/>
+             <Border CornerRadius="8" 
+                     Margin="0 0 30 0">
+             
+                <local:DutyPersonalListControl/>
+             
+             </Border>
+          
              <!-- Personal details -->
-             <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
+             <StackPanel Grid.Column="1"
+                         local:TextEntryWidthMatcherProperty.Value="True">
+             
+               <local:TextEntryControl DataContext="{Binding FirstName}"/>
+               <local:TextEntryControl DataContext="{Binding LastName}"/>
+               <local:TextEntryControl DataContext="{Binding Identify}"/>
+               <local:TextEntryControl DataContext="{Binding Type}"/>
+               <local:TextEntryControl DataContext="{Binding Specialize}"/>
+               <local:TextEntryControl DataContext="{Binding PwdNumber}"/>
+               <local:TextEntryControl DataContext="{Binding Password}"/>
+             
+             </StackPanel>
           
-          <!-- Duty list -->
-          <Border CornerRadius="8" 
-                  Margin="0 0 30 0">
-             
-             <local:DutyPersonalListControl/>
-             
-          </Border>
-          
-          <!-- Personal details -->
-          <StackPanel Grid.Column="1">
-             
-            <local:TextEntryControl/>
-            <local:TextEntryControl/>
-            <local:TextEntryControl/>
-            <local:TextEntryControl/>
-             
-          </StackPanel>
-          
-       </Grid>
+          </Grid>
        
-    </Grid>
+       </Grid>
+      </Border>
 </UserControl>
