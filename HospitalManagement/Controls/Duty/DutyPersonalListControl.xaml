@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="HospitalManagement.DutyListControl"
+﻿<UserControl x:Class="HospitalManagement.DutyPersonalListControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
    
-   <Grid  DataContext="{x:Static core:DutyListDesignModel.Instance}">
+    <Grid  DataContext="{x:Static core:DutyListDesignModel.Instance}">
 
       <!-- Data container -->
        <Grid >
@@ -17,7 +17,7 @@
                   <ItemsControl.ItemTemplate>
                      
                      <DataTemplate>
-                        <local:DutyListItemControl/>
+                        <local:DutyPersonalListItemControl/>
                      </DataTemplate>
                      
                   </ItemsControl.ItemTemplate>
@@ -26,6 +26,4 @@
        </Grid>
    
    </Grid>
-   
-   
 </UserControl>

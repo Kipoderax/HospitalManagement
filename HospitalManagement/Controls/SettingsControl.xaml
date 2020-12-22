@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HospitalManagement"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" >
+   
     <Grid Background="{StaticResource ForegroundLightBrush}">
        
             <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
             </Grid.RowDefinitions>
        
        <!-- Panel Title -->
-       <Grid Height="50">
+       <Grid Height="50" Margin="0 0 0 20">
           
           <!-- Back button -->
           <Button Style="{StaticResource IconGrowButton}"
@@ -44,6 +44,74 @@
        </Grid>
        
        <!-- Main Content -->
+       <Grid Grid.Row="1"
+             Width="700"
+             VerticalAlignment="Top">
+          
+          <Grid.ColumnDefinitions>
+             <!-- Duty list -->
+             <ColumnDefinition Width="300"/>
+             <!-- Personal details -->
+             <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          
+          <!-- Duty list -->
+          <Border CornerRadius="8" 
+                  Margin="0 0 10 0">
+             
+             <local:DutyPersonalListControl/>
+             
+          </Border>
+          
+          <!-- Personal details -->
+          <Grid Grid.Column="1"
+                local:PanelChildMarginProperty.Value="15 8">
+             
+             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+             </Grid.ColumnDefinitions>
+             
+             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" MaxHeight="60"/>
+                <RowDefinition Height="Auto"/>
+             </Grid.RowDefinitions>
+             
+             <!-- Labels -->
+             <TextBlock Text="Imię" FontFamily="{StaticResource LatoRegular}"/>
+             <TextBlock Text="Nazwisko" Grid.Row="1" FontFamily="{StaticResource LatoRegular}"/>
+             <TextBlock Text="Identyfikator" Grid.Row="2" FontFamily="{StaticResource LatoRegular}"/>
+             <TextBlock Text="Posada" Grid.Row="3" FontFamily="{StaticResource LatoRegular}"/>
+             <TextBlock Text="Specjalizacja" Grid.Row="4" FontFamily="{StaticResource LatoRegular}"/>
+             <TextBlock Text="Numer Pwd" Grid.Row="5" FontFamily="{StaticResource LatoRegular}"/>
+             <TextBlock Text="Hasło" Grid.Row="6" FontFamily="{StaticResource LatoRegular}"/>
+             
+             <!-- Content -->
+             <TextBlock Text="Jessica" Grid.Column="1"/>
+             <TextBlock Text="Stalon" Grid.Row="1" Grid.Column="1"/>
+             <TextBlock Text="JS15328" Grid.Row="2" Grid.Column="1"/>
+             <TextBlock Text="Lekarz" Grid.Row="3" Grid.Column="1"/>
+             <TextBlock Text="Urolog" Grid.Row="4" Grid.Column="1"/>
+             <TextBlock Text="pwd135" Grid.Row="5" Grid.Column="1"/>
+             <TextBlock Text="********" Grid.Row="6" Grid.Column="1"/>
+             
+             <Button Style="{StaticResource TextButton}" Grid.ColumnSpan="2" Grid.Row="8"
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource ForegroundVeryDarkBrush}"
+                        Background="{StaticResource WordGreenBrush}"
+                        Height="40" Width="210"
+                        Content="Dodaj dyżur"/>
+             
+          </Grid>
+          
+       </Grid>
        
     </Grid>
 </UserControl>

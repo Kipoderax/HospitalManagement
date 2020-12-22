@@ -9,7 +9,40 @@
       d:DesignHeight="700" d:DesignWidth="700">
 
     <Border>
-       <local:DutyListControl/>
+       
+       <Grid>
+          
+          <Grid.RowDefinitions>
+         
+         <!-- Filter data -->
+         <RowDefinition Height="50"/>
+         <!-- Data container -->
+         <RowDefinition Height="*"/>
+         
+      </Grid.RowDefinitions>
+          
+          <Border Background="{StaticResource WordBlueBrush}">
+         
+               <Grid Width="150"
+                     DataContext="{x:Static core:DutyListDesignModel.Instance}">
+
+                  <ComboBox Height="40"
+                      Padding="7 12 0 0"
+                      FontFamily="{StaticResource LatoRegular}"
+                      FontSize="{StaticResource FontSizeRegular}"
+                      Foreground="{StaticResource ForegroundVeryDarkBrush}"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding SectionNames}">
+               
+                   </ComboBox>
+            
+               </Grid>
+         
+      </Border>
+          
+          <local:DutyListControl Grid.Row="1"/>
+       </Grid>
+       
     </Border>
    
 </local:BasePage>
