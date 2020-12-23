@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace HospitalManagement
 {
@@ -18,7 +19,7 @@ namespace HospitalManagement
         public PageAnimation PageLoadAnimation { get; set; } = PageAnimation.SlideAndFadeInFromRight;
 
         /// <summary>
-        /// The animation the play when the page is first unloaded
+        /// The animation the play when the page is unloaded
         /// </summary>
         public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToLeft;
 
@@ -28,7 +29,7 @@ namespace HospitalManagement
         public float SlideSeconds { get; set; } = 0.4f;
 
         /// <summary>
-        /// A flag indicate if this page should animate out on load.
+        /// A flag to indicate if this page should animate out on load.
         /// Useful for when we are moving the page to another frame
         /// </summary>
         public bool ShouldAnimateOut { get; set; }
@@ -42,6 +43,10 @@ namespace HospitalManagement
         /// </summary>
         public BasePage ()
         {
+            // Don't bother animating in design time
+            if (DesignerProperties.GetIsInDesignMode( this ))
+                return;
+
             // If we are animating in, hide to begin with
             if (PageLoadAnimation != PageAnimation.None)
                 Visibility = Visibility.Collapsed;
@@ -59,19 +64,20 @@ namespace HospitalManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void BasePage_LoadedAsync ( object sender, RoutedEventArgs e )
+        private async void BasePage_LoadedAsync ( object sender, System.Windows.RoutedEventArgs e )
         {
             // If we are setup to animate out on load
             if (ShouldAnimateOut)
                 // Animate out the page
                 await AnimateOutAsync();
+            // Otherwise...
             else
                 // Animate the page in
                 await AnimateInAsync();
         }
 
         /// <summary>
-        /// Animates in this page
+        /// Animates the page in
         /// </summary>
         /// <returns></returns>
         public async Task AnimateInAsync ()
@@ -85,13 +91,14 @@ namespace HospitalManagement
                 case PageAnimation.SlideAndFadeInFromRight:
 
                     // Start the animation
-                    await this.SlideAndFadeInFromRightAsync( SlideSeconds );
+                    await this.SlideAndFadeInAsync( AnimationSlideInDirection.Right, false, SlideSeconds, size: (int) Application.Current.MainWindow.Width );
+
                     break;
             }
         }
 
         /// <summary>
-        /// Animates out this page
+        /// Animates the page out
         /// </summary>
         /// <returns></returns>
         public async Task AnimateOutAsync ()
@@ -105,7 +112,8 @@ namespace HospitalManagement
                 case PageAnimation.SlideAndFadeOutToLeft:
 
                     // Start the animation
-                    await this.SlideAndFadeOutToLeftAsync( SlideSeconds );
+                    await this.SlideAndFadeOutAsync( AnimationSlideInDirection.Right, SlideSeconds );
+
                     break;
             }
         }
@@ -116,15 +124,15 @@ namespace HospitalManagement
     /// <summary>
     /// A base page with added ViewModel support
     /// </summary>
-    public class BasePage<VM> : BasePage 
+    public class BasePage<VM> : BasePage
         where VM : BaseViewModel, new()
     {
-        #region Private Members
+        #region Private Member
 
         /// <summary>
         /// The View Model associated with this page
         /// </summary>
-        private VM viewModel;
+        private VM mViewModel;
 
         #endregion
 
@@ -135,18 +143,18 @@ namespace HospitalManagement
         /// </summary>
         public VM ViewModel
         {
-            get => viewModel;
+            get => mViewModel;
             set
             {
                 // If nothing has changed, return
-                if (viewModel == value)
+                if (mViewModel == value)
                     return;
 
                 // Update the value
-                viewModel = value;
+                mViewModel = value;
 
                 // Set the data context for this page
-                DataContext = viewModel;
+                DataContext = mViewModel;
             }
         }
 
@@ -157,7 +165,7 @@ namespace HospitalManagement
         /// <summary>
         /// Default constructor
         /// </summary>
-        public BasePage() : base()
+        public BasePage () : base()
         {
             // Create a default view model
             ViewModel = new VM();
