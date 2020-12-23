@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace HospitalManagement.Core
 {
@@ -42,7 +43,17 @@ namespace HospitalManagement.Core
         /// <summary>
         /// The current users mask password
         /// </summary>
-        public TextEntryViewModel Password { get; set; }
+        public PasswordEntryViewModel Password { get; set; }
+
+        /// <summary>
+        /// The text for the logout button
+        /// </summary>
+        public string LogoutButtonText { get; set; }
+
+        /// <summary>
+        /// The text for the duty button
+        /// </summary>
+        public string AddDutyButtonText { get; set; }
 
         #endregion
 
@@ -58,6 +69,16 @@ namespace HospitalManagement.Core
         /// </summary>
         public ICommand CloseCommand { get; set; }
 
+        /// <summary>
+        /// The command to logout of the application
+        /// </summary>
+        public ICommand LogoutCommand { get; set; }
+
+        /// <summary>
+        /// The command to clear the users data from the view model
+        /// </summary>
+        public ICommand ClearUserDataCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -70,15 +91,12 @@ namespace HospitalManagement.Core
             // Create commands
             OpenCommand = new RelayCommand( Open );
             CloseCommand = new RelayCommand( Close );
+            LogoutCommand = new RelayCommand( Logout );
+            ClearUserDataCommand = new RelayCommand( ClearUserData );
 
-            // TODO: Remove this with real information pulled from our database in future
-            FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = "Jessica" };
-            LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = "Stalon" };
-            Identify = new TextEntryViewModel { Label = "Identyfikator", OriginalText = "JS12321" };
-            Type = new TextEntryViewModel { Label = "Posada", OriginalText = "Lekarz" };
-            Specialize = new TextEntryViewModel { Label = "Specjalizacja", OriginalText = "Urolog" };
-            PwdNumber = new TextEntryViewModel { Label = "Numer PWD", OriginalText = "pwd135" };
-            Password = new TextEntryViewModel { Label = "Hasło", OriginalText = "********" };
+            // TODO: Get from localization
+            LogoutButtonText = "Wyloguj";
+            AddDutyButtonText = "Dodaj dyżur";
         }
 
         #endregion
@@ -99,6 +117,38 @@ namespace HospitalManagement.Core
         {
             // Close settings menu
             IoC.Application.SettingsMenuVisible = true;
+        }
+
+        /// <summary>
+        /// Logs the user out
+        /// </summary>
+        private void Logout ()
+        {
+            // TODO: Confirm the user wants to logout
+
+            //TODO: Clear any user data/cache
+
+            // Clean all application level view models that contain
+            // any information about the current user
+            ClearUserData();
+
+            // Go to login page
+            IoC.Application.GoToPage( ApplicationPage.Login );
+        }
+
+        /// <summary>
+        /// Clears any data specific to the current user
+        /// </summary>
+        public void ClearUserData()
+        {
+            // Clear all view models containing the users info
+            FirstName = null;
+            LastName = null;
+            Identify = null;
+            Type = null;
+            Specialize = null;
+            PwdNumber = null;
+            Password = null;
         }
 
     }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HospitalManagement.Core
+﻿namespace HospitalManagement.Core
 {
     /// <summary>
     /// The application state as the view model
@@ -32,6 +30,9 @@ namespace HospitalManagement.Core
         /// <param name="page">The page to go to</param>
         public void GoToPage ( ApplicationPage page)
         {
+            // Always hide settings page if we are changing pages
+            SettingsMenuVisible = false;
+
             // Set the current page
             CurrentPage = page;
 

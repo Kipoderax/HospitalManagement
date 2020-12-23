@@ -77,9 +77,13 @@
                <local:TextEntryControl DataContext="{Binding Identify}"/>
                <local:TextEntryControl DataContext="{Binding Type}"/>
                <local:TextEntryControl DataContext="{Binding Specialize}"/>
+               <local:PasswordEntryControl DataContext="{Binding Password}"/>
                <local:TextEntryControl DataContext="{Binding PwdNumber}"/>
-               <local:TextEntryControl DataContext="{Binding Password}"/>
              
+                <Button Content="{Binding LogoutButtonText}"
+                        Command="{Binding LogoutCommand}"
+                        FontSize="{StaticResource FontSizeRegular}"/>
+                
              </StackPanel>
           
           </Grid>

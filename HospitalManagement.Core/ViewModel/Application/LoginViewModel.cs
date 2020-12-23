@@ -44,6 +44,20 @@ namespace HospitalManagement.Core
         {
             await RunCommand( () => LoginIsRunning, async () =>
              {
+                 // TODO: Fake a login...
+
+                 // Ok successfully logged in.. now get users data
+                 //TODO: Ask server for users info
+
+                 // TODO: Remove this with real information pulled from our database in future
+                 IoC.Settings.FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = "Jessica" };
+                 IoC.Settings.LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = "Stalon" };
+                 IoC.Settings.Identify = new TextEntryViewModel { Label = "Identyfikator", OriginalText = "JS12321" };
+                 IoC.Settings.Type = new TextEntryViewModel { Label = "Posada", OriginalText = "Lekarz" };
+                 IoC.Settings.Specialize = new TextEntryViewModel { Label = "Specjalizacja", OriginalText = "Urolog" };
+                 IoC.Settings.PwdNumber = new TextEntryViewModel { Label = "Numer PWD", OriginalText = "pwd135" };
+                 IoC.Settings.Password = new PasswordEntryViewModel { Label = "Hasło", FakePassword = "********" };
+
                  await Task.Delay( 2000 );
 
                  // Go to work page

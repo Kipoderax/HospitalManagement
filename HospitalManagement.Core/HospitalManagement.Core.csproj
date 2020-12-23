@@ -74,7 +74,9 @@
     <Compile Include="ViewModel\Employee\EmployeeListViewModel.cs" />
     <Compile Include="ViewModel\Application\LoginViewModel.cs" />
     <Compile Include="ViewModel\Application\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\Input\Design\PasswordEntryDesignModel.cs" />
     <Compile Include="ViewModel\Input\Design\TextEntryDesignModel.cs" />
+    <Compile Include="ViewModel\Input\PasswordEntryViewModel.cs" />
     <Compile Include="ViewModel\Input\TextEntryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
