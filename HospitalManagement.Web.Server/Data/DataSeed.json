@@ -1,0 +1,442 @@
+[
+  {
+    "FirstName": "Mcleod",
+    "LastName": "Kerr",
+    "Pesel": 82092927182,
+    "Username": "Mcleod82092927182",
+    "Password": 82092927182,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2017-12-07",
+    "EmployeeType": {
+      "EmployeeRole": "Pielęgniarka"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Urolog",
+      "NumberPwz": 2069792
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-02-01 03:29",
+        "EndShift": "2020-02-01 03:29"
+      }
+    ]
+  },
+  {
+    "FirstName": "Sargent",
+    "LastName": "Mcdonald",
+    "Pesel": 89083089487,
+    "Username": "Sargent89083089487",
+    "Password": 89083089487,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2018-03-24",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Neurolog",
+      "NumberPwz": 8987021
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-05-15 08:00",
+        "EndShift": "2020-05-15 08:00"
+      }
+    ]
+  },
+  {
+    "FirstName": "Paul",
+    "LastName": "Knox",
+    "Pesel": 86041146053,
+    "Username": "Paul86041146053",
+    "Password": 86041146053,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2018-07-20",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Neurolog",
+      "NumberPwz": 6596571
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-05-20 22:36",
+        "EndShift": "2020-05-20 22:36"
+      }
+    ]
+  },
+  {
+    "FirstName": "Dickson",
+    "LastName": "Park",
+    "Pesel": 72091218196,
+    "Username": "Dickson72091218196",
+    "Password": 72091218196,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2017-03-30",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Laryngolog",
+      "NumberPwz": 1698851
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-02-04 10:25",
+        "EndShift": "2020-02-04 10:25"
+      }
+    ]
+  },
+  {
+    "FirstName": "Richards",
+    "LastName": "Frazier",
+    "Pesel": 83091142299,
+    "Username": "Richards83091142299",
+    "Password": 83091142299,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2018-06-08",
+    "EmployeeType": {
+      "EmployeeRole": "Pielęgniarka"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Kardiolog",
+      "NumberPwz": 4683140
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-12-24 22:33",
+        "EndShift": "2020-12-24 22:33"
+      }
+    ]
+  },
+  {
+    "FirstName": "Chase",
+    "LastName": "Chambers",
+    "Pesel": 75022846310,
+    "Username": "Chase75022846310",
+    "Password": 75022846310,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2020-11-14",
+    "EmployeeType": {
+      "EmployeeRole": "Administrator"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Urolog",
+      "NumberPwz": 8245121
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-11-07 15:04",
+        "EndShift": "2020-11-07 15:04"
+      }
+    ]
+  },
+  {
+    "FirstName": "Parker",
+    "LastName": "Petersen",
+    "Pesel": 78031143245,
+    "Username": "Parker78031143245",
+    "Password": 78031143245,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2019-01-17",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Urolog",
+      "NumberPwz": 7824137
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-03-25 01:58",
+        "EndShift": "2020-03-25 01:58"
+      }
+    ]
+  },
+  {
+    "FirstName": "Massey",
+    "LastName": "Hooper",
+    "Pesel": 74031875425,
+    "Username": "Massey74031875425",
+    "Password": 74031875425,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2020-06-27",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Kardiolog",
+      "NumberPwz": 9022346
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-12-07 12:08",
+        "EndShift": "2020-12-07 12:08"
+      }
+    ]
+  },
+  {
+    "FirstName": "Walls",
+    "LastName": "Guy",
+    "Pesel": 73041183877,
+    "Username": "Walls73041183877",
+    "Password": 73041183877,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2018-02-05",
+    "EmployeeType": {
+      "EmployeeRole": "Administrator"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Laryngolog",
+      "NumberPwz": 4735034
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-09-16 23:38",
+        "EndShift": "2020-09-16 23:38"
+      }
+    ]
+  },
+  {
+    "FirstName": "Wiley",
+    "LastName": "Ward",
+    "Pesel": 95041294276,
+    "Username": "Wiley95041294276",
+    "Password": 95041294276,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2018-04-29",
+    "EmployeeType": {
+      "EmployeeRole": "Administrator"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Urolog",
+      "NumberPwz": 2248783
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-09-01 22:42",
+        "EndShift": "2020-09-01 22:42"
+      }
+    ]
+  },
+  {
+    "FirstName": "Nell",
+    "LastName": "Shaffer",
+    "Pesel": 87092458971,
+    "Username": "Nell87092458971",
+    "Password": 87092458971,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2017-08-26",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Laryngolog",
+      "NumberPwz": 7025612
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-02-20 22:56",
+        "EndShift": "2020-02-20 22:56"
+      }
+    ]
+  },
+  {
+    "FirstName": "Araceli",
+    "LastName": "Butler",
+    "Pesel": 95071425198,
+    "Username": "Araceli95071425198",
+    "Password": 95071425198,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2017-04-01",
+    "EmployeeType": {
+      "EmployeeRole": "Administrator"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Neurolog",
+      "NumberPwz": 6167920
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-09-27 14:50",
+        "EndShift": "2020-09-27 14:50"
+      }
+    ]
+  },
+  {
+    "FirstName": "Ethel",
+    "LastName": "Olsen",
+    "Pesel": 94092389076,
+    "Username": "Ethel94092389076",
+    "Password": 94092389076,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2017-05-16",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Laryngolog",
+      "NumberPwz": 6751064
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-05-10 13:58",
+        "EndShift": "2020-05-10 13:58"
+      }
+    ]
+  },
+  {
+    "FirstName": "Nicole",
+    "LastName": "Hendrix",
+    "Pesel": 77011999671,
+    "Username": "Nicole77011999671",
+    "Password": 77011999671,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2018-01-13",
+    "EmployeeType": {
+      "EmployeeRole": "Pielęgniarka"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Urolog",
+      "NumberPwz": 3669258
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-09-04 09:47",
+        "EndShift": "2020-09-04 09:47"
+      }
+    ]
+  },
+  {
+    "FirstName": "Tamika",
+    "LastName": "Mcdaniel",
+    "Pesel": 80043085011,
+    "Username": "Tamika80043085011",
+    "Password": 80043085011,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2020-06-26",
+    "EmployeeType": {
+      "EmployeeRole": "Administrator"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Kardiolog",
+      "NumberPwz": 1959687
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-02-08 16:37",
+        "EndShift": "2020-02-08 16:37"
+      }
+    ]
+  },
+  {
+    "FirstName": "Earline",
+    "LastName": "Glover",
+    "Pesel": 76041041438,
+    "Username": "Earline76041041438",
+    "Password": 76041041438,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2018-03-15",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Kardiolog",
+      "NumberPwz": 2649005
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-10-01 06:58",
+        "EndShift": "2020-10-01 06:58"
+      }
+    ]
+  },
+  {
+    "FirstName": "Dollie",
+    "LastName": "Sloan",
+    "Pesel": 78021560934,
+    "Username": "Dollie78021560934",
+    "Password": 78021560934,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2020-01-31",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Laryngolog",
+      "NumberPwz": 5988841
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-06-06 19:29",
+        "EndShift": "2020-06-06 19:29"
+      }
+    ]
+  },
+  {
+    "FirstName": "Diann",
+    "LastName": "Cole",
+    "Pesel": 70061817891,
+    "Username": "Diann70061817891",
+    "Password": 70061817891,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2017-07-19",
+    "EmployeeType": {
+      "EmployeeRole": "Administrator"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Neurolog",
+      "NumberPwz": 3334701
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-03-26 12:23",
+        "EndShift": "2020-03-26 12:23"
+      }
+    ]
+  },
+  {
+    "FirstName": "Bianca",
+    "LastName": "Ingram",
+    "Pesel": 73081976423,
+    "Username": "Bianca73081976423",
+    "Password": 73081976423,
+    "IsFirstLogin": 1,
+    "AccountCreated": "2019-12-29",
+    "EmployeeType": {
+      "EmployeeRole": "Lekarz"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Urolog",
+      "NumberPwz": 2709116
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-07-27 07:50",
+        "EndShift": "2020-07-27 07:50"
+      }
+    ]
+  },
+  {
+    "FirstName": "Liz",
+    "LastName": "Brock",
+    "Pesel": 96072910208,
+    "Username": "Liz96072910208",
+    "Password": 96072910208,
+    "IsFirstLogin": 0,
+    "AccountCreated": "2019-11-20",
+    "EmployeeType": {
+      "EmployeeRole": "Pielęgniarka"
+    },
+    "EmployeeSpecialize": {
+      "SpecializeEmployee": "Urolog",
+      "NumberPwz": 5008654
+    },
+    "EmployeeDuties": [
+      {
+        "StartShift": "2020-07-17 05:07",
+        "EndShift": "2020-07-17 05:07"
+      }
+    ]
+  }
+]

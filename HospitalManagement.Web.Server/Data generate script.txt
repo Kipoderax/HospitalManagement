@@ -1,0 +1,30 @@
+﻿NOTE: The keys are properties from Employee class.
+             If you set with another name then data dont save to sql
+
+[
+  '{{repeat(10)}}',
+  {
+    FirstName: '{{firstName("female")}}',
+    LastName: '{{surname()}}',
+    Pesel: '{{integer(70, 97)}}' + '{{0}}' + '{{integer(1, 9)}}' + '{{integer(10, 30)}}' + '{{integer(10000, 99998)}}',
+    Username: function(){return this.FirstName + this.Pesel;},
+    Password: function(){return this.Pesel;},
+    IsFirstLogin: '{{integer(0,1)}}',
+    AccountCreated: '{{date(new Date(2020,12,20), new Date(2017,1,1), "YYYY-MM-dd")}}',
+    EmployeeType:
+      {
+        EmployeeRole: '{{random("Administrator", "Lekarz", "Pielęgniarka")}}'
+      },
+    EmployeeSpecialize: 
+      {
+        SpecializeEmployee: '{{random("Urolog", "Neurolog", "Kardiolog", "Laryngolog")}}',
+        NumberPwz: '{{integer(1000000, 9999999)}}'
+      },
+    EmployeeDuties: [
+      {
+        StartShift: '{{date(new Date(2020,12,20), new Date(2020,1,1), "YYYY-MM-dd HH:mm")}}',
+        EndShift: function(){return this.StartShift;}
+      }
+    ]
+  }
+]
