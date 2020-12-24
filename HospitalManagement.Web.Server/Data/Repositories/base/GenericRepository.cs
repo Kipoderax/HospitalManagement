@@ -67,6 +67,7 @@ namespace HospitalManagement.Web.Server
         /// <returns></returns>
         public async Task<bool> SaveAll ()
         {
+            // Greater than zero means that something with success saved to database
             return await _dataContext.SaveChangesAsync() > 0;
         }
 

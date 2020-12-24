@@ -27,6 +27,10 @@ namespace HospitalManagement.Web.Server
             services.AddTransient<Seed>();
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IGenericRepository, GenericRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            //services.ad
 
             services.AddControllersWithViews();
         }
