@@ -59,6 +59,9 @@ namespace HospitalManagement.Web.Server
                 }
             };
 
+            if (!EmployeeValidate.PeselValidate( employeeDto.Pesel ))
+                return BadRequest( "Pesel pracownika jest nie poprawny." );
+
             var createdEmployee = await _authRepository.Register(employeeToCreate, employeeDto.Pesel);
 
             return StatusCode( 201 );
