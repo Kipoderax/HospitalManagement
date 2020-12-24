@@ -7,6 +7,11 @@ namespace HospitalManagement.Web.Server
     /// </summary>
     public static class EmployeeValidate
     {
+        /// <summary>
+        /// Pesel checking for persons born between 1900-1999
+        /// </summary>
+        /// <param name="pesel">Employee pesel to check</param>
+        /// <returns></returns>
         public static bool PeselValidate ( string pesel )
         {
             // Check pesel length
@@ -15,10 +20,8 @@ namespace HospitalManagement.Web.Server
 
             // Check if pesel contain only digits
             foreach (var p in pesel)
-            {
                 if (!char.IsDigit( p ))
                     return false;
-            }
 
             // Check month, day
             if (int.Parse( pesel.Substring( 2, 2 ) ) > 12 ||
@@ -35,6 +38,34 @@ namespace HospitalManagement.Web.Server
 
             // Check control sum
             if (sum % 10 != 0)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if number pwz is correct input with country standard
+        /// </summary>
+        /// <param name="numberPwz">employee number pwz</param>
+        /// <returns></returns>
+        public static bool NumberPwzValidate( string numberPwz )
+        {
+            // Check number length
+            if (numberPwz.Length != 7)
+                return false;
+           
+            // Check if number pwz contain only digits
+            foreach (var p in numberPwz)
+                if (!char.IsDigit( p ))
+                    return false;
+
+            // Get control sum
+            int sum = 0;
+            for (int i = 0; i < numberPwz.Length - 1; i++)
+                sum += int.Parse( numberPwz[i+1].ToString() ) * (i + 1);
+
+            // Check sum control with first digit in number pwz
+            if (sum % 11 != int.Parse( numberPwz[0].ToString() ))
                 return false;
 
             return true;

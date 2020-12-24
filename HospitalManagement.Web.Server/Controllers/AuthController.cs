@@ -62,6 +62,9 @@ namespace HospitalManagement.Web.Server
             if (!EmployeeValidate.PeselValidate( employeeDto.Pesel ))
                 return BadRequest( "Pesel pracownika jest nie poprawny." );
 
+            if (!EmployeeValidate.NumberPwzValidate( employeeDto.NumberPwz ))
+                return BadRequest( "Wpisano nie prawidłowo numer pwz pracownika" );
+
             var createdEmployee = await _authRepository.Register(employeeToCreate, employeeDto.Pesel);
 
             return StatusCode( 201 );
