@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HospitalManagement.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -83,15 +84,18 @@ namespace HospitalManagement.Web.Server
         /// </summary>
         /// <param name="loginDto">Dto entity with login prop</param>
         /// <returns></returns>
-        [HttpPost("login")]
-        public async Task<IActionResult> Login( EmployeeLoginDto loginDto )
+        [Route("login")]
+        public async Task<ApiResponse<LoginResultApiModel>> Login( [FromBody] LoginCredentialsApiModel loginDto )
         {
             // Get employee from repo
-            var employee = await _authRepository.Login( loginDto.Identify, loginDto.Password );
+            var employee = await _authRepository.Login( loginDto.Username, loginDto.Password );
 
             // Make sure employee is not null
             if (employee == null)
-                return Unauthorized();
+                return new ApiResponse<LoginResultApiModel>
+                {
+                    ErrorMessage = "Zły login lub hasło"
+                };
 
             // Create token for id and username
             var claims = new[]
@@ -117,7 +121,20 @@ namespace HospitalManagement.Web.Server
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken( tokenDescriptor );
 
-            return Ok( new { token = tokenHandler.WriteToken( token ) } );
+            return new ApiResponse<LoginResultApiModel> 
+            {
+                Response = new LoginResultApiModel
+                {
+                    Token = tokenHandler.WriteToken(token),
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Username = employee.Username,
+                    Pesel = employee.Pesel,
+                    Type = employee.EmployeeType.EmployeeRole,
+                    Specialize = employee.EmployeeSpecialize.SpecializeEmployee,
+                    NumberPwz = employee.EmployeeSpecialize.NumberPwz
+                }
+            };
         }
     }
 }

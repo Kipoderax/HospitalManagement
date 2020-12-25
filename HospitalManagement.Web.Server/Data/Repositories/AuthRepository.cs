@@ -42,7 +42,11 @@ namespace HospitalManagement.Web.Server
         public async Task<Employee> Login(string username, string password)
         {
             // Find employee with username
-            Employee employee = await _context.Employees.FirstOrDefaultAsync(u => u.Username == username);
+            Employee employee = await _context.Employees
+                .Include(t => t.EmployeeType)
+                .Include(s => s.EmployeeSpecialize)
+                .Include(d => d.EmployeeDuties)
+                .FirstOrDefaultAsync(u => u.Username == username);
 
             // Make sure employee is not null
             if (employee == null)

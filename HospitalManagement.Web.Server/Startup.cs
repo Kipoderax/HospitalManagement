@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Net.Http;
 
 namespace HospitalManagement.Web.Server
 {
@@ -25,12 +26,21 @@ namespace HospitalManagement.Web.Server
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<Seed>();
+
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
-            //services.ad
+            services.AddHttpClient( "HttpClientWithSSLUntrusted" ).ConfigurePrimaryHttpMessageHandler( () => new HttpClientHandler
+            {
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                ServerCertificateCustomValidationCallback =
+               ( httpRequestMessage, cert, cetChain, policyErrors ) =>
+               {
+                   return true;
+               }
+            } );
 
             services.AddControllersWithViews();
         }
