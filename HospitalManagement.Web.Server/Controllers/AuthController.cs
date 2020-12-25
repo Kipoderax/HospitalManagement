@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HospitalManagement.Web.Server
@@ -11,6 +16,7 @@ namespace HospitalManagement.Web.Server
         #region Private Members
 
         private readonly IAuthRepository _authRepository;
+        private readonly IConfiguration _config;
 
         #endregion
 
@@ -20,9 +26,10 @@ namespace HospitalManagement.Web.Server
         /// Constructor with dependency injections
         /// </summary>
         /// <param name="authRepository"></param>
-        public AuthController (IAuthRepository authRepository)
+        public AuthController (IAuthRepository authRepository, IConfiguration config)
         {
             _authRepository = authRepository;
+            _config = config;
         }
 
         #endregion
@@ -30,7 +37,7 @@ namespace HospitalManagement.Web.Server
         /// <summary>
         /// Register new employee to database
         /// </summary>
-        /// <param name="employeeDto">Dto employee object</param>
+        /// <param name="employeeDto">Dto entity with register prop</param>
         /// <returns></returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register(EmployeeRegisterDto employeeDto)
@@ -68,6 +75,49 @@ namespace HospitalManagement.Web.Server
             var createdEmployee = await _authRepository.Register(employeeToCreate, employeeDto.Pesel);
 
             return StatusCode( 201 );
+        }
+
+        /// <summary>
+        /// Login employee to app via token authentication
+        /// Unnecessary request to database
+        /// </summary>
+        /// <param name="loginDto">Dto entity with login prop</param>
+        /// <returns></returns>
+        [HttpPost("login")]
+        public async Task<IActionResult> Login( EmployeeLoginDto loginDto )
+        {
+            // Get employee from repo
+            var employee = await _authRepository.Login( loginDto.Identify, loginDto.Password );
+
+            // Make sure employee is not null
+            if (employee == null)
+                return Unauthorized();
+
+            // Create token for id and username
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, employee.UserId.ToString()),
+                new Claim(ClaimTypes.Name, employee.Username)
+            };
+
+            // Create key from token
+            var tokenKey = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( _config.GetSection( "AppSettings:Token" ).Value ) );
+
+            // Generate credentials of our token
+            var tokenCredentials = new SigningCredentials( tokenKey, SecurityAlgorithms.HmacSha512Signature );
+
+            // 
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity( claims ),
+                Expires = DateTime.Now.AddMinutes(30),
+                SigningCredentials = tokenCredentials
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken( tokenDescriptor );
+
+            return Ok( new { token = tokenHandler.WriteToken( token ) } );
         }
     }
 }
