@@ -140,6 +140,24 @@ namespace HospitalManagement
     }
 
     /// <summary>
+    /// Animates a framework element sliding bottom from the top on show
+    /// and sliding out to the bottom on hide
+    /// NOTE: Keeps the margin
+    /// </summary>
+    public class AnimateSlideInFromTopMarginProperty : AnimateBaseProperty<AnimateSlideInFromTopMarginProperty>
+    {
+        protected override async void DoAnimation ( FrameworkElement element, bool value, bool firstLoad )
+        {
+            if (value)
+                // Animate in
+                await element.SlideAndFadeInAsync( AnimationSlideInDirection.Top, firstLoad, firstLoad ? 0 : 0.3f, keepMargin: true );
+            else
+                // Animate out
+                await element.SlideAndFadeOutAsync( AnimationSlideInDirection.Bottom, firstLoad ? 0 : 0.3f, keepMargin: true );
+        }
+    }
+
+    /// <summary>
     /// Animates a framework element fading in on show
     /// and fading out on hide
     /// </summary>

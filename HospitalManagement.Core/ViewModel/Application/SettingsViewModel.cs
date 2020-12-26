@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace HospitalManagement.Core
 {
@@ -51,6 +50,12 @@ namespace HospitalManagement.Core
         public string LogoutButtonText { get; set; }
 
         /// <summary>
+        /// The text for the new employee button
+        /// NOTE: It's visible for users login as administrator
+        /// </summary>
+        public string NewEmployeeText { get; set; }
+
+        /// <summary>
         /// The text for the duty button
         /// </summary>
         public string AddDutyButtonText { get; set; }
@@ -79,6 +84,11 @@ namespace HospitalManagement.Core
         /// </summary>
         public ICommand ClearUserDataCommand { get; set; }
 
+        /// <summary>
+        /// The command to open employee forms for register to application
+        /// </summary>
+        public ICommand NewEmployeeCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -93,10 +103,12 @@ namespace HospitalManagement.Core
             CloseCommand = new RelayCommand( Close );
             LogoutCommand = new RelayCommand( Logout );
             ClearUserDataCommand = new RelayCommand( ClearUserData );
+            NewEmployeeCommand = new RelayCommand( NewEmployee );
 
             // TODO: Get from localization
             LogoutButtonText = "Wyloguj";
             AddDutyButtonText = "Dodaj dyżur";
+            NewEmployeeText = "Nowy pracownik";
         }
 
         #endregion
@@ -106,8 +118,13 @@ namespace HospitalManagement.Core
         /// </summary>
         private void Close ()
         {
-            // Close settings menu
-            IoC.Application.SettingsMenuVisible = false;
+            // Close register form employee if is open
+            if (IoC.Application.NewEmployeeFormVisible)
+                IoC.Application.NewEmployeeFormVisible = false;
+
+            // Otherwise close settings menu
+            else
+                IoC.Application.SettingsMenuVisible = false;
         }
 
         /// <summary>
@@ -126,8 +143,6 @@ namespace HospitalManagement.Core
         {
             // TODO: Confirm the user wants to logout
 
-            //TODO: Clear any user data/cache
-
             // Clean all application level view models that contain
             // any information about the current user
             ClearUserData();
@@ -139,7 +154,7 @@ namespace HospitalManagement.Core
         /// <summary>
         /// Clears any data specific to the current user
         /// </summary>
-        public void ClearUserData()
+        private void ClearUserData()
         {
             // Clear all view models containing the users info
             FirstName = null;
@@ -151,5 +166,9 @@ namespace HospitalManagement.Core
             Password = null;
         }
 
+        private void NewEmployee()
+        {
+            IoC.Application.NewEmployeeFormVisible = true;
+        }
     }
 }

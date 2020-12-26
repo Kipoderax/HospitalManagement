@@ -24,6 +24,11 @@ namespace HospitalManagement.Core
         /// </summary>
         public static SettingsViewModel Settings => Get<SettingsViewModel>();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="RegisterEmployeeViewModel"/>
+        /// </summary>
+        public static RegisterEmployeeViewModel RegisterEmployee => Get<RegisterEmployeeViewModel>();
+
         #endregion
 
         #region Construction

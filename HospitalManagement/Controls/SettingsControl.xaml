@@ -27,7 +27,7 @@
              <Button Style="{StaticResource IconGrowButton}"
                      Content="{StaticResource FontAwesomeArrowLeftIcon}"
                      FontFamily="{StaticResource FontAwesome}"
-                     Foreground="{StaticResource BackgroundLightBrush}"
+                     Foreground="{StaticResource ForegroundVeryDarkBrush}"
                      Height="40"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Center"
@@ -41,7 +41,7 @@
                      Text="{StaticResource FontAwesomeCogIcon}"
                      Foreground="{StaticResource WordOrangeBrush}"/>
                 <!-- Settings text -->
-                <Run Text="Jessica"
+                <Run Text="{Binding FirstName}"
                      FontFamily="{StaticResource LatoRegular}"
                      Foreground="{StaticResource ForegroundVeryDarkBrush}"/>
              </TextBlock>
@@ -60,6 +60,13 @@
                 <ColumnDefinition Width="*"/>
              </Grid.ColumnDefinitions>
           
+             <Border Grid.ColumnSpan="2" Panel.ZIndex="3">
+                <local:EmployeeRegisterPage
+                   local:AnimateSlideInFromTopMarginProperty.Value=
+                   "{Binding ApplicationViewModel.NewEmployeeFormVisible,
+                   Source={x:Static local:ViewModelLocator.Instance}}"/>
+             </Border>
+             
              <!-- Duty list -->
              <Border CornerRadius="8" 
                      Margin="0 0 30 0">
@@ -79,10 +86,21 @@
                <local:TextEntryControl DataContext="{Binding Specialize}"/>
                <local:PasswordEntryControl DataContext="{Binding Password}"/>
                <local:TextEntryControl DataContext="{Binding PwdNumber}"/>
-             
-                <Button Content="{Binding LogoutButtonText}"
+                
+                <StackPanel Orientation="Horizontal">
+
+                   <Button Content="{Binding NewEmployeeText}"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           Command="{Binding NewEmployeeCommand}"
+                           Width="140"
+                           Padding="10"/>
+                   
+                   <Button Content="{Binding LogoutButtonText}"
                         Command="{Binding LogoutCommand}"
-                        FontSize="{StaticResource FontSizeRegular}"/>
+                        FontSize="{StaticResource FontSizeRegular}"
+                        Margin="110 10 0 10"/>
+
+                </StackPanel>
                 
              </StackPanel>
           

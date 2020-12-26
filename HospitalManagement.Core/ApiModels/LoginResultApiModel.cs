@@ -12,23 +12,18 @@
         /// </summary>
         public string Token { get; set; }
 
-        public string FirstName { get; set; }
+        // TODO: Add employee duties
+        #region Employee Personal Information
 
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Pesel { get; set; }
         public string Type { get; set; }
         public string Specialize { get; set; }
         public string NumberPwz { get; set; }
-
-        /// <summary>
-        /// The employee username
-        /// </summary>
         public string Username { get; set; }
 
-        /// <summary>
-        /// The employee id
-        /// </summary>
-        public string Id { get; set; }
+        #endregion
 
         #endregion
 

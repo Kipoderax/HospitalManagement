@@ -22,6 +22,11 @@
         /// </summary>
         public bool SettingsMenuVisible { get; set; } = false;
 
+        /// <summary>
+        /// True if user as administrator want add new employee
+        /// </summary>
+        public bool NewEmployeeFormVisible { get; set; } = false;
+
         #endregion
 
         /// <summary>
@@ -32,6 +37,7 @@
         {
             // Always hide settings page if we are changing pages
             SettingsMenuVisible = false;
+            NewEmployeeFormVisible = false;
 
             // Set the current page
             CurrentPage = page;
