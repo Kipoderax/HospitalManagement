@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HospitalManagement.Relational;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.Web.Server
 {

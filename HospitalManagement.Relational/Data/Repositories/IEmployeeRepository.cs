@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HospitalManagement.Web.Server
+namespace HospitalManagement.Relational
 {
     /// <summary>
     /// Management employees like show list, get specify employee and so on

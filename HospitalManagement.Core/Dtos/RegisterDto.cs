@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HospitalManagement.Web.Server
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// Simply object of our employee entity for use in view application
     /// </summary>
-    public class EmployeeRegisterDto
+    public class RegisterDto
     {
         #region Public Properties
 

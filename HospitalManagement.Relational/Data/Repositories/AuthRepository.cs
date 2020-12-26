@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalManagement.Web.Server
+namespace HospitalManagement.Relational
 {
     /// <summary>
     /// Authorization employee for hospital application

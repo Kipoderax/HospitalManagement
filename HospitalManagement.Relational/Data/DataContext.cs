@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace HospitalManagement.Web.Server
+namespace HospitalManagement.Relational
 {
     /// <summary>
     /// The database representational model for our application

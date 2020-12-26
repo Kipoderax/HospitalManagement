@@ -89,6 +89,8 @@ StyleCopReport.xml
 *.scc
 */appsettings.json
 *.config
+*.db
+*.sqlite*
 
 # Chutzpah Test files
 _Chutzpah*

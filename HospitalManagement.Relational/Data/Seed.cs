@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace HospitalManagement.Web.Server
+namespace HospitalManagement.Relational
 {
     /// <summary>
     /// Read all data from <see cref="DataSeed.json"/> file and save in database

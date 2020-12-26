@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HospitalManagement.Web.Server.Migrations
+namespace HospitalManagement.Relational
 {
     public partial class Create_Entities : Migration
     {

@@ -1,4 +1,5 @@
 ﻿using HospitalManagement.Core;
+using HospitalManagement.Relational;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -40,8 +41,8 @@ namespace HospitalManagement.Web.Server
         /// </summary>
         /// <param name="employeeDto">Dto entity with register prop</param>
         /// <returns></returns>
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(EmployeeRegisterDto employeeDto)
+        [HttpPost( "register" )]
+        public async Task<IActionResult> Register ( RegisterDto employeeDto )
         {
             // Make sure that employee with this username not exist
             if (await _authRepository.EmployeeExists( employeeDto.FirstName.Substring( 0, 1 ) + employeeDto.LastName.Substring( 0, 1 ) + employeeDto.Pesel[6..] ))
@@ -73,7 +74,7 @@ namespace HospitalManagement.Web.Server
             if (!EmployeeValidate.NumberPwzValidate( employeeDto.NumberPwz ))
                 return BadRequest( "Wpisano nie prawidłowo numer pwz pracownika" );
 
-            var createdEmployee = await _authRepository.Register(employeeToCreate, employeeDto.Pesel);
+            var createdEmployee = await _authRepository.Register( employeeToCreate, employeeDto.Pesel );
 
             return StatusCode( 201 );
         }
@@ -85,10 +86,10 @@ namespace HospitalManagement.Web.Server
         /// <param name="loginDto">Dto entity with login prop</param>
         /// <returns></returns>
         [Route("login")]
-        public async Task<ApiResponse<LoginResultApiModel>> Login( [FromBody] LoginCredentialsApiModel loginDto )
+        public async Task<ApiResponse<LoginResultApiModel>> Login( [FromBody] LoginDto loginDto )
         {
             // Get employee from repo
-            var employee = await _authRepository.Login( loginDto.Username, loginDto.Password );
+            var employee = await _authRepository.Login( loginDto.Identify, loginDto.Password );
 
             // Make sure employee is not null
             if (employee == null)

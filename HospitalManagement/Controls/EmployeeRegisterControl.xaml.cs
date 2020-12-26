@@ -6,9 +6,9 @@ namespace HospitalManagement
     /// <summary>
     /// Logika interakcji dla klasy EmployeeRegisterPage.xaml
     /// </summary>
-    public partial class EmployeeRegisterPage : UserControl
+    public partial class EmployeeRegisterControl : UserControl
     {
-        public EmployeeRegisterPage ()
+        public EmployeeRegisterControl ()
         {
             InitializeComponent();
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace HospitalManagement.Web.Server
+namespace HospitalManagement.Relational
 {
     /// <summary>
     /// Base functionality to manage entities

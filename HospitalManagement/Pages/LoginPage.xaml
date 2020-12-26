@@ -40,7 +40,7 @@
 
                             <!-- Identify -->
                             <TextBox Tag="Identyfikator"
-                                                Text="{Binding Identify}"/>
+                                                Text="{Binding MyIdentify}"/>
                             
                             <!-- Password -->
                             <PasswordBox Tag="Haslo"

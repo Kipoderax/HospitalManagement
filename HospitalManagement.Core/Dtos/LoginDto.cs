@@ -1,9 +1,9 @@
-﻿namespace HospitalManagement.Web.Server
+﻿namespace HospitalManagement.Core
 {
     /// <summary>
     /// Simply object of our employee entity for use in view application
     /// </summary>
-    public class EmployeeLoginDto
+    public class LoginDto
     {
         #region Public Properties
 
@@ -18,5 +18,10 @@
         public string Password { get; set; }
 
         #endregion
+
+        public LoginDto ()
+        {
+
+        }
     }
 }

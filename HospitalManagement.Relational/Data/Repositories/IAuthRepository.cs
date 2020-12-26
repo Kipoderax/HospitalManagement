@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace HospitalManagement.Web.Server
+namespace HospitalManagement.Relational
 {
     public interface IAuthRepository
     {

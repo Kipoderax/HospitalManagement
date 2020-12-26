@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HospitalManagement.Core\HospitalManagement.Core.csproj" />
+    <ProjectReference Include="..\HospitalManagement.Relational\HospitalManagement.Relational.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\Input\PasswordEntryControl.xaml.cs">
+    <Compile Update="Controls\Input\Edit\PasswordEntryControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\Input\Register\RegisterPasswordEntryControl.xaml.cs">
@@ -54,7 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Controls\Input\PasswordEntryControl.xaml">
+    <Page Update="Controls\Input\Edit\PasswordEntryControl.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

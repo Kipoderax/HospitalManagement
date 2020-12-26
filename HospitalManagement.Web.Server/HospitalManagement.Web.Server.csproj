@@ -17,4 +17,17 @@
     <ProjectReference Include="..\HospitalManagement.Core\HospitalManagement.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="HospitalManagement.Core">
+      <HintPath>..\HospitalManagement.Relational\bin\Debug\netcoreapp3.1\HospitalManagement.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="HospitalManagement.Relational">
+      <HintPath>..\HospitalManagement.Relational\bin\Debug\netcoreapp3.1\HospitalManagement.Relational.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApiModels\" />
+  </ItemGroup>
+
 </Project>

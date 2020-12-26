@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using HospitalManagement.Relational;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalManagement.Web.Server
 {

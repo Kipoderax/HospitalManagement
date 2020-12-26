@@ -14,7 +14,7 @@ namespace HospitalManagement.Core
         /// <summary>
         /// The login of the user
         /// </summary>
-        public string Identify { get; set; }
+        public string MyIdentify { get; set; }
 
         /// <summary>
         /// A flag indicating if the login command is running
@@ -50,18 +50,18 @@ namespace HospitalManagement.Core
         {
             await RunCommand( () => LoginIsRunning, async () =>
              {
-                 //// Call the server and attempt to login with credentials
-                 //// TODO: Move all URLs and API routes to static class in core
+                 ////// Call the server and attempt to login with credentials
+                 ////// TODO: Move all URLs and API routes to static class in core
                  //var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
                  //    "http://localhost:5000/api/auth/login",
-                 //    new LoginCredentialsApiModel
+                 //    new LoginDto
                  //    {
-                 //        Username = Identify,
+                 //        Identify = MyIdentify,
                  //        Password = (parameter as IHavePassword).SecurePassword.UnSecure()
                  //    } );
 
                  //// If there was no response, bad data or a response with a error message
-                 //if (result == null || result.ServerResponse == null || !result.ServerResponse.Successful )
+                 //if (result == null || result.ServerResponse == null || !result.ServerResponse.Successful)
                  //{
                  //    // Default error message
                  //    // TODO: Localize strings
@@ -73,7 +73,7 @@ namespace HospitalManagement.Core
                  //        message = result.ServerResponse.ErrorMessage;
 
                  //    // If we have a result but deserialize failed
-                 //    else if (string.IsNullOrWhiteSpace(result?.RawServerResponse))
+                 //    else if (string.IsNullOrWhiteSpace( result?.RawServerResponse ))
                  //        // Set error message
                  //        message = $"Unexpected response from server. {result.RawServerResponse}";
 

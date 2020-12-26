@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Net.Http;
+using HospitalManagement.Relational;
 
 namespace HospitalManagement.Web.Server
 {
@@ -23,7 +24,7 @@ namespace HospitalManagement.Web.Server
         {
             // Add ApplicationDbContext to DI
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(Configuration.GetConnectionString( "RelativeConnection" ) ));
 
             services.AddTransient<Seed>();
 
@@ -32,6 +33,7 @@ namespace HospitalManagement.Web.Server
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
+            // Avoid required submit SSL certification
             services.AddHttpClient( "HttpClientWithSSLUntrusted" ).ConfigurePrimaryHttpMessageHandler( () => new HttpClientHandler
             {
                 ClientCertificateOptions = ClientCertificateOption.Manual,

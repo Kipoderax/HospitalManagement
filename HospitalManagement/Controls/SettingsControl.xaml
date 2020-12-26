@@ -61,7 +61,7 @@
              </Grid.ColumnDefinitions>
           
              <Border Grid.ColumnSpan="2" Panel.ZIndex="3">
-                <local:EmployeeRegisterPage
+                <local:EmployeeRegisterControl
                    local:AnimateSlideInFromTopMarginProperty.Value=
                    "{Binding ApplicationViewModel.NewEmployeeFormVisible,
                    Source={x:Static local:ViewModelLocator.Instance}}"/>
