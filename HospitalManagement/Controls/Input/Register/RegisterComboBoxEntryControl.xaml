@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:HospitalManagement"
              xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
              mc:Ignorable="d"
-             d:DataContext="{x:Static core:RegisterEmployeeViewModel.Instance}">
+             d:DataContext="{x:Static core:RegisterViewModel.Instance}">
    
    <!-- Grey underline -->
     <Border BorderBrush="{StaticResource ForegroundDarkBrush}"

@@ -27,7 +27,7 @@ namespace HospitalManagement
         /// <summary>
         /// The register employee view model
         /// </summary>
-        public static RegisterEmployeeViewModel RegisterEmployeeViewModel => IoC.RegisterEmployee;
+        public static RegisterViewModel RegisterEmployeeViewModel => IoC.RegisterEmployee;
 
         #endregion
     }

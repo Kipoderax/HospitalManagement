@@ -37,46 +37,69 @@ namespace HospitalManagement.Web.Server
         #endregion
 
         /// <summary>
-        /// Register new employee to database
+        /// Register new employee on the server
         /// </summary>
         /// <param name="employeeDto">Dto entity with register prop</param>
         /// <returns></returns>
         [HttpPost( "register" )]
-        public async Task<IActionResult> Register ( RegisterDto employeeDto )
+        public async Task<ApiResponse<RegisterResultApiModel>> Register([FromBody] RegisterDto employeeDto )
         {
             // Make sure that employee with this username not exist
-            if (await _authRepository.EmployeeExists( employeeDto.FirstName.Substring( 0, 1 ) + employeeDto.LastName.Substring( 0, 1 ) + employeeDto.Pesel[6..] ))
-                return BadRequest( "Taki pracownik już został dodany" );
+            if (await _authRepository.EmployeeExists( employeeDto?.FirstName.Substring( 0, 1 ) + employeeDto?.LastName.Substring( 0, 1 ) + employeeDto?.Pesel[6..] ))
+                return new ApiResponse<RegisterResultApiModel>()
+                {
+                    //TODO: Localize strings
+                    ErrorMessage = "Pracownik z takim numere pesel już istnieje"
+                };
 
             // Create employee
             var employeeToCreate = new Employee
             {
-                FirstName = employeeDto.FirstName,
-                LastName = employeeDto.LastName,
-                Pesel = employeeDto.Pesel,
+                FirstName = employeeDto?.FirstName,
+                LastName = employeeDto?.LastName,
+                Pesel = employeeDto?.Pesel,
                 Username = employeeDto.FirstName.Substring( 0, 1 ) + employeeDto.LastName.Substring( 0, 1 ) + employeeDto.Pesel[6..],
                 IsFirstLogin = true,
                 AccountCreated = DateTime.Now,
                 EmployeeType = new EmployeeType
                 {
-                    EmployeeRole = employeeDto.Type
+                    EmployeeRole = employeeDto?.Type
                 },
                 EmployeeSpecialize = new EmployeeSpecialize
                 {
-                    SpecializeEmployee = employeeDto.Specialize,
-                    NumberPwz = employeeDto.NumberPwz
+                    SpecializeEmployee = employeeDto?.Specialize,
+                    NumberPwz = employeeDto?.NumberPwz
                 }
             };
 
             if (!EmployeeValidate.PeselValidate( employeeDto.Pesel ))
-                return BadRequest( "Pesel pracownika jest nie poprawny." );
+                return new ApiResponse<RegisterResultApiModel>()
+                {
+                    ErrorMessage = "Pesel pracownika jest nie poprawny."
+                };
 
             if (!EmployeeValidate.NumberPwzValidate( employeeDto.NumberPwz ))
-                return BadRequest( "Wpisano nie prawidłowo numer pwz pracownika" );
+                return new ApiResponse<RegisterResultApiModel>()
+                {
+                    ErrorMessage = "Wpisano nie prawidłowo numer pwz pracownika"
+                };
 
+            // Saving new account to database
             var createdEmployee = await _authRepository.Register( employeeToCreate, employeeDto.Pesel );
 
-            return StatusCode( 201 );
+            return new ApiResponse<RegisterResultApiModel>
+            {
+                Response = new RegisterResultApiModel
+                {
+                    FirstName = createdEmployee.FirstName,
+                    LastName = createdEmployee.LastName,
+                    Username = createdEmployee.Username,
+                    Pesel = createdEmployee.Pesel,
+                    Type = createdEmployee.EmployeeType.EmployeeRole,
+                    Specialize = createdEmployee.EmployeeSpecialize.SpecializeEmployee,
+                    NumberPwz = createdEmployee.EmployeeSpecialize.NumberPwz
+                }
+            };
         }
 
         /// <summary>
@@ -85,7 +108,7 @@ namespace HospitalManagement.Web.Server
         /// </summary>
         /// <param name="loginDto">Dto entity with login prop</param>
         /// <returns></returns>
-        [Route("login")]
+        [HttpPost("login")]
         public async Task<ApiResponse<LoginResultApiModel>> Login( [FromBody] LoginDto loginDto )
         {
             // Get employee from repo
@@ -124,6 +147,7 @@ namespace HospitalManagement.Web.Server
 
             return new ApiResponse<LoginResultApiModel> 
             {
+                //TODO: Add employes duties to result response
                 Response = new LoginResultApiModel
                 {
                     Token = tokenHandler.WriteToken(token),

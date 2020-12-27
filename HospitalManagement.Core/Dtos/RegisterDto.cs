@@ -30,5 +30,18 @@ namespace HospitalManagement.Core
         public string NumberPwz { get; set; }
 
         #endregion
+        
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public RegisterDto ()
+        {
+
+        }
+
+        #endregion
+
     }
 }
