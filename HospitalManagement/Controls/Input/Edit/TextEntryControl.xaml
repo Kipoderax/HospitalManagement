@@ -10,8 +10,8 @@
    
    <!-- Grey underline -->
     <Border BorderBrush="{StaticResource ForegroundDarkBrush}"
-               BorderThickness="0 0 0 0.4">
-               
+               BorderThickness="0 0 0 0.4"
+               > 
        <Grid Background="{StaticResource ForegroundLightBrush}">
           
           <!-- Double click to edit -->
@@ -94,6 +94,18 @@
                      Background="{StaticResource ForegroundDarkBrush}"
                      FontSize="{StaticResource FontSizeSmall}"
                      VerticalAlignment="Center"/>
+             
+          </Grid>
+          
+          <!-- Updating employee information -->
+          <Grid Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                local:AnimateFadeInProperty.Value="{Binding Updating}">
+             
+             <Border Padding="0 0 5 0">
+                  <TextBlock Style="{StaticResource SpinningText}"/>
+             </Border>
              
           </Grid>
           

@@ -22,16 +22,68 @@
           
           <!-- Hints information -->
        <StackPanel Width="400" Margin="0 10 0 0">
-            <local:RegisterTextEntryControl DataContext="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
-            <local:RegisterTextEntryControl DataContext="{Binding LastName}"/>
+
+          <local:RegisterTextEntryControl>
+                  <TextBox Text="{Binding FirstName}"
+                           Tag="Imię pracownika"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Padding="8"
+                           Margin="15 10 15 0"/>
+          </local:RegisterTextEntryControl>
+          <local:RegisterTextEntryControl>
+                  <TextBox Text="{Binding LastName}"
+                           Tag="Nazwisko pracownika"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Padding="8"
+                           Margin="15 0 15 0"/>
+          </local:RegisterTextEntryControl>
+          <local:RegisterTextEntryControl>
+                  <TextBox Text="{Binding Pesel}"
+                           Tag="Pesel pracownika"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Padding="8"
+                           Margin="15 0 15 0"/>
+          </local:RegisterTextEntryControl>
+          <local:RegisterTextEntryControl>
+                  <TextBox Text="{Binding PwzNumber}"
+                           Tag="Numer prawa wykonywanego zawodu"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Padding="8"
+                           Margin="15 0 15 0"/>
+          </local:RegisterTextEntryControl>
+          <local:RegisterTextEntryControl>
+               <ComboBox ItemsSource="{Binding Types}"
+                         SelectedValue="{Binding Type}"
+                         SelectedIndex="0"
+                  FontSize="{StaticResource FontSizeLarge}"
+                   Padding="8"
+                   Margin="15 0 15 0">
+               </ComboBox>
+          </local:RegisterTextEntryControl>
+                    <local:RegisterTextEntryControl>
+               <ComboBox ItemsSource="{Binding Specializes}"
+                         SelectedValue="{Binding Specialize}"
+                         SelectedIndex="0"
+                  FontSize="{StaticResource FontSizeLarge}"
+                   Padding="8"
+                   Margin="15 0 15 0">
+               </ComboBox>
+          </local:RegisterTextEntryControl>
+
+          <!-- ===================================== -->
+                  <!-- Repair binding to Input/Register files in future -->
+          <!-- ===================================== -->
+          
+            <!--<local:RegisterTextEntryControl DataContext="{Binding LastName}"/>
             <local:RegisterPasswordEntryControl DataContext="{Binding Pesel}"/>
             <local:RegisterComboBoxEntryControl DataContext="{Binding Types}"/>
             <local:RegisterComboBoxEntryControl DataContext="{Binding Specializes}"/>
-            <local:RegisterPasswordEntryControl DataContext="{Binding PwzNumber}"/>
+            <local:RegisterPasswordEntryControl DataContext="{Binding PwzNumber}"/>-->
        </StackPanel>
        
           <!-- Register button -->
-          <Button Grid.Row="2"
+          <StackPanel Grid.Row="2">
+          <Button
                   HorizontalAlignment="Center"
                   Content="Dodaj pracownika"
                   local:IsBusyProperty.Value="{Binding RegisterIsRunning}"
@@ -39,6 +91,18 @@
                   FontSize="{StaticResource FontSizeRegular}"
                   Padding="10 5"
                   Background="{StaticResource WordGreenBrush}"/>
+             <TextBlock Text="{Binding ErrorMessage}" 
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource WordRedBrush}"
+                        Margin="0 0 0 15"
+                        Visibility="{Binding Success, Converter={local:BooleanToVisibilityConverter}}"/>
+               <TextBlock Text="Dodano nowego pracownika" 
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource WordGreenBrush}"
+                        Margin="0 0 0 15"
+                        Visibility="{Binding Success, Converter={local:BooleanInvertConverter}}"/>
+  
+          </StackPanel>
           
        </Grid>
     </Border>
