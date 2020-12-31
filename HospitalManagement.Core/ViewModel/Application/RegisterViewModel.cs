@@ -31,13 +31,45 @@ namespace HospitalManagement.Core
         /// </summary>
         public string ErrorMessage { get; set; }
 
-        #region Employee Hints Information To Register
+        public bool Success { get; set; }
 
+        #region Combo Box Items In Register Forms
+
+        public List<string> Types { get; set; } = new List<string> { "Administrator", "Lekarz", "Pielęgniarka" };
+        public List<string> Specializes { get; set; } = new List<string> { "Urolog", "Neurolog", "Kardiolog", "Laryngolog" };
+
+        #endregion
+
+        #region Employee Details From Register Forms
+
+        /// <summary>
+        /// Employee first name from register form
+        /// </summary>
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// Employee last name from register form
+        /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Employee pesel from register form
+        /// </summary>
         public string Pesel { get; set; }
-        public List<string> Types { get; set; }
-        public List<string> Specializes { get; set; }
+
+        /// <summary>
+        /// Employee type from register form
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Employee specjalize from register form
+        /// </summary>
+        public string Specialize { get; set; }
+
+        /// <summary>
+        /// Employee pwz number from register form
+        /// </summary>
         public string PwzNumber { get; set; }
 
         #endregion
@@ -58,13 +90,6 @@ namespace HospitalManagement.Core
         public RegisterViewModel ()
         {
             // Set tags to register view form
-            FirstName = "Imię pracownika";
-            LastName = "Nazwisko pracownika";
-            Pesel = "Pesel pracownika";
-            Types = new List<string> { "Administrator", "Lekarz", "Pielęgniarka" };
-            Specializes = new List<string> { "Urolog", "Neurolog", "Kardiolog", "Laryngolog" };
-            PwzNumber = "Numer prawa wykonywanego zawodu";
-
             RegisterCommand = new RelayCommand ( async () => await RegisterAsync() );
         }
 
@@ -83,18 +108,23 @@ namespace HospitalManagement.Core
                         FirstName = FirstName,
                         LastName = LastName,
                         Pesel = Pesel,
-                        Type = Types[0],
-                        Specialize = Specializes[0],
+                        Type = Type,
+                        Specialize = Specialize,
                         NumberPwz = PwzNumber
                     } );
 
-                if (result.DisplayErrorIfFailedAsync( "Register failed" ))
+                if (result.DisplayErrorIfFailedAsync( "Rejestracja nieudana" ))
+                {
+                    Success = false;
+                    ErrorMessage = result.ErrorMessage;
                     return;
+                }
+                else
+                {
+                    ErrorMessage = null;
+                }
                 
-                await Task.Delay( 2000 );
-
-                // Go to work page
-                IoC.Get<ApplicationViewModel>().GoToPage( ApplicationPage.Work );
+                await Task.Delay( 1000 );
             } );
         }
     }

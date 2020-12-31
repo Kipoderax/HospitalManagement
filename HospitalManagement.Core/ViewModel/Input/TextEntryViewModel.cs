@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace HospitalManagement.Core
 {
@@ -28,6 +30,17 @@ namespace HospitalManagement.Core
         /// Indicates if the current text is in edit mode
         /// </summary>
         public bool Editing { get; set; }
+
+        /// <summary>
+        /// Indicates if the current control is pending an update
+        /// </summary>
+        public bool Updating { get; set; }
+
+        /// <summary>
+        /// The action to run when saving information
+        /// Returns true if the commis was successful or false otherwise
+        /// </summary>
+        public Func<Task<bool>> CommitAction { get; set; }
 
         #endregion
 
@@ -73,10 +86,38 @@ namespace HospitalManagement.Core
         /// </summary>
         private void Save ()
         {
-            // TODO: Save content
-            OriginalText = EditedText;
+            // Store the result of a commit call
+            var result = default(bool);
 
-            Editing = false;
+            // Save currently saved value
+            var currentSavedValue = OriginalText;
+
+            RunCommandAsync( () => Updating, async () =>
+             {
+                 // While updating, come out of edit mode
+                 Editing = false;
+
+                 // Get new value to update
+                 OriginalText = EditedText;
+                 //await IoC.Settings.UpdateEmployee();
+                 CommitAction = IoC.Settings.UpdateEmployeeDetailAsync;
+                 //CommitAction = IoC.Settings.SaveLastNameAsync;
+                 // Try and do the work
+                 result = CommitAction == null || await CommitAction();
+             } ).ContinueWith( t =>
+              {
+                  // If we succeeded
+                  // Nothing to do
+                  // If we fail
+                  if (!result)
+                  {
+                      // Restore original value
+                      EditedText = currentSavedValue;
+
+                      // Go back into edit mode
+                      Editing = true;
+                  }
+              } );
         }
 
         /// <summary>

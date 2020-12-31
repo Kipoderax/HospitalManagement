@@ -14,19 +14,19 @@ namespace HospitalManagement.Core
         /// <typeparam name="T">The type of Api Response</typeparam>
         /// <param name="response">The response to check</param>
         /// <returns>Returns true if there was an error, or false if all was ok</returns>
-        public static bool DisplayErrorIfFailedAsync<T> ( this WebRequestResult<ApiResponse<T>> response, string errorMessage )
+        public static bool DisplayErrorIfFailedAsync ( this WebRequestResult response, string errorMessage )
         {
             // If there was no response, bad data or a response with a error message
-            if (response == null || response.ServerResponse == null || !response.ServerResponse.Successful)
+            if (response == null || response.ServerResponse == null || (response.ServerResponse as ApiResponse)?.Successful == false)
             {
                 // Default error message
                 // TODO: Localize strings
                 var message = "Unknown error from server call";
 
                 // If we got a response from the server
-                if (response?.ServerResponse != null)
+                if (response?.ServerResponse is ApiResponse apiResponse)
                     // Set message to servers response
-                    message = response.ServerResponse.ErrorMessage;
+                    message = apiResponse.ErrorMessage;
 
                 // If we have a result but deserialize failed
                 else if (string.IsNullOrWhiteSpace( response?.RawServerResponse ))
@@ -36,11 +36,11 @@ namespace HospitalManagement.Core
                 // If we have a result but no server response details at all...
                 else if (response != null)
                     // Set message to standard HTTP server response details
-                    message = $"Failed to communicate with server. Status code {response.StatusCode}. {response.StatusDescription}";
+                    message = response.ErrorMessage ?? $"{response.StatusCode}. ({response.StatusDescription})";
 
                 // Display error
                 //TODO: Localize string
-                errorMessage = $" Nie udane logowanie - {message}.";
+                response.ErrorMessage = $" {errorMessage} - {message}.";
 
                 // Enough failures
                 return true;

@@ -1,4 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Linq.Expressions;
+using Dna;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace HospitalManagement.Core
 {
@@ -8,6 +12,19 @@ namespace HospitalManagement.Core
     public class SettingsViewModel : BaseViewModel
     {
         #region Public Properties
+
+        public string Token { get; set; }
+
+        #region Transactional Properties
+
+        /// <summary>
+        /// Indicates if the first name is current being saved
+        /// </summary>
+        public bool DetailIsSaving { get; set; }
+
+        #endregion
+
+        #region Employee Details From View Application
 
         /// <summary>
         /// The current users first name
@@ -32,7 +49,7 @@ namespace HospitalManagement.Core
         /// <summary>
         /// The current users specialize
         /// </summary>
-        public TextEntryViewModel Specialize{ get; set; }
+        public TextEntryViewModel Specialize { get; set; }
 
         /// <summary>
         /// The current users pwd number
@@ -44,6 +61,10 @@ namespace HospitalManagement.Core
         /// </summary>
         public PasswordEntryViewModel Password { get; set; }
 
+        #endregion
+
+        #region Button Texts
+
         /// <summary>
         /// The text for the logout button
         /// </summary>
@@ -53,12 +74,14 @@ namespace HospitalManagement.Core
         /// The text for the new employee button
         /// NOTE: It's visible for users login as administrator
         /// </summary>
-        public string NewEmployeeText { get; set; }
+        public string NewEmployeeButtonText { get; set; }
 
         /// <summary>
         /// The text for the duty button
         /// </summary>
-        public string AddDutyButtonText { get; set; }
+        public string AddDutyButtonText { get; set; } 
+
+        #endregion
 
         #endregion
 
@@ -89,6 +112,11 @@ namespace HospitalManagement.Core
         /// </summary>
         public ICommand NewEmployeeCommand { get; set; }
 
+        /// <summary>
+        /// The command to update at least one detail of the employee
+        /// </summary>
+        public ICommand UpdateEmployeeCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -98,6 +126,18 @@ namespace HospitalManagement.Core
         /// </summary>
         public SettingsViewModel ()
         {
+            FirstName = new TextEntryViewModel
+            {
+                Label = "Imię",
+                OriginalText = "Loading text",
+                CommitAction = UpdateEmployeeDetailAsync
+            };
+            LastName = new TextEntryViewModel
+            {
+                Label = "Nazwisko",
+                OriginalText = "Loading text",
+            };
+
             // Create commands
             OpenCommand = new RelayCommand( Open );
             CloseCommand = new RelayCommand( Close );
@@ -105,10 +145,13 @@ namespace HospitalManagement.Core
             ClearUserDataCommand = new RelayCommand( ClearUserData );
             NewEmployeeCommand = new RelayCommand( NewEmployee );
 
+            // Saving user details commands
+            UpdateEmployeeCommand = new RelayCommand( async () => await UpdateEmployeeDetailAsync() );
+
             // TODO: Get from localization
             LogoutButtonText = "Wyloguj";
             AddDutyButtonText = "Dodaj dyżur";
-            NewEmployeeText = "Nowy pracownik";
+            NewEmployeeButtonText = "Nowy pracownik";
         }
 
         #endregion
@@ -169,6 +212,47 @@ namespace HospitalManagement.Core
         private void NewEmployee()
         {
             IoC.Application.NewEmployeeFormVisible = true;
+        }
+
+        /// <summary>
+        /// Saves the new First Name to the server
+        /// </summary>
+        /// <returns>Returns true if successful, false otherwise</returns>
+        public async Task<bool> UpdateEmployeeDetailAsync()
+        {
+            // TODO: Implement method to load employee after each single update
+            // Lock this command to ignore any other requests while processing
+            return await RunCommandAsync( () => DetailIsSaving, async () =>
+            {
+                // Get the current known credentials
+                var credentials = IoC.Settings;
+
+                // Update the server with the details
+                var result = await WebRequests.PostAsync<ApiResponse<UpdateEmployeeDto>>(
+                    // TODO: Move URLs into better place
+                    "http://localhost:5000/api/auth/update",
+                    new UpdateEmployeeDto
+                    {
+                        FirstName = credentials.FirstName.OriginalText,
+                        LastName = credentials.LastName.OriginalText,
+                        Username = IoC.Settings.Identify.OriginalText,
+                        Type =  IoC.Settings.Type.OriginalText,
+                        Specialize = IoC.Settings.Specialize.OriginalText,
+                        PwzNumber = IoC.Settings.PwdNumber.OriginalText
+                    }, bearerToken: credentials.Token );
+
+                // If the response has an error
+                if (result.DisplayErrorIfFailedAsync( "Update first name" ))
+                    return false;
+
+                var username = result.ServerResponse.Response;
+                
+                // Store the new employee first name to data store
+                IoC.Settings.Identify.OriginalText = username.Username;
+                //IoC.Settings.Identify.OriginalText = 
+
+                return true;
+            });
         }
     }
 }

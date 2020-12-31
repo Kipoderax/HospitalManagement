@@ -1,34 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace HospitalManagement.Relational
+namespace HospitalManagement.Core
 {
     /// <summary>
-    /// The specialize of the employee
+    /// Duty of employees
     /// </summary>
-    public class EmployeeSpecialize
+    public class Duty
     {
         #region Public Properties
 
         /// <summary>
-        /// Auto-increment Id
+        /// Auto-increment id
         /// </summary>
         [Key]
         public int Id { get; set; }
 
         /// <summary>
-        /// Foreign id of the employee
+        /// Employee id
         /// </summary>
         public int EmployeeId { get; set; }
 
         /// <summary>
-        /// The specialize employee
+        /// Full date for start shift duty of the employee
         /// </summary>
-        public string SpecializeEmployee { get; set; }
+        public DateTime StartShift { get; set; }
 
         /// <summary>
-        /// Number pwz of the employee
+        /// Full date for end shift duty of the employee
         /// </summary>
-        public string NumberPwz { get; set; }
+        public DateTime EndShift { get; set; }
 
         public Employee Employee { get; set; }
 

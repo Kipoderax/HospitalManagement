@@ -12,6 +12,11 @@
         /// </summary>
         public string Token { get; set; }
 
+        /// <summary>
+        /// Something wrong with request
+        /// </summary>
+        public string ErrorMessage { get; set; }
+
         // TODO: Add employee duties
         #region Employee Personal Information
 

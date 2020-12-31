@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace HospitalManagement.Relational
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// Hospital employee

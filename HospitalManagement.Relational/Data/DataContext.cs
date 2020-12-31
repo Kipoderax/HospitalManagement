@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HospitalManagement.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Relational
 {

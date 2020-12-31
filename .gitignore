@@ -342,3 +342,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/HospitalManagement.Relational/HospitalManagement.Relational.csproj.DotSettings
+/HospitalManagement.Core/HospitalManagement.Core.csproj.DotSettings
+/HospitalManagement.Web.Server/HospitalManagement.Web.Server.csproj.DotSettings

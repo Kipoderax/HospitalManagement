@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using HospitalManagement.Core;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HospitalManagement.Relational
@@ -25,6 +26,6 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="id">Primary key of the employee</param>
         /// <returns></returns>
-        Task<Employee> GetEmployee ( int id );
+        Task<Employee> GetEmployee ( string username );
     }
 }

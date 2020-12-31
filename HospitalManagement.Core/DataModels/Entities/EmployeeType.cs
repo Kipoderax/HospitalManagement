@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HospitalManagement.Relational
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// Role of the employees

@@ -1,4 +1,6 @@
-﻿namespace HospitalManagement.Core
+﻿using System.Threading.Tasks;
+
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// The application state as the view model
@@ -45,6 +47,5 @@
             // Show side menu or not
             SideMenuVisible = page == ApplicationPage.Work;
         }
-
     }
 }

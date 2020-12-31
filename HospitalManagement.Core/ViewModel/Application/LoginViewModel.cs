@@ -1,4 +1,6 @@
 ﻿using Dna;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -67,7 +69,6 @@ namespace HospitalManagement.Core
                  // Ok successfully logged in.. now get users data
                  var employeeData = result.ServerResponse.Response;
 
-                 //IoC.Settings.FirstName = new TextEntryViewModel { OriginalText = "Jessica" };
                  IoC.Settings.FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = employeeData?.FirstName };
                  IoC.Settings.LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = employeeData?.LastName };
                  IoC.Settings.Identify = new TextEntryViewModel { Label = "Identyfikator", OriginalText = employeeData?.Username };

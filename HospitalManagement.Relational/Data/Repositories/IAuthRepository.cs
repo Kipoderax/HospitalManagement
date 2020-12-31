@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using HospitalManagement.Core;
+using System.Threading.Tasks;
 
 namespace HospitalManagement.Relational
 {

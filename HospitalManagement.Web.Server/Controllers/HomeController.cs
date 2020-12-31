@@ -12,8 +12,6 @@ namespace HospitalManagement.Web.Server
         /// </summary>
         protected DataContext _Context;
 
-        private readonly IAuthRepository _authRepository;
-
         #endregion
 
         #region Constructor
@@ -22,23 +20,16 @@ namespace HospitalManagement.Web.Server
         /// Default constructor
         /// </summary>
         /// <param name="context">The injected context</param>
-        /// <param name="authRepository">Repozytorium autentykacyjne</param>
-        public HomeController(DataContext context, IAuthRepository authRepository)
+        public HomeController(DataContext context)
         {
             _Context = context;
-            _authRepository = authRepository;
         }
 
         #endregion
 
         public IActionResult Index()
         {
-            Employee employee = new Employee()
-            {
-                Username = "Username"
-            };
-
-            _authRepository.Register( employee, "password" );
+            _Context.Database.EnsureCreated();
 
             return View();
         }

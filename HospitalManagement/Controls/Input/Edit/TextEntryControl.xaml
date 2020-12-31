@@ -10,6 +10,7 @@
    
    <!-- Grey underline -->
     <Border BorderBrush="{StaticResource ForegroundDarkBrush}"
+               IsEnabled="{Binding Updating, Converter={local:BooleanInvertConverter}}"
                BorderThickness="0 0 0 0.4"
                > 
        <Grid Background="{StaticResource ForegroundLightBrush}">
@@ -79,6 +80,8 @@
           
           <!-- Buttons container -->
           <Grid Grid.Column="2" 
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Center"
                       local:AnimateFadeInProperty.Value="{Binding Editing, Converter={local:BooleanInvertConverter}}"
                       >
              

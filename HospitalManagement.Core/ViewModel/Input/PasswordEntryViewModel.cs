@@ -1,4 +1,6 @@
-﻿using System.Security;
+﻿using System;
+using System.Security;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HospitalManagement.Core
@@ -65,6 +67,17 @@ namespace HospitalManagement.Core
         /// </summary>
         public string BadRequestMessage { get; set; }
 
+        /// <summary>
+        /// Indicates if the current control is pending an update
+        /// </summary>
+        public bool Updating { get; set; }
+
+        /// <summary>
+        /// The action to run when saving information
+        /// Returns true if the commis was successful or false otherwise
+        /// </summary>
+        public Func<Task<bool>> CommitAction { get; set; }
+
         #endregion
 
         #region Public Commands
@@ -115,50 +128,29 @@ namespace HospitalManagement.Core
         /// </summary>
         private void Save ()
         {
-            // TODO: Save content
-            // Make sure current password is correct
-            // TODO: This will come from the real back-end store of this users password
-            //               or via asking the web server to confirm it
-            var storedPassword = "Testing";
+            // Store the result of a commit call
+            var result = default(bool);
 
-            // Confirm current password is a match
-            // NOTE: Typically this isn't done here, it's done on the server
-            if (storedPassword != CurrentPassword.UnSecure())
-            {
-                IsNotCorrect = true;
-                // Let user know 
-                BadRequestMessage = "Nie prawidłowe hasło";
+            RunCommandAsync( () => Updating, async () =>
+             {
+                 // While working, come out of edit mode
+                 Editing = false;
 
-                return;
-            }
 
-            // Now check that the new and confirm password match
-            if (NewPassword.UnSecure() != ConfirmPassword.UnSecure())
-            {
-                IsNotCorrect = true;
-                //Let user know
-                BadRequestMessage = "Wprowadzone hasła się nie zgadzają";
+                 // Try and do the work
+                 result = CommitAction == null || await CommitAction();
 
-                return;
-            }
-
-            // Check we actually have a password 
-            if (NewPassword.UnSecure().Length == 0)
-            {
-                IsNotCorrect = true;
-                //Let user know
-                BadRequestMessage = "Hasło jest za krótkie";
-
-                return;
-            }
-
-            // Set the edited password to the current value
-            CurrentPassword = new SecureString();
-            foreach (var c in NewPassword.UnSecure().ToCharArray())
-                CurrentPassword.AppendChar( c );
-
-            Editing = false;
-            IsNotCorrect = false;
+             } ).ContinueWith( t =>
+              {
+                  // If we succeeded
+                  // Nothing to do
+                  // If we fail
+                  if (!result)
+                  {
+                      // Go back into edit mode
+                      Editing = true;
+                  }
+              } );
         }
 
         /// <summary>

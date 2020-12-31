@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HospitalManagement.Core;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,12 +71,14 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="id">Primary key of the employee</param>
         /// <returns></returns>
-        public async Task<Employee> GetEmployee ( int id )
+        public async Task<Employee> GetEmployee ( string username )
         {
             // Employee with his duties
             var employee = await _dataContext.Employees
-                .Include( d => d.EmployeeDuties )
-                .FirstOrDefaultAsync( e => e.UserId == id );
+                .Include ( d => d.EmployeeDuties )
+                .Include ( t => t.EmployeeType )
+                .Include ( s => s.EmployeeSpecialize )
+                .FirstOrDefaultAsync( e => e.Username == username );
 
             return employee;
         }
