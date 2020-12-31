@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using Dna;
+﻿using Dna;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -126,18 +124,6 @@ namespace HospitalManagement.Core
         /// </summary>
         public SettingsViewModel ()
         {
-            FirstName = new TextEntryViewModel
-            {
-                Label = "Imię",
-                OriginalText = "Loading text",
-                CommitAction = UpdateEmployeeDetailAsync
-            };
-            LastName = new TextEntryViewModel
-            {
-                Label = "Nazwisko",
-                OriginalText = "Loading text",
-            };
-
             // Create commands
             OpenCommand = new RelayCommand( Open );
             CloseCommand = new RelayCommand( Close );

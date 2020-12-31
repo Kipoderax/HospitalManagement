@@ -10,6 +10,7 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         x:Name="AppWindow"
+        Icon="pack://application:,,,/Images/Logo/virus.png"
         Height="600" Width="900"
         MinHeight="{Binding WindowMinimumHeight}"
         MinWidth="{Binding WindowMinimumWidth}"
@@ -69,7 +70,8 @@
                                         <!-- Icon -->
                                         <Button Width="40" Style="{StaticResource SystemIconButton}"
                                                 Command="{Binding MenuCommand}">
-                                       </Button>
+                                            <Image Source="pack://application:,,,/Images/Logo/virus-small.png"></Image>
+                                        </Button>
 
                                         <!-- Title -->
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">
@@ -126,6 +128,10 @@
               <ColumnDefinition Width="*"/>
            </Grid.ColumnDefinitions>
            
+           <Grid.Background>
+               <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="pack://application:,,,/Images/Backgrounds/main.png"></ImageBrush>
+           </Grid.Background>
+           
           <!-- Settings page -->
           <local:SettingsControl Grid.ColumnSpan="2"
                                  Panel.ZIndex="2"
@@ -133,7 +139,7 @@
                                  "{Binding ApplicationViewModel.SettingsMenuVisible,
                                              Source={x:Static local:ViewModelLocator.Instance}}"/>
           
-           <local:PageHost Grid.Column="1"  Grid.Row="1"
+           <local:PageHost Grid.Column="1"
                   DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                                      Source={x:Static local:ViewModelLocator.Instance},
                                                      Converter={local:ApplicationPageValueConverter}}"

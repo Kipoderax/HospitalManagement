@@ -1,6 +1,4 @@
 ﻿using Dna;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -59,7 +57,7 @@ namespace HospitalManagement.Core
                      new LoginDto
                      {
                          Identify = MyIdentify,
-                         Password = (parameter as IHavePassword).SecurePassword.UnSecure()
+                         Password = (parameter as IHavePassword)?.SecurePassword.UnSecure()
                      } );
 
                  // If there was no response, bad data or a response with a error message

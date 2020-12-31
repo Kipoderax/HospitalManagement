@@ -9,7 +9,7 @@
       x:Name="Page"
       d:DesignHeight="700" d:DesignWidth="700">
 
-    <Border Background="{StaticResource ForegroundDarkBrush}">
+    <Border>
         <Grid>
 
             <!-- Background image will be add -->

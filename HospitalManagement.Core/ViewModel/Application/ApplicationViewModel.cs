@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace HospitalManagement.Core
+﻿namespace HospitalManagement.Core
 {
     /// <summary>
     /// The application state as the view model
@@ -17,17 +15,17 @@ namespace HospitalManagement.Core
         /// <summary>
         /// True if the side menu should be shown
         /// </summary>
-        public bool SideMenuVisible { get; set; } = false;
+        public bool SideMenuVisible { get; set; }
 
         /// <summary>
         /// True if the settings menu should be shown
         /// </summary>
-        public bool SettingsMenuVisible { get; set; } = false;
+        public bool SettingsMenuVisible { get; set; }
 
         /// <summary>
         /// True if user as administrator want add new employee
         /// </summary>
-        public bool NewEmployeeFormVisible { get; set; } = false;
+        public bool NewEmployeeFormVisible { get; set; }
 
         #endregion
 

@@ -30,6 +30,9 @@ namespace HospitalManagement.Web.Server
         /// Constructor with dependency injections
         /// </summary>
         /// <param name="authRepository"></param>
+        /// <param name="employeeRepository"></param>
+        /// <param name="config"></param>
+        /// <param name="context"></param>
         public AuthController (IAuthRepository authRepository, 
                                                    IEmployeeRepository employeeRepository,
                                                    IConfiguration config,
@@ -234,22 +237,28 @@ namespace HospitalManagement.Web.Server
     
             #region Update Employee
 
-            if (updateDto.FirstName != null || updateDto.FirstName != employee.FirstName)
+            if (updateDto.FirstName != employee.FirstName)
             {
                 employee.FirstName = updateDto.FirstName;
-                employee.Username = employee.Username.Replace( employee.Username.Substring( 0, 1 ), updateDto.FirstName.Substring( 0, 1 ) );
+                employee.Username = employee.Username.Replace( 
+                    employee.Username.Substring( 0, 1 ), 
+                    updateDto.FirstName.Substring( 0, 1 ) );
             }
 
-            if (updateDto.LastName != null || updateDto.LastName != employee.LastName)
+            if (updateDto.LastName != employee.LastName)
             {
                 employee.LastName = updateDto.LastName;
-                employee.Username = employee.Username.Replace( employee.Username.Substring( 1, 1 ), updateDto.LastName.Substring( 0, 1 ) );
+                employee.Username = employee.Username.Replace( 
+                    employee.Username.Substring( 1, 1 ), 
+                    updateDto.LastName.Substring( 0, 1 ) );
             }
 
-            if (updateDto.Pesel != null)
+            if (updateDto.Pesel != employee.Pesel)
             {
                 employee.Pesel = updateDto.Pesel;
-                employee.Username = employee.Username.Replace( employee.Username[2..], updateDto.Pesel[6..] );
+                employee.Username = employee.Username.Replace( 
+                    employee.Username[2..], 
+                    updateDto.Pesel[6..] );
             }
 
             if (updateDto.Type != null)

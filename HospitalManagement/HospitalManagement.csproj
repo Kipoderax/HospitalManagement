@@ -37,6 +37,9 @@
     <Resource Include="Fonts\fontawesome-webfont.woff2" />
     <Resource Include="Fonts\FontAwesome.otf" />
     <Resource Include="Images\EmployeeTypes\Doctor.jpg" />
+    <Resource Include="Images\Backgrounds\main.png" />
+    <Resource Include="Images\Logo\virus-small.png" />
+    <Resource Include="Images\Logo\virus.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,6 +77,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Images\Backgrounds" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
 
