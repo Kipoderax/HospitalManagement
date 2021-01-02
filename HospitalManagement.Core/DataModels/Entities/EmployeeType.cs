@@ -16,16 +16,15 @@ namespace HospitalManagement.Core
         public int Id { get; set; }
 
         /// <summary>
-        /// Foreign id of the employee
-        /// </summary>
-        public int EmployeeId { get; set; }
-
-        /// <summary>
         /// The role of the employee
         /// </summary>
         public string EmployeeRole { get; set; }
 
-
+        /// <summary>
+        /// Foreign id of the employee
+        /// </summary>
+        public int EmployeeId { get; set; }
+        
         public Employee Employee { get; set; }
 
         #endregion

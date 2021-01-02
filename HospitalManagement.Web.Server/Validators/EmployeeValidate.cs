@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace HospitalManagement.Web.Server
 {
@@ -17,11 +18,10 @@ namespace HospitalManagement.Web.Server
             // Check pesel length
             if (pesel.Length != 11)
                 return false;
-
+            
             // Check if pesel contain only digits
-            foreach (var p in pesel)
-                if (!char.IsDigit( p ))
-                    return false;
+            if( pesel.Any ( p => !char.IsDigit( p ) ) )
+                return false;
 
             // Check month, day
             if (int.Parse( pesel.Substring( 2, 2 ) ) > 12 ||
@@ -29,18 +29,13 @@ namespace HospitalManagement.Web.Server
                     int.Parse( string.Concat( "19", pesel.Substring( 0, 2 ) ) ),
                     int.Parse( pesel.Substring( 2, 2 ) ) ))
                 return false;
-
+            
             // Get control sum
             int[] weights = { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3, 1 };
-            int sum = 0;
-            for (int i = 0; i < weights.Length; i++)
-                sum += int.Parse( pesel[i].ToString() ) * weights[i];
+            var sum = weights.Select ( ( t, i ) => int.Parse ( pesel[i].ToString() ) * t ).Sum();
 
             // Check control sum
-            if (sum % 10 != 0)
-                return false;
-
-            return true;
+            return sum % 10 == 0;
         }
 
         /// <summary>
@@ -55,20 +50,17 @@ namespace HospitalManagement.Web.Server
                 return false;
            
             // Check if number pwz contain only digits
-            foreach (var p in numberPwz)
-                if (!char.IsDigit( p ))
-                    return false;
+            if( numberPwz.Any ( p => !char.IsDigit( p ) ) )
+                return false;
+            
 
             // Get control sum
-            int sum = 0;
-            for (int i = 0; i < numberPwz.Length - 1; i++)
+            var sum = 0;
+            for (var i = 0; i < numberPwz.Length - 1; i++)
                 sum += int.Parse( numberPwz[i+1].ToString() ) * (i + 1);
 
-            // Check sum control with first digit in number pwz
-            if (sum % 11 != int.Parse( numberPwz[0].ToString() ))
-                return false;
-
-            return true;
+            // Return true if sum control is the first digit in number pwz
+            return sum % 11 == int.Parse( numberPwz[0].ToString() );
         }
     }
 }

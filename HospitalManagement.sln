@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagement", "HospitalManagement\HospitalManagement.csproj", "{412BCCD9-787D-4F6F-A6FC-DD71811DDF3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagement.Web.Server", "HospitalManagement.Web.Server\HospitalManagement.Web.Server.csproj", "{5A034AD6-E0E6-4038-8A68-400AAC06135D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagement.Core", "HospitalManagement.Core\HospitalManagement.Core.csproj", "{6A41F81E-6E8C-4949-8006-6C69A3430437}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagement.Relational", "HospitalManagement.Relational\HospitalManagement.Relational.csproj", "{E3FF81FD-CC3C-4CEC-A98A-198144B15BC7}"
@@ -21,10 +19,6 @@ Global
 		{412BCCD9-787D-4F6F-A6FC-DD71811DDF3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{412BCCD9-787D-4F6F-A6FC-DD71811DDF3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{412BCCD9-787D-4F6F-A6FC-DD71811DDF3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A034AD6-E0E6-4038-8A68-400AAC06135D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A034AD6-E0E6-4038-8A68-400AAC06135D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A034AD6-E0E6-4038-8A68-400AAC06135D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A034AD6-E0E6-4038-8A68-400AAC06135D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A41F81E-6E8C-4949-8006-6C69A3430437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A41F81E-6E8C-4949-8006-6C69A3430437}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A41F81E-6E8C-4949-8006-6C69A3430437}.Release|Any CPU.ActiveCfg = Release|Any CPU

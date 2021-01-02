@@ -23,18 +23,6 @@
         public object Response { get; set; }
 
         #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public ApiResponse ()
-        {
-
-        }
-
-        #endregion
     }
 
     /// <summary>
@@ -47,6 +35,12 @@
         /// <summary>
         /// The API response object as T
         /// </summary>
-        public new T Response { get => (T) base.Response; set => base.Response = value; }
+        public new T Response
+        {
+            get => (T) base.Response; 
+            set => base.Response = value;
+        }
     }
+    
+
 }

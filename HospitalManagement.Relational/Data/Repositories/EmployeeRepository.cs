@@ -1,6 +1,5 @@
 ﻿using HospitalManagement.Core;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,7 +42,13 @@ namespace HospitalManagement.Relational
         public async Task<IEnumerable<Employee>> GetEmployees ()
         {
             var employees = await _dataContext.Employees.
+                
+                // Includes relation entities
                 Include( d => d.EmployeeDuties ).
+                Include ( t => t.EmployeeType ).
+                Include ( s => s.EmployeeSpecialize ).
+                
+                // Collect results to list
                 ToListAsync();
 
             return employees;
@@ -69,7 +74,7 @@ namespace HospitalManagement.Relational
         /// <summary>
         /// Get specify employee
         /// </summary>
-        /// <param name="id">Primary key of the employee</param>
+        /// <param name="username">Username of the employee</param>
         /// <returns></returns>
         public async Task<Employee> GetEmployee ( string username )
         {

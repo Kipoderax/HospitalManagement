@@ -34,9 +34,9 @@ namespace HospitalManagement.Web.Server
         /// <param name="config"></param>
         /// <param name="context"></param>
         public AuthController (IAuthRepository authRepository, 
-                                                   IEmployeeRepository employeeRepository,
-                                                   IConfiguration config,
-                                                   DataContext context)
+                                                  IEmployeeRepository employeeRepository,
+                                                  IConfiguration config,
+                                                  DataContext context)
         {
             _authRepository = authRepository;
             _employeeRepository = employeeRepository;
@@ -57,42 +57,42 @@ namespace HospitalManagement.Web.Server
             #region Empty Validates
 
             if (string.IsNullOrWhiteSpace(employeeDto.FirstName))
-                return new ApiResponse<RegisterResultApiModel>()
+                return new ApiResponse<RegisterResultApiModel>
                 {
                     //TODO: Localize strings
                     ErrorMessage = "Pole imię pracownika jest puste"
                 };
 
             if (string.IsNullOrWhiteSpace( employeeDto.LastName ))
-                return new ApiResponse<RegisterResultApiModel>()
+                return new ApiResponse<RegisterResultApiModel>
                 {
                     //TODO: Localize strings
                     ErrorMessage = "Pole nazwisko pracownika jest puste"
                 };
 
             if (string.IsNullOrWhiteSpace( employeeDto.Pesel ))
-                return new ApiResponse<RegisterResultApiModel>()
+                return new ApiResponse<RegisterResultApiModel>
                 {
                     //TODO: Localize strings
                     ErrorMessage = "Pole pesel pracownika jest puste"
                 };
 
             if (string.IsNullOrWhiteSpace( employeeDto.Type ))
-                return new ApiResponse<RegisterResultApiModel>()
+                return new ApiResponse<RegisterResultApiModel>
                 {
                     //TODO: Localize strings
                     ErrorMessage = "Pole posada pracownika jest puste"
                 };
 
             if (string.IsNullOrWhiteSpace( employeeDto.Specialize ))
-                return new ApiResponse<RegisterResultApiModel>()
+                return new ApiResponse<RegisterResultApiModel>
                 {
                     //TODO: Localize strings
                     ErrorMessage = "Pole specjalizacja pracownika jest puste"
                 };
 
             if (string.IsNullOrWhiteSpace( employeeDto.NumberPwz ))
-                return new ApiResponse<RegisterResultApiModel>()
+                return new ApiResponse<RegisterResultApiModel>
                 {
                     //TODO: Localize strings
                     ErrorMessage = "Pole numer pwz pracownika jest puste"
@@ -100,7 +100,7 @@ namespace HospitalManagement.Web.Server
 
             #endregion
 
-            string username = employeeDto?.FirstName.Substring( 0, 1 ) + employeeDto?.LastName.Substring( 0, 1 ) + employeeDto?.Pesel[6..];
+            string username = employeeDto?.FirstName.Substring( 0, 1 ) + employeeDto.LastName.Substring( 0, 1 ) + employeeDto?.Pesel[6..];
             // Make sure that employee with this username not exist
             if (await _authRepository.EmployeeExists( username ))
                 return new ApiResponse<RegisterResultApiModel>()
@@ -294,11 +294,13 @@ namespace HospitalManagement.Web.Server
             var result = await _context.SaveChangesAsync();
            
             #endregion
+            
+            #region Respond
 
             if( result > 0 )
                 return new ApiResponse<UpdateEmployeeDto>
                 {
-                    Response = new UpdateEmployeeDto()
+                    Response = new UpdateEmployeeDto
                     {
                         FirstName = employee.FirstName,
                         LastName = employee.LastName,
@@ -308,13 +310,10 @@ namespace HospitalManagement.Web.Server
                         PwzNumber = employee.EmployeeSpecialize.NumberPwz
                     }
                 };
-            else
-                return new ApiResponse<UpdateEmployeeDto>
-                {
-                    ErrorMessage = "Update failed"
-                };
-
-            #region Respond
+            return new ApiResponse<UpdateEmployeeDto>
+            {
+                ErrorMessage = "Update failed"
+            };
 
             #endregion
         }
