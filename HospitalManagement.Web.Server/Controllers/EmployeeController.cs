@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using HospitalManagement.Relational;
 using HospitalManagement.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalManagement.Web.Server
 {
     [Route("api/[controller]")]
+    [AuthorizeToken]
     [ApiController]
     public class EmployeeController : ControllerBase
     {

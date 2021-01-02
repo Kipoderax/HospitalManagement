@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using AutoMapper;
 using HospitalManagement.Relational;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HospitalManagement.Web.Server
 {
@@ -46,6 +49,21 @@ namespace HospitalManagement.Web.Server
                 ServerCertificateCustomValidationCallback =
                ( httpRequestMessage, cert, cetChain, policyErrors ) => true
             } );
+
+            // JWT authentication for Api requests
+            services.AddAuthentication ( JwtBearerDefaults.AuthenticationScheme )
+                .AddJwtBearer ( options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey ( Encoding.ASCII.GetBytes ( Configuration
+                            .GetSection (
+                                "AppSettings:Token" ).Value ) ),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                } );
             
             services.AddControllersWithViews();
 
