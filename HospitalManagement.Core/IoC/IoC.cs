@@ -31,6 +31,8 @@ namespace HospitalManagement.Core
 
         public static EmployeeListDesignModel Employees => Get<EmployeeListDesignModel>();
 
+        public static DutyListDesignModel Duties => Get<DutyListDesignModel>();
+
         #endregion
 
         #region Construction
@@ -59,6 +61,9 @@ namespace HospitalManagement.Core
 
             // Bind to a single instance of Employee view model
             Kernel.Bind<EmployeeListDesignModel>().ToConstant ( new EmployeeListDesignModel() );
+            
+            // Bind to a single instance of Duty view model
+            Kernel.Bind<DutyListDesignModel>().ToConstant ( new DutyListDesignModel() );
         }
 
         #endregion

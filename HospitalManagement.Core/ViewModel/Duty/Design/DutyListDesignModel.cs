@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace HospitalManagement.Core
 {
@@ -26,9 +27,9 @@ namespace HospitalManagement.Core
         /// </summary>
         public DutyListDesignModel ()
         {
-            SectionNames = new List<string>() { "", "Urolog", "Neurolog", "Kardiolog", "Laryngolog" };
+            SectionNames = new List<string> { "", "Urolog", "Neurolog", "Kardiolog", "Laryngolog" };
 
-            Items = new List<DutyListItemViewModel>
+            Items = new ObservableCollection<DutyListItemViewModel>
             {
                 new DutyListItemViewModel
                 {
