@@ -36,13 +36,8 @@ namespace HospitalManagement.Core
 
         private void EmployeeForDutyResultApiModel()
         {
-            CreateMap<Duty, DutyResultApiModel>()
-                .ForMember (
-                    dest => dest.StartShift,
-                    opt => { opt.MapFrom ( src => src.StartShift ); } )
-                .ForMember (
-                    dest => dest.EndShift,
-                    opt => { opt.MapFrom ( src => src.EndShift ); } );
+            CreateMap<Duty, DutyResultApiModel>();
+
         }
     }
 }

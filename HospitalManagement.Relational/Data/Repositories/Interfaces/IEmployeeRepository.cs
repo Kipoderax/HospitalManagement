@@ -24,7 +24,7 @@ namespace HospitalManagement.Relational
         /// <summary>
         /// Get specify employee
         /// </summary>
-        /// <param name="id">Primary key of the employee</param>
+        /// <param name="username">Primary key of the employee</param>
         /// <returns></returns>
         Task<Employee> GetEmployee ( string username );
     }

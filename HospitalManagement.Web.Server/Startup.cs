@@ -41,6 +41,7 @@ namespace HospitalManagement.Web.Server
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IDutyRepository, DutyRepository>();
 
             // Avoid required submit SSL certification
             services.AddHttpClient( "HttpClientWithSSLUntrusted" ).ConfigurePrimaryHttpMessageHandler( () => new HttpClientHandler

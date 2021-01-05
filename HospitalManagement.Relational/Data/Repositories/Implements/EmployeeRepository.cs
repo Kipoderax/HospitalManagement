@@ -80,7 +80,6 @@ namespace HospitalManagement.Relational
         {
             // Employee with his duties
             var employee = await _dataContext.Employees
-                .Include ( d => d.EmployeeDuties )
                 .Include ( t => t.EmployeeType )
                 .Include ( s => s.EmployeeSpecialize )
                 .FirstOrDefaultAsync( e => e.Username == username );

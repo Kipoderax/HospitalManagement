@@ -17,7 +17,6 @@
         /// </summary>
         public string ErrorMessage { get; set; }
 
-        // TODO: Add employee duties
         #region Employee Personal Information
 
         public string FirstName { get; set; }
@@ -29,18 +28,6 @@
         public string Username { get; set; }
 
         #endregion
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public LoginResultApiModel ()
-        {
-
-        }
 
         #endregion
     }
