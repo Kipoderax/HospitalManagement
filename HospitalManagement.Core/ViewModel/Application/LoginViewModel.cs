@@ -1,6 +1,6 @@
-﻿using Dna;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using Dna;
 
 namespace HospitalManagement.Core
 {
@@ -41,7 +41,7 @@ namespace HospitalManagement.Core
         /// </summary>
         public LoginViewModel ()
         {
-            LoginCommand = new RelayParametrizedCommand( async ( parameter ) => await LoginAsync( parameter ) );
+            LoginCommand = new RelayParametrizedCommand( async parameter => await LoginAsync( parameter ) );
         }
 
         #endregion
@@ -64,9 +64,10 @@ namespace HospitalManagement.Core
                  if (result.DisplayErrorIfFailedAsync( "Login failed" ))
                      return;
 
-                 // Ok successfully logged in.. now get users data
+                 // Ok successfully logged in.. now get employee data
                  var employeeData = result.ServerResponse.Response;
 
+                 IoC.Settings.Token = result.ServerResponse.Response.Token;
                  IoC.Settings.FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = employeeData?.FirstName };
                  IoC.Settings.LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = employeeData?.LastName };
                  IoC.Settings.Identify = new TextEntryViewModel { Label = "Identyfikator", OriginalText = employeeData?.Username };
@@ -74,6 +75,9 @@ namespace HospitalManagement.Core
                  IoC.Settings.Specialize = new TextEntryViewModel { Label = "Specjalizacja", OriginalText = employeeData?.Specialize };
                  IoC.Settings.PwdNumber = new TextEntryViewModel { Label = "Numer PWD", OriginalText = employeeData?.NumberPwz };
                  IoC.Settings.Password = new PasswordEntryViewModel { Label = "Hasło", FakePassword = "********" };
+
+                 // and get employee data
+                 await IoC.Employees.LoadEmployees();
 
                  await Task.Delay( 2000 );
 

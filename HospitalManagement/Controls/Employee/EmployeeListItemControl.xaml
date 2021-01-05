@@ -30,7 +30,7 @@
                            </Grid.ColumnDefinitions>
        
                               <!-- Selected employee -->
-                           <Border Background="Red" 
+                           <Border Background="{StaticResource WordRedBrush}" 
                                    Width="2" 
                                    HorizontalAlignment="Left"
                                    Visibility="{Binding IsSelected, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"/>
@@ -111,7 +111,5 @@
    
    <ContentControl d:DataContext="{x:Static core:EmployeeListItemDesignModel.Instance}"
                    Style="{StaticResource ContentStyle}"/>
-   
-
    
 </UserControl>

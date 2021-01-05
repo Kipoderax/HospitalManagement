@@ -119,11 +119,17 @@ namespace HospitalManagement.Core
                     ErrorMessage = result.ErrorMessage;
                     return;
                 }
-                else
-                {
-                    ErrorMessage = null;
-                }
                 
+                // Update employee list with this new
+                IoC.Employees.AddNewEmployee ( new EmployeeListItemViewModel
+                {
+                    Name = result.ServerResponse.Response.FirstName + " " + result.ServerResponse.Response.LastName,
+                    Who = result.ServerResponse.Response.Type,
+                    Job = result.ServerResponse.Response.Specialize,
+                    ProfilePictureRGB = "cceeff",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg"
+                });
+                    
                 await Task.Delay( 1000 );
             } );
         }

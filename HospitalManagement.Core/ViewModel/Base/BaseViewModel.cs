@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace HospitalManagement.Core
@@ -31,9 +32,9 @@ namespace HospitalManagement.Core
         /// Call this to fire a <see cref="PropertyChanged"/> event
         /// </summary>
         /// <param name="name"></param>
-        public void OnPropertyChanged(string name)
+        public void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         #region Command Helper

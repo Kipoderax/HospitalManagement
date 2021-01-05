@@ -91,7 +91,7 @@
                 
                 <StackPanel Orientation="Horizontal">
 
-                   <Button Content="{Binding NewEmployeeText}"
+                   <Button Content="{Binding NewEmployeeButtonText}"
                            FontSize="{StaticResource FontSizeRegular}"
                            Command="{Binding NewEmployeeCommand}"
                            Width="140"

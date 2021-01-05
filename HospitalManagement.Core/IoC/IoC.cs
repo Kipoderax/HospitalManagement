@@ -29,6 +29,8 @@ namespace HospitalManagement.Core
         /// </summary>
         public static RegisterViewModel RegisterEmployee => Get<RegisterViewModel>();
 
+        public static EmployeeListDesignModel Employees => Get<EmployeeListDesignModel>();
+
         #endregion
 
         #region Construction
@@ -54,6 +56,9 @@ namespace HospitalManagement.Core
 
             // Bind to a single instance of Settings view model
             Kernel.Bind<SettingsViewModel>().ToConstant( new SettingsViewModel() );
+
+            // Bind to a single instance of Employee view model
+            Kernel.Bind<EmployeeListDesignModel>().ToConstant ( new EmployeeListDesignModel() );
         }
 
         #endregion

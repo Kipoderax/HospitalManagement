@@ -161,7 +161,6 @@ namespace HospitalManagement.Core
         /// </summary>
         private void Open ()
         {
-            // Close settings menu
             IoC.Application.SettingsMenuVisible = true;
         }
 

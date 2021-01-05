@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using HospitalManagement.Core;
+using HospitalManagement.Relational;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using HospitalManagement.Relational;
-using HospitalManagement.Core;
-using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalManagement.Web.Server
 {
@@ -38,7 +37,7 @@ namespace HospitalManagement.Web.Server
 
         #endregion
 
-        [HttpGet("employees")]
+        [Route("employees")]
         public async Task<ApiResponse<IEnumerable<EmployeeResultApiModel>>> GetAllEmployees()
         {
             var employee = await _employeeRepository.GetEmployees();

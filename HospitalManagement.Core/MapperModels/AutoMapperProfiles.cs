@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Linq;
 
 namespace HospitalManagement.Core
 {

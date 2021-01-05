@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 
 namespace HospitalManagement.Core
 {
@@ -7,6 +7,7 @@ namespace HospitalManagement.Core
     /// </summary>
     public class EmployeeListDesignModel : EmployeeListViewModel
     {
+
         #region Singleton
             
         /// <summary>
@@ -23,14 +24,14 @@ namespace HospitalManagement.Core
         /// </summary>
         public EmployeeListDesignModel ()
         {
-            Items = new List<EmployeeListItemViewModel>
+            Items = new ObservableCollection<EmployeeListItemViewModel>
             {
                 new EmployeeListItemViewModel
                 {
                     Name = "Jolanta",
                     Who = "Lekarka",
                     Job = "Kardiolog",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5",
                     IsSelected = false
                 },
@@ -39,7 +40,7 @@ namespace HospitalManagement.Core
                     Name = "Jessica",
                     Who = "Pielęgniarka",
                     Job = "",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "ff0000"
                 },
                 new EmployeeListItemViewModel
@@ -47,7 +48,7 @@ namespace HospitalManagement.Core
                     Name = "Zbigniew",
                     Who = "Administrator",
                     Job = "Onkolog",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5",
                     IsSelected = true
                 },
@@ -56,7 +57,7 @@ namespace HospitalManagement.Core
                     Name = "Jolanta",
                     Who = "Lekarka",
                     Job = "Kardiolog",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5"
                 },
                 new EmployeeListItemViewModel
@@ -64,7 +65,7 @@ namespace HospitalManagement.Core
                     Name = "Jessica",
                     Who = "Pielęgniarka",
                     Job = "",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5"
                 },
                 new EmployeeListItemViewModel
@@ -72,7 +73,7 @@ namespace HospitalManagement.Core
                     Name = "Zbigniew",
                     Who = "Administrator",
                     Job = "Onkolog",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5"
                 },
                 new EmployeeListItemViewModel
@@ -80,7 +81,7 @@ namespace HospitalManagement.Core
                     Name = "Jolanta",
                     Who = "Lekarka",
                     Job = "Kardiolog",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5"
                 },
                 new EmployeeListItemViewModel
@@ -88,7 +89,7 @@ namespace HospitalManagement.Core
                     Name = "Jessica",
                     Who = "Pielęgniarka",
                     Job = "",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5"
                 },
                 new EmployeeListItemViewModel
@@ -96,12 +97,14 @@ namespace HospitalManagement.Core
                     Name = "Zbigniew",
                     Who = "Administrator",
                     Job = "Onkolog",
-                    JobPicture = @"C:\Users\Kipoderax\source\repos\HospitalManagement-master\HospitalManagement\Images\EmployeeTypes\Doctor.jpg",
+                    JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg",
                     ProfilePictureRGB = "3099c5"
                 },
             };
         }
 
         #endregion
+
+
     }
 }

@@ -10,7 +10,7 @@
    <UserControl.Template>
       <ControlTemplate TargetType="UserControl">
          
-         <Border Background="{StaticResource BackgroundLightBrush}" Grid.Row="1">
+         <Border Background="{StaticResource BackgroundLightBrush}">
               
               <!-- Content -->
               <Grid>
