@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
@@ -17,16 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HospitalManagement.Core\HospitalManagement.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="HospitalManagement.Core">
-      <HintPath>..\HospitalManagement.Relational\bin\Debug\netcoreapp3.1\HospitalManagement.Core.dll</HintPath>
+    <Reference Include="HospitalManagement.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\HospitalManagement.Core\bin\Debug\netcoreapp3.1\HospitalManagement.Core.dll</HintPath>
     </Reference>
-    <Reference Include="HospitalManagement.Relational">
+    <Reference Include="HospitalManagement.Relational, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\HospitalManagement.Relational\bin\Debug\netcoreapp3.1\HospitalManagement.Relational.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 
 </Project>

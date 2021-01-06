@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalManagement.Core;
 using HospitalManagement.Relational;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -38,15 +40,30 @@ namespace HospitalManagement.Web.Server
         #endregion
         
         [Route("{username}")]
-        public async Task<ApiResponse<IEnumerable<DutyResultApiModel>>> GetAllEmployees(string username)
+        public async Task<ApiResponse<IEnumerable<DutyDto>>> GetAllEmployeeDutiesAsync(string username)
         {
             var employeeDuties = await _dutyRepository.GetEmployeeDutiesByUsername(username);
 
-            var employeeDutyApi = _mapper.Map<IEnumerable<DutyResultApiModel>> ( employeeDuties );
+            var employeeDutyApi = _mapper.Map<List<DutyDto>> ( employeeDuties );
             
-            return new ApiResponse<IEnumerable<DutyResultApiModel>>
+            return new ApiResponse<IEnumerable<DutyDto>>
             {
                 Response = employeeDutyApi
+            };
+        }
+
+        [AllowAnonymous]
+        public async Task<ApiResponse<IEnumerable<DutyDto>>> GetAllDutiesAsync()
+        {
+            var duties = await _dutyRepository.GetEmployeeDuties();
+
+            var dutiesApi = _mapper.Map<List<DutyDto>> ( duties );
+            
+            
+
+            return new ApiResponse<IEnumerable<DutyDto>>
+            {
+                Response = dutiesApi
             };
         }
     }

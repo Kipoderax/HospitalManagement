@@ -125,8 +125,8 @@ namespace HospitalManagement.Core
         public SettingsViewModel ()
         {
             // Create commands
-            OpenCommand = new RelayCommand( Open );
-            CloseCommand = new RelayCommand( Close );
+            OpenCommand = new RelayCommand( async () => await OpenAsync() );
+            CloseCommand = new RelayCommand ( async () => await CloseAsync() );
             LogoutCommand = new RelayCommand( Logout );
             ClearUserDataCommand = new RelayCommand( ClearUserData );
             NewEmployeeCommand = new RelayCommand( NewEmployee );
@@ -145,7 +145,7 @@ namespace HospitalManagement.Core
         /// <summary>
         /// Closes the settings menu
         /// </summary>
-        private void Close ()
+        private async Task CloseAsync ()
         {
             // Close register form employee if is open
             if (IoC.Application.NewEmployeeFormVisible)
@@ -153,15 +153,20 @@ namespace HospitalManagement.Core
 
             // Otherwise close settings menu
             else
+            {
+                await IoC.Duties.LoadDuties();
                 IoC.Application.SettingsMenuVisible = false;
+            }
         }
 
         /// <summary>
         /// Open the settings menu
         /// </summary>
-        private void Open ()
+        private async Task OpenAsync ()
         {
             IoC.Application.SettingsMenuVisible = true;
+            await Task.Delay ( 100 );
+            await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
         }
 
         /// <summary>

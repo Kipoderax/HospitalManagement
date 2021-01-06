@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalManagement.Core;
@@ -47,6 +48,21 @@ namespace HospitalManagement.Relational
                 .ToListAsync();
 
             return duty;
+        }
+
+        /// <summary>
+        /// Get duties list of all employees
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Duty>> GetEmployeeDuties()
+        {
+            var duties = await _dataContext.Duties
+                .Include ( e => e.Employee )
+                .Include ( s => s.Employee.EmployeeSpecialize )
+                .OrderByDescending ( d => d.StartShift )
+                .ToListAsync();
+
+            return duties;
         }
     }
 }

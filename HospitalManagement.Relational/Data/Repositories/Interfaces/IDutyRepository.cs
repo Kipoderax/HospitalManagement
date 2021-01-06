@@ -15,5 +15,11 @@ namespace HospitalManagement.Relational
         /// <param name="username">The employee username</param>
         /// <returns></returns>
         Task<IEnumerable<Duty>> GetEmployeeDutiesByUsername( string username );
+
+        /// <summary>
+        /// Get duties list of all employees
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Duty>> GetEmployeeDuties();
     }
 }

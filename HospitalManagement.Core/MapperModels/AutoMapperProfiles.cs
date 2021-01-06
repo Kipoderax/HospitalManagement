@@ -4,6 +4,7 @@ namespace HospitalManagement.Core
 {
     /// <summary>
     /// Converter data models to api models
+    /// NOTE: More information - https://docs.automapper.org
     /// </summary>
     public class AutoMapperProfiles : Profile
     {
@@ -25,6 +26,7 @@ namespace HospitalManagement.Core
         /// </summary>
         private void EmployeeForEmployeeResultApiModel()
         {
+            
             CreateMap<Employee, EmployeeResultApiModel>()
                 .ForMember (
                     dest => dest.EmployeeSpecialize.SpecializeEmployee,
@@ -32,12 +34,20 @@ namespace HospitalManagement.Core
                 .ForMember (
                     dest => dest.EmployeeType,
                     opt => { opt.MapFrom ( src => src.EmployeeType.EmployeeRole ); } );
+            
         }
 
         private void EmployeeForDutyResultApiModel()
         {
-            CreateMap<Duty, DutyResultApiModel>();
-
+            CreateMap<Duty, DutyDto>()
+                .ForMember (
+                    dest => dest.Employee.FirstName,
+                    opt => opt.MapFrom ( src => src.Employee.FirstName ) )
+                .ForMember (
+                    dest => dest.Employee.EmployeeSpecialize,
+                    opt => opt.MapFrom ( src => src.Employee.EmployeeSpecialize ) );
+            
+            Mapper.AssertConfigurationIsValid();
         }
     }
 }
