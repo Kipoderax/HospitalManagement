@@ -5,7 +5,7 @@ namespace HospitalManagement.Core
     /// <summary>
     /// Simply object of our employee entity for use in view application
     /// </summary>
-    public class RegisterDto
+    public class RegisterEmployeeDto
     {
         #region Public Properties
 
@@ -28,7 +28,7 @@ namespace HospitalManagement.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public RegisterDto ()
+        public RegisterEmployeeDto ()
         {
 
         }

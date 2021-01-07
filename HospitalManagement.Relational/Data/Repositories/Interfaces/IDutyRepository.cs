@@ -21,5 +21,12 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Duty>> GetEmployeeDuties();
+
+        /// <summary>
+        /// Register employee duty
+        /// </summary>
+        /// <param name="dutyDto">The duty dto arrived from view form </param>
+        /// <returns></returns>
+        Task<bool> AddDutyAsync( DutyDto dutyDto );
     }
 }

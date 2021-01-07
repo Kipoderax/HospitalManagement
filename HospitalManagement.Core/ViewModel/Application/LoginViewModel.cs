@@ -46,6 +46,11 @@ namespace HospitalManagement.Core
 
         #endregion
 
+        /// <summary>
+        /// Employee authentication
+        /// </summary>
+        /// <param name="parameter">The employee password</param>
+        /// <returns></returns>
         public async Task LoginAsync(object parameter)
         {
             await RunCommandAsync( () => LoginIsRunning, async () =>
@@ -54,7 +59,7 @@ namespace HospitalManagement.Core
                  // TODO: Move all URLs and API routes to static class in core
                  var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
                      "http://localhost:5000/api/auth/login",
-                     new LoginDto
+                     new LoginEmployeeDto
                      {
                          Identify = MyIdentify,
                          Password = (parameter as IHavePassword)?.SecurePassword.UnSecure()

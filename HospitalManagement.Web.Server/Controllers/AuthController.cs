@@ -52,7 +52,7 @@ namespace HospitalManagement.Web.Server
         /// <param name="employeeDto">Dto entity with register prop</param>
         /// <returns></returns>
         [Route( "register" )]
-        public async Task<ApiResponse<RegisterResultApiModel>> Register([FromBody] RegisterDto employeeDto )
+        public async Task<ApiResponse<RegisterResultApiModel>> Register([FromBody] RegisterEmployeeDto employeeDto )
         {
             #region Empty Validates
 
@@ -167,7 +167,7 @@ namespace HospitalManagement.Web.Server
         /// <param name="loginDto">Dto entity with login prop</param>
         /// <returns></returns>
         [HttpPost("login")]
-        public async Task<ApiResponse<LoginResultApiModel>> LoginAsync( [FromBody] LoginDto loginDto )
+        public async Task<ApiResponse<LoginResultApiModel>> LoginAsync( [FromBody] LoginEmployeeDto loginDto )
         {
             // Get employee from repo
             var employee = await _authRepository.Login( loginDto?.Identify, loginDto?.Password );

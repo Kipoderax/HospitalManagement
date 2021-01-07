@@ -52,7 +52,6 @@ namespace HospitalManagement.Web.Server
             };
         }
 
-        [AllowAnonymous]
         public async Task<ApiResponse<IEnumerable<DutyDto>>> GetAllDutiesAsync()
         {
             var duties = await _dutyRepository.GetEmployeeDuties();
@@ -64,6 +63,27 @@ namespace HospitalManagement.Web.Server
             return new ApiResponse<IEnumerable<DutyDto>>
             {
                 Response = dutiesApi
+            };
+        }
+
+        [Route ( "add" )]
+        public async Task<ApiResponse<DutyDto>> Register( [FromBody] DutyDto dutyDto )
+        {
+            // If something was wrong
+            if( !await _dutyRepository.AddDutyAsync ( dutyDto ) )
+                // return ApiResponse with described errors
+                // TODO: Add error message
+                return new ApiResponse<DutyDto>();
+
+            // Otherwise return new duty object
+            return new ApiResponse<DutyDto>
+            {
+                Response = new DutyDto
+                {
+                    StartShift = dutyDto.StartShift,
+                    EndShift = dutyDto.EndShift,
+                    Employee = dutyDto.Employee
+                }
             };
         }
     }

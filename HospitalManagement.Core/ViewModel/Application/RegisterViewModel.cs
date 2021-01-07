@@ -103,7 +103,7 @@ namespace HospitalManagement.Core
                 // TODO: Move all URLs and API routes to static class in core
                 var result = await WebRequests.PostAsync<ApiResponse<RegisterResultApiModel>>(
                     "http://localhost:5000/api/auth/register",
-                    new RegisterDto
+                    new RegisterEmployeeDto
                     {
                         FirstName = FirstName,
                         LastName = LastName,

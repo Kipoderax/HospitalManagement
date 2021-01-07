@@ -3,7 +3,7 @@
     /// <summary>
     /// Simply object of our employee entity for use in view application
     /// </summary>
-    public class LoginDto
+    public class LoginEmployeeDto
     {
         #region Public Properties
 
@@ -19,7 +19,7 @@
 
         #endregion
 
-        public LoginDto ()
+        public LoginEmployeeDto ()
         {
 
         }

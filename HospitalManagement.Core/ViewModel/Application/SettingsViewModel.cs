@@ -155,6 +155,8 @@ namespace HospitalManagement.Core
             else
             {
                 await IoC.Duties.LoadDuties();
+                
+                // Replace auth employee duty list to duty list contain duties of all employee
                 IoC.Application.SettingsMenuVisible = false;
             }
         }
@@ -165,7 +167,8 @@ namespace HospitalManagement.Core
         private async Task OpenAsync ()
         {
             IoC.Application.SettingsMenuVisible = true;
-            await Task.Delay ( 100 );
+            
+            // Replace duty list of all employees to auth employee duty list
             await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
         }
 
@@ -197,8 +200,12 @@ namespace HospitalManagement.Core
             Specialize = null;
             PwdNumber = null;
             Password = null;
+            IoC.Duties.Items = null;
         }
 
+        /// <summary>
+        /// Bring user to register new employee form
+        /// </summary>
         private void NewEmployee()
         {
             IoC.Application.NewEmployeeFormVisible = true;
@@ -210,7 +217,6 @@ namespace HospitalManagement.Core
         /// <returns>Returns true if successful, false otherwise</returns>
         public async Task<bool> UpdateEmployeeDetailAsync()
         {
-            // TODO: Implement method to load employee after each single update
             // Lock this command to ignore any other requests while processing
             return await RunCommandAsync( () => DetailIsSaving, async () =>
             {
