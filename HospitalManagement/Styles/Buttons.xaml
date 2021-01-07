@@ -310,4 +310,39 @@
         </Setter>
     </Style>
    
+   <!-- Calendar Button -->
+   <Style x:Key="CalendarStyle" TargetType="{x:Type Calendar}">
+         <Setter Property="Foreground" Value="{StaticResource WordBlueBrush}"/>
+         <Setter Property="Background">
+            <Setter.Value>
+               <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                  <GradientStop Color="{StaticResource WordBlue}" Offset="0"/>
+                  <GradientStop Color="{StaticResource ForegroundDark}" Offset="0.16"/>
+                  <GradientStop Color="#FFFCFCFD" Offset="0.16"/>
+                  <GradientStop Color="#FFFFFFFF" Offset="1"/>
+               </LinearGradientBrush>
+            </Setter.Value>
+         </Setter>
+         <Setter Property="BorderBrush">
+            <Setter.Value>
+               <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                  <GradientStop Color="{StaticResource WordRed}" Offset="0"/>
+                  <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                  <GradientStop Color="#FF718597" Offset="0.375"/>
+                  <GradientStop Color="#FF617584" Offset="1"/>
+               </LinearGradientBrush>
+            </Setter.Value>
+         </Setter>
+         <Setter Property="BorderThickness" Value="2"/>
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="{x:Type Calendar}">
+                  <StackPanel x:Name="PART_Root" HorizontalAlignment="Center">
+                     <CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Style="{TemplateBinding CalendarItemStyle}"/>
+                  </StackPanel>
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+      </Style>
+   
 </ResourceDictionary>

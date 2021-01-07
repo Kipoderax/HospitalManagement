@@ -59,10 +59,17 @@
           
              <Grid.ColumnDefinitions>
                 <!-- Duty list -->
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="330"/>
                 <!-- Personal details -->
                 <ColumnDefinition Width="*"/>
              </Grid.ColumnDefinitions>
+             
+             <Grid.RowDefinitions>
+                <!-- Duty list -->
+                <RowDefinition Height="400"/>
+                <!-- Calendar icon -->
+                <RowDefinition Height="Auto"/>
+             </Grid.RowDefinitions>
           
              <Border Grid.ColumnSpan="2" Panel.ZIndex="3">
                 <local:EmployeeRegisterControl
@@ -73,11 +80,21 @@
              
              <!-- Duty list -->
              <Border CornerRadius="8" 
-                     Margin="0 0 30 0">
+                     Margin="0 0 30 0" Padding="0 0 0 10">
              
-                <local:DutyPersonalListControl/>
+                   <local:DutyPersonalListControl/>
              
              </Border>
+             
+             <!-- Attach Calendar Button-->
+              <Button Grid.Row="1" 
+                      Style="{StaticResource SystemIconButton}" 
+                      FontFamily="{StaticResource FontAwesome}"
+                      Content="{StaticResource FontAwesomeCalendarAltIcon}"
+                      VerticalAlignment="Top" 
+                      HorizontalAlignment="Left"
+                      Background="{StaticResource BackgroundVeryLightBrush}"
+                      />
           
              <!-- Personal details -->
              <StackPanel Grid.Column="1"
@@ -92,16 +109,18 @@
                 
                 <StackPanel Orientation="Horizontal">
 
+                   <!-- Register New Employee Button -->
                    <Button Content="{Binding NewEmployeeButtonText}"
                            FontSize="{StaticResource FontSizeRegular}"
                            Command="{Binding NewEmployeeCommand}"
                            Width="140"
                            Padding="10"/>
                    
+                   <!-- Logout Button -->
                    <Button Content="{Binding LogoutButtonText}"
                         Command="{Binding LogoutCommand}"
                         FontSize="{StaticResource FontSizeRegular}"
-                        Margin="110 10 0 10"/>
+                        Margin="70 10 0 10"/>
 
                 </StackPanel>
                 
