@@ -33,20 +33,21 @@
                      VerticalAlignment="Center"
                      Command="{Binding CloseCommand}"/>
           
-             <TextBlock Text="{Binding SettingsViewModel.FirstName.OriginalText,
-                        Source={x:Static local:ViewModelLocator.Instance}}"
+             <TextBlock 
                         FontSize="{StaticResource FontSizeLarge}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <!-- Cog icon --><!--
+                
+                <!-- Cog icon -->
                 <Run FontFamily="{StaticResource FontAwesome}"
                      Text="{StaticResource FontAwesomeCogIcon}"
                      Foreground="{StaticResource WordOrangeBrush}"/>
-                --><!-- Settings text --><!--
-                <Run Text="{Binding SettingsViewModel.FirstName,
+                 
+                <!-- Employee First Name -->
+                <Run Text="{Binding SettingsViewModel.FirstName.OriginalText,
                         Source={x:Static local:ViewModelLocator.Instance}}"
                      FontFamily="{StaticResource LatoRegular}"
-                     Foreground="{StaticResource ForegroundVeryDarkBrush}"/>-->
+                     Foreground="{StaticResource ForegroundVeryDarkBrush}"/>
              </TextBlock>
           
           </Grid>
