@@ -11,7 +11,17 @@ namespace HospitalManagement.Core
     {
         #region Public Properties
 
+        /// <summary>
+        /// Employee authentication token to allow use application after login
+        /// </summary>
         public string Token { get; set; }
+
+        /// <summary>
+        /// True to show the attachment content, false to hide it
+        /// </summary>
+        public bool AttachmentMenuVisible { get; set; }
+
+        public bool InnerPageForm { get; set; }
 
         #region Transactional Properties
 
@@ -115,6 +125,11 @@ namespace HospitalManagement.Core
         /// </summary>
         public ICommand UpdateEmployeeCommand { get; set; }
 
+        /// <summary>
+        /// The command for when the attachment button is clicked
+        /// </summary>
+        public ICommand AttachmentButtonCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -130,6 +145,7 @@ namespace HospitalManagement.Core
             LogoutCommand = new RelayCommand( Logout );
             ClearUserDataCommand = new RelayCommand( ClearUserData );
             NewEmployeeCommand = new RelayCommand( NewEmployee );
+            AttachmentButtonCommand = new RelayCommand( AttachmentButton );
 
             // Saving user details commands
             UpdateEmployeeCommand = new RelayCommand( async () => await UpdateEmployeeDetailAsync() );
@@ -149,13 +165,16 @@ namespace HospitalManagement.Core
         {
             // Close register form employee if is open
             if (IoC.Application.NewEmployeeFormVisible)
+            {
                 IoC.Application.NewEmployeeFormVisible = false;
+                InnerPageForm = false;
+            }
 
             // Otherwise close settings menu
             else
             {
                 await IoC.Duties.LoadDuties();
-                
+
                 // Replace auth employee duty list to duty list contain duties of all employee
                 IoC.Application.SettingsMenuVisible = false;
             }
@@ -209,6 +228,16 @@ namespace HospitalManagement.Core
         private void NewEmployee()
         {
             IoC.Application.NewEmployeeFormVisible = true;
+            InnerPageForm = true;
+        }
+
+        /// <summary>
+        /// When the attachment button is clicked show/hide the attachment content
+        /// </summary>
+        private void AttachmentButton ()
+        {
+            // Toggle menu visibility
+            AttachmentMenuVisible ^= true;
         }
 
         /// <summary>

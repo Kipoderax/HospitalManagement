@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using HospitalManagement.Core;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace HospitalManagement.Controls.Input.Calendar
+namespace HospitalManagement
 {
     /// <summary>
     /// Logika interakcji dla klasy DutyCalendarControl.xaml
@@ -21,6 +11,8 @@ namespace HospitalManagement.Controls.Input.Calendar
         public DutyCalendarControl ()
         {
             InitializeComponent();
+            //DataContext = IoC.DutyCalendar;
+            CalendarRange.BlackoutDates.Add( new CalendarDateRange( IoC.DutyCalendar.Start, IoC.DutyCalendar.End ) );
         }
     }
 }

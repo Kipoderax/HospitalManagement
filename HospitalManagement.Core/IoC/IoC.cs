@@ -29,9 +29,20 @@ namespace HospitalManagement.Core
         /// </summary>
         public static RegisterViewModel RegisterEmployee => Get<RegisterViewModel>();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="EmployeeListDesignModel"/>
+        /// </summary>
         public static EmployeeListDesignModel Employees => Get<EmployeeListDesignModel>();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="DutyListDesignModel"/>
+        /// </summary>
         public static DutyListDesignModel Duties => Get<DutyListDesignModel>();
+
+        /// <summary>
+        /// A shortcut to access the <see cref="DutyCalendarViewModel"/>
+        /// </summary>
+        public static DutyCalendarViewModel DutyCalendar => Get<DutyCalendarViewModel>();
 
         #endregion
 
@@ -64,6 +75,9 @@ namespace HospitalManagement.Core
             
             // Bind to a single instance of Duty view model
             Kernel.Bind<DutyListDesignModel>().ToConstant ( new DutyListDesignModel() );
+
+            // Bind to a single instance of Duty calendar view model
+            Kernel.Bind<DutyCalendarViewModel>().ToConstant( new DutyCalendarViewModel() );
         }
 
         #endregion

@@ -59,7 +59,7 @@ namespace HospitalManagement
                 // Set the column definition width to the new value
                 (d as PasswordEntryControl).LabelColumnDefinition.Width = (GridLength)e.NewValue;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Make developer aware of potential issue
                 Debugger.Break();

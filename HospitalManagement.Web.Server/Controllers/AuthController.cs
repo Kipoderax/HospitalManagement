@@ -51,7 +51,7 @@ namespace HospitalManagement.Web.Server
         /// </summary>
         /// <param name="employeeDto">Dto entity with register prop</param>
         /// <returns></returns>
-        [Route( "register" )]
+        [HttpPost( "register" )]
         public async Task<ApiResponse<RegisterResultApiModel>> Register([FromBody] RegisterEmployeeDto employeeDto )
         {
             #region Empty Validates
