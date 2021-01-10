@@ -65,7 +65,7 @@ namespace HospitalManagement.Web.Server
         }
 
         [Route ( "add" )]
-        public async Task<ApiResponse<DutyDto>> Register( [FromBody] DutyDto dutyDto )
+        public async Task<ApiResponse<DutyDto>> Register( DutyDto dutyDto )
         {
             // If something was wrong
             if( !await _dutyRepository.AddDutyAsync ( dutyDto ) )

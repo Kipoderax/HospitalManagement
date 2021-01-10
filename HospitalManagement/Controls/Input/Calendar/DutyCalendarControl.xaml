@@ -6,10 +6,14 @@
              xmlns:local="clr-namespace:HospitalManagement"
              xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"          
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="200">
+             d:DesignHeight="200" d:DesignWidth="200" >
    
-   <Border Background="{StaticResource ForegroundDarkBrush}" BorderThickness="8" CornerRadius="10" BorderBrush="{StaticResource ForegroundDarkBrush}">
-    <Grid DataContext="{x:Static core:IoC.DutyCalendar}">
+   <Border DataContext="{x:Static core:IoC.DutyCalendar}"
+           Background="{StaticResource ForegroundDarkBrush}" 
+           BorderThickness="8" 
+           CornerRadius="10" 
+           BorderBrush="{StaticResource ForegroundDarkBrush}">
+    <Grid >
 
        <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
@@ -17,7 +21,10 @@
        </Grid.RowDefinitions>
        
           <!-- Calendar container -->
-            <Calendar x:Name="CalendarRange" Style="{StaticResource CalendarStyle}"/>
+            <Calendar x:Name="CalendarRange" 
+                      Style="{StaticResource CalendarStyle}"
+                      SelectedDate="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
+          
           
        <Border Grid.Row="1" Margin="0 2 0 0"
                Background="{StaticResource WordLightBlueBrush}" 
@@ -35,8 +42,7 @@
              </Grid.ColumnDefinitions>
              
              <!-- Hours edit text -->
-         <TextBox x:Name="HourText"
-                     Tag="hh"
+         <TextBox Tag="hh"
                      Text="{Binding HourTime}"
                      FontSize="{StaticResource FontSizeLarge}"
                      VerticalAlignment="Center"
@@ -59,7 +65,7 @@
                      Foreground="Black"/>
                       
              <!-- Minuts edit text -->
-         <TextBox Grid.Column="2" x:Name="MinutText"
+         <TextBox Grid.Column="2"
                      Tag="mm"
                      Text="{Binding MinutTime}"
                      FontSize="{StaticResource FontSizeLarge}"
@@ -73,6 +79,7 @@
                     Width="40"
                      Foreground="Black"/>
              
+             <!-- Add duty button -->  
              <Button Grid.Column="3" 
                      Content="Dodaj"
                      Padding="8"
@@ -81,6 +88,8 @@
                      FontSize="{StaticResource FontSizeRegular}"
                      Background="{StaticResource WordBlueBrush}"
                      Foreground="{StaticResource BackgroundLightBrush}"
+                     local:IsBusyProperty.Value="{Binding AddDutyIsRunning}"
+                     Command="{Binding AddDutyCommand}"
                      />
              
          </Grid>

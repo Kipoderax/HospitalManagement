@@ -111,7 +111,8 @@ namespace HospitalManagement.Core
                         Type = Type,
                         Specialize = Specialize,
                         NumberPwz = PwzNumber
-                    } );
+                    } 
+                );
 
                 if (result.DisplayErrorIfFailedAsync( "Rejestracja nieudana" ))
                 {

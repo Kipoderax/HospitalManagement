@@ -11,7 +11,6 @@ namespace HospitalManagement
         public DutyCalendarControl ()
         {
             InitializeComponent();
-            //DataContext = IoC.DutyCalendar;
             CalendarRange.BlackoutDates.Add( new CalendarDateRange( IoC.DutyCalendar.Start, IoC.DutyCalendar.End ) );
         }
     }

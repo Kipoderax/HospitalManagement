@@ -1,38 +1,114 @@
-﻿using System;
+﻿using Dna;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace HospitalManagement.Core
 {
     /// <summary>
     /// A view model for the get duty date
     /// </summary>
-    public class DutyCalendarViewModel
+    public class DutyCalendarViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private DateTime _start;
+        private DateTime _end;
+        private string _hourTime;
+        private string _minutTime;
+        private DateTime _selectedDate;
+
+        #endregion
+        
         #region Public Properties
 
         /// <summary>
         /// The range from begin employees can't set self duty
         /// </summary>
-        public DateTime Start { get; set; }
+        public DateTime Start 
+        {
+            get => _start;
+            set
+            {
+                // Update value
+                _start = value;
+                
+                // Update to view with detect change
+                OnPropertyChanged ( nameof(Start) );
+            }
+        }
 
         /// <summary>
         /// The range to end employees can't set self duty
         /// </summary>
-        public DateTime End { get; set; }
+        public DateTime End 
+        {
+            get => _end;
+            set
+            {
+                // Update value
+                _end = value;
+                
+                // Update to view with detect change
+                OnPropertyChanged ( nameof(End) );
+            }
+        }
 
         /// <summary>
         /// Part time of hour for duty set
         /// </summary>
-        public string HourTime { get; set; }
+        public string HourTime 
+        {
+            get => _hourTime;
+            set
+            {
+                // Update value
+                _hourTime = value;
+                
+                // Update to view with detect change
+                OnPropertyChanged ( nameof(HourTime) );
+            }
+        }
 
         /// <summary>
         /// Part time of minut for duty set
         /// </summary>
-        public string MinutTime { get; set; }
+        public string MinutTime 
+        {
+            get => _minutTime;
+            set
+            {
+                // Update value
+                _minutTime = value;
+                
+                // Update to view with detect change
+                OnPropertyChanged ( nameof(MinutTime) );
+            }
+        }
+
+        public DateTime SelectedDate
+        {
+            get => _selectedDate;
+            set
+            {
+                // Update value
+                _selectedDate = value;
+                
+                // Update to view with detect change
+                OnPropertyChanged ( nameof(SelectedDate) );
+            }
+        }
+
+        public bool AddDutyIsRunning { get; set; }
 
         #endregion
 
         #region Public Commands
 
+        /// <summary>
+        /// The command to add duty
+        /// </summary>
+        public ICommand AddDutyCommand { get; set; }
 
         #endregion
 
@@ -45,14 +121,46 @@ namespace HospitalManagement.Core
         {
             Start = DateTime.Now.AddDays( 30 );
             End = Start.AddMonths( 1 );
-            HourTime = "7";
-            MinutTime = "15";
+
+            AddDutyCommand = new RelayCommand ( async () => await AddDutyAsync() );
         }
 
         #endregion
 
         #region Command Methods
 
+        /// <summary>
+        /// Add duty by login employee or administrator
+        /// NOTE: username null means that duty add by login employee
+        ///       otherwise duty is adding by administrator for employee which have
+        ///       this username
+        /// </summary>
+        /// <param name="username">The employee username</param>
+        /// <returns></returns>
+        public async Task AddDutyAsync(string username = null)
+        {
+            var employee = new Employee();
+            await RunCommandAsync ( () => AddDutyIsRunning, async () =>
+            { 
+                 
+                employee.Username = username ?? IoC.Settings.Identify.OriginalText;
+                    
+                
+                var result = await WebRequests.PostAsync<ApiResponse<DutyDto>> (
+                    "http://localhost:5000/api/duties/add",
+                    new DutyDto
+                    {
+                        StartShift = SelectedDate.Date.Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
+                        EndShift = SelectedDate.AddDays ( 1 ).Date.Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
+                        Employee = employee
+                    },
+                    bearerToken: IoC.Settings.Token
+                );
+
+               if( result.Successful )
+                   await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+            } );
+        }
 
         #endregion
     }

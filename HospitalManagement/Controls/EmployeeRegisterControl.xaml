@@ -81,26 +81,32 @@
             <local:RegisterPasswordEntryControl DataContext="{Binding PwzNumber}"/>-->
        </StackPanel>
        
-          <!-- Register button -->
+          <!-- Register content -->
           <StackPanel Grid.Row="2">
-          <Button
-                  HorizontalAlignment="Center"
-                  Content="Dodaj pracownika"
-                  local:IsBusyProperty.Value="{Binding RegisterIsRunning}"
-                  Command="{Binding RegisterCommand}"
-                  FontSize="{StaticResource FontSizeRegular}"
-                  Padding="10 5"
-                  Background="{StaticResource WordGreenBrush}"/>
-             <TextBlock Text="{Binding ErrorMessage}" 
-                        HorizontalAlignment="Center"
-                        Foreground="{StaticResource WordRedBrush}"
-                        Margin="0 0 0 15"
-                        Visibility="{Binding Success, Converter={local:BooleanToVisibilityConverter}}"/>
-               <TextBlock Text="Dodano nowego pracownika" 
-                        HorizontalAlignment="Center"
-                        Foreground="{StaticResource WordGreenBrush}"
-                        Margin="0 0 0 15"
-                        Visibility="{Binding Success, Converter={local:BooleanInvertConverter}}"/>
+              
+              <!-- Register button -->
+              <Button
+                      HorizontalAlignment="Center"
+                      Content="Dodaj pracownika"
+                      local:IsBusyProperty.Value="{Binding RegisterIsRunning}"
+                      Command="{Binding RegisterCommand}"
+                      FontSize="{StaticResource FontSizeRegular}"
+                      Padding="10 5"
+                      Background="{StaticResource WordGreenBrush}"/>
+              
+              <!-- If something was wrong display message -->
+              <TextBlock Text="{Binding ErrorMessage}" 
+                         HorizontalAlignment="Center"
+                         Foreground="{StaticResource WordRedBrush}"
+                         Margin="0 0 0 15"
+                         Visibility="{Binding Success, Converter={local:BooleanToVisibilityConverter}}"/>
+               
+              <!-- Successful message -->  
+              <TextBlock Text="Dodano nowego pracownika" 
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource WordGreenBrush}"
+                       Margin="0 0 0 15"
+                       Visibility="{Binding Success, Converter={local:BooleanInvertConverter}}"/>
   
           </StackPanel>
           
