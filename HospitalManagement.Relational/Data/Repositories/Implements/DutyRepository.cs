@@ -89,8 +89,6 @@ namespace HospitalManagement.Relational
             duty.EndShift = dutyDto.EndShift;
             duty.EmployeeId = employeeId.UserId;
 
-            // TODO: Put validates for duties here
-            
             // If no conflict with other duties add to data context
             await _dataContext.AddAsync ( duty );
             

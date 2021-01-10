@@ -65,5 +65,18 @@ namespace HospitalManagement.Core
                 .All ( daysDifferent => !( daysDifferent < 2 ) 
                 );
         }
+
+        /// <summary>
+        /// Get amount of employee duties for month in th selected date
+        /// </summary>
+        /// <param name="selectedDate">The selected date for employee</param>
+        /// <returns></returns>
+        public static int AmountDutiesInMoth( DateTime selectedDate )
+        {
+            // Get employee duties
+            var items = IoC.Duties.Items;
+
+            return items.Count ( item => item.StartShift.Month == selectedDate.Month );
+        }
     }
 }
