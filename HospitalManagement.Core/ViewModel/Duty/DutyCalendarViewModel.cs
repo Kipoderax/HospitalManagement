@@ -142,10 +142,21 @@ namespace HospitalManagement.Core
             var employee = new Employee();
             await RunCommandAsync ( () => AddDutyIsRunning, async () =>
             { 
-                 
+                // Check if username is not null
                 employee.Username = username ?? IoC.Settings.Identify.OriginalText;
-                    
                 
+                // Check if no exist duty with specialize contain by employee add for
+                if( ! await DutyValidate.IsUniqueSpecialize ( SelectedDate, IoC.Settings.Specialize.OriginalText ) )
+                    return false;
+                
+                // Check if employee get date from correct date-range
+                if( ! DutyValidate.IsDateRangeCorrect ( SelectedDate, End ) )
+                    return false;
+                
+                // Check if employee don't get duty 1 day after end shift
+                if( !DutyValidate.IsDayAfterOrBefore ( SelectedDate ) )
+                    return false;
+
                 var result = await WebRequests.PostAsync<ApiResponse<DutyDto>> (
                     "http://localhost:5000/api/duties/add",
                     new DutyDto
@@ -157,8 +168,10 @@ namespace HospitalManagement.Core
                     bearerToken: IoC.Settings.Token
                 );
 
-               if( result.Successful )
-                   await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+                if( result.Successful )
+                    await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+
+                return true;
             } );
         }
 

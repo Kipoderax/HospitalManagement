@@ -40,7 +40,7 @@ namespace HospitalManagement.Web.Server
         [Route("{username}")]
         public async Task<ApiResponse<IEnumerable<DutyDto>>> GetAllEmployeeDutiesAsync(string username)
         {
-            var employeeDuties = await _dutyRepository.GetEmployeeDutiesByUsername(username);
+            var employeeDuties = await _dutyRepository.FindEmployeeDutiesByUsername(username);
 
             var employeeDutyApi = _mapper.Map<List<DutyDto>> ( employeeDuties );
             

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HospitalManagement.Core;
 
@@ -14,7 +15,7 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="username">The employee username</param>
         /// <returns></returns>
-        Task<IEnumerable<Duty>> GetEmployeeDutiesByUsername( string username );
+        Task<IEnumerable<Duty>> FindEmployeeDutiesByUsername( string username );
 
         /// <summary>
         /// Get duties list of all employees

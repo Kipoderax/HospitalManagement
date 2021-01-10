@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalManagement.Core;
@@ -44,12 +45,13 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="username">The employee username</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Duty>> GetEmployeeDutiesByUsername( string username )
+        public async Task<IEnumerable<Duty>> FindEmployeeDutiesByUsername( string username )
         {
             var duty = await _dataContext.Duties
                     
                 // filter by logged employee
                 .Where( u => u.Employee.Username == username )
+                .OrderByDescending ( d => d.StartShift )
                 .ToListAsync();
 
             return duty;

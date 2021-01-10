@@ -221,7 +221,7 @@ namespace HospitalManagement.Web.Server
         }
 
         [HttpPost("update")]
-        public async Task<ApiResponse<UpdateEmployeeDto>> Update(UpdateEmployeeDto updateDto)
+        public async Task<ApiResponse<UpdateEmployeeDto>> UpdateAsync(UpdateEmployeeDto updateDto)
         {
             #region Get Employee
 
@@ -251,14 +251,6 @@ namespace HospitalManagement.Web.Server
                 employee.Username = employee.Username.Replace( 
                     employee.Username.Substring( 1, 1 ), 
                     updateDto.LastName.Substring( 0, 1 ) );
-            }
-
-            if (updateDto.Pesel != employee.Pesel)
-            {
-                employee.Pesel = updateDto.Pesel;
-                employee.Username = employee.Username.Replace( 
-                    employee.Username[2..], 
-                    updateDto.Pesel[6..] );
             }
 
             if (updateDto.Type != null)

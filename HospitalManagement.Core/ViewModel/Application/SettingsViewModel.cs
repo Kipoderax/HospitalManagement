@@ -274,7 +274,7 @@ namespace HospitalManagement.Core
                 
                 // Store the new employee first name to data store
                 IoC.Settings.Identify.OriginalText = username.Username;
-                //IoC.Settings.Identify.OriginalText = 
+                await IoC.Employees.LoadEmployees();
 
                 return true;
             });
