@@ -29,11 +29,8 @@ namespace HospitalManagement.Core
         ///             If someone have duty with this specialize on the selectedDate
         ///             return false otherwise return true
         /// </returns>
-        public static async Task<bool> IsUniqueSpecialize(DateTime selectedDate, string specialize)
+        public static bool IsUniqueSpecialize(DateTime selectedDate, string specialize)
         {
-            // Replace duty list to all 
-            await IoC.Duties.LoadDuties();
-            
             // Initialize duty items of all employees
             var items = IoC.Duties.Items;
 
@@ -42,9 +39,6 @@ namespace HospitalManagement.Core
                 .Where ( s => s.StartShift.Date == selectedDate.Date )
                 .Select ( s => s.JobName )
                 .ToList();
-            
-            // Back to employee duty list
-            await IoC.Duties.LoadEmployeeDuties(IoC.Settings.Identify.OriginalText);
             
             return !getDateFromItems.Contains ( specialize );
         }
@@ -57,7 +51,7 @@ namespace HospitalManagement.Core
         public static bool IsDayAfterOrBefore( DateTime selectedDate )
         {
             // Get employee duties
-            var items = IoC.Duties.Items;
+            var items = IoC.Duties.EmployeeItems;
 
             return ( 
                 from item in items 
@@ -74,7 +68,7 @@ namespace HospitalManagement.Core
         public static int AmountDutiesInMoth( DateTime selectedDate )
         {
             // Get employee duties
-            var items = IoC.Duties.Items;
+            var items = IoC.Duties.EmployeeItems;
 
             return items.Count ( item => item.StartShift.Month == selectedDate.Month );
         }

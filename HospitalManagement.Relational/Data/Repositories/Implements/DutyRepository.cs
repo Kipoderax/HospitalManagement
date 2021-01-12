@@ -66,6 +66,20 @@ namespace HospitalManagement.Relational
             var duties = await _dataContext.Duties
                 .Include ( e => e.Employee )
                 .Include ( s => s.Employee.EmployeeSpecialize )
+                .Include ( t => t.Employee.EmployeeType )
+                .OrderByDescending ( d => d.StartShift )
+                .ToListAsync();
+
+            return duties;
+        }
+
+        public async Task<IEnumerable<Duty>> GetNoAdmEmployeeDuties()
+        {
+            var duties = await _dataContext.Duties
+                .Include ( e => e.Employee )
+                .Include ( s => s.Employee.EmployeeSpecialize )
+                .Include ( t => t.Employee.EmployeeType )
+                .Where ( u => u.Employee.EmployeeType.EmployeeRole.Equals ( "Administrator" ) )
                 .OrderByDescending ( d => d.StartShift )
                 .ToListAsync();
 

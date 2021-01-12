@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         x:Name="AppWindow"
-        Icon="pack://application:,,,/Images/Logo/virus.png"
+        Icon="pack://application:,,,/Images/Logo/logo-virus.png"
         Height="600" Width="900"
         MinHeight="{Binding WindowMinimumHeight}"
         MinWidth="{Binding WindowMinimumWidth}"
@@ -68,9 +68,9 @@
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Icon -->
-                                        <Button Width="40" Style="{StaticResource SystemIconButton}"
+                                        <Button Width="60" Style="{StaticResource SystemIconButton}"
                                                 Command="{Binding MenuCommand}">
-                                            <Image Source="pack://application:,,,/Images/Logo/virus-small.png"></Image>
+                                            <Image Source="pack://application:,,,/Images/Logo/logo-virus.png"></Image>
                                         </Button>
 
                                         <!-- Title -->
@@ -129,7 +129,8 @@
            </Grid.ColumnDefinitions>
            
            <Grid.Background>
-               <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="pack://application:,,,/Images/Backgrounds/main.png"></ImageBrush>
+               <ImageBrush 
+                           ImageSource="pack://application:,,,/Images/Backgrounds/bloodcells.png"></ImageBrush>
            </Grid.Background>
            
           <!-- Settings page -->

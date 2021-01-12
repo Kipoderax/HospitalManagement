@@ -55,8 +55,6 @@ namespace HospitalManagement.Web.Server
             var duties = await _dutyRepository.GetEmployeeDuties();
 
             var dutiesApi = _mapper.Map<List<DutyDto>> ( duties );
-            
-            
 
             return new ApiResponse<IEnumerable<DutyDto>>
             {

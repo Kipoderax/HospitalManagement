@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Dna;
 
 namespace HospitalManagement.Core
@@ -16,6 +17,10 @@ namespace HospitalManagement.Core
         /// The duty list items for the list
         /// </summary>
         private ObservableCollection<DutyListItemViewModel> _items;
+
+        private ObservableCollection<DutyListItemViewModel> _employeeItems;
+
+        private string _selectedSpecialize = "Wszyscy";
 
         #endregion
 
@@ -36,7 +41,37 @@ namespace HospitalManagement.Core
                 OnPropertyChanged ( nameof(Items) );
             }
         }
+
+        public ObservableCollection<DutyListItemViewModel> EmployeeItems
+        {
+            get => _employeeItems;
+            set
+            {
+                // Update value
+                _employeeItems = value;
+
+                // Update to view with detect change
+                OnPropertyChanged(nameof(EmployeeItems));
+            }
+        }
+
+        public string SelectedSpecialize
+        {
+            get => _selectedSpecialize;
+            set
+            {
+                _selectedSpecialize = value;
+
+                OnPropertyChanged(_selectedSpecialize);
+            }
+        }
         
+        #endregion
+        
+        #region Public Commands
+
+        public ICommand SpecializeCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -47,6 +82,8 @@ namespace HospitalManagement.Core
         public DutyListViewModel()
         {
             Items = new ObservableCollection<DutyListItemViewModel>();
+            
+            SpecializeCommand = new RelayParametrizedCommand(async specialize => await LoadDuties(specialize));
         }
 
         #endregion
@@ -58,9 +95,11 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         public async Task LoadEmployeeDuties(string username)
         {
+            EmployeeItems ??= new ObservableCollection<DutyListItemViewModel>();
+            
             // Clear before each request
-            if (Items.Count > 0)
-                Items.Clear();
+            if (EmployeeItems.Count > 0)
+                EmployeeItems.Clear();
             
             // Connect with server to get data
             var result = await WebRequests.PostAsync<ApiResponse<IEnumerable<DutyDto>>> (
@@ -75,7 +114,7 @@ namespace HospitalManagement.Core
                 // put each taken item to list
                 foreach ( var dutyResult in result.ServerResponse.Response )
                 {
-                    Items.Add ( new DutyListItemViewModel
+                    EmployeeItems.Add ( new DutyListItemViewModel
                     {
                         StartShift = dutyResult.StartShift,
                         EndShift = dutyResult.EndShift
@@ -87,8 +126,14 @@ namespace HospitalManagement.Core
         /// Load duties of each employee to main list
         /// </summary>
         /// <returns></returns>
-        public async Task LoadDuties()
+        public async Task LoadDuties(object specialize = null)
         {
+            var spec = specialize as string;
+            if (specialize == null) spec = "Wszyscy";
+
+            // Make sure duty list not null
+            Items ??= new ObservableCollection<DutyListItemViewModel>();
+
             // Clear before each request 
             if (Items.Count > 0)
                 Items.Clear();
@@ -104,6 +149,10 @@ namespace HospitalManagement.Core
             if (result.Successful)
                 foreach ( var dutyResult in result.ServerResponse.Response )
                 {
+                    if (spec != null && !spec.Equals("Wszyscy"))
+                        if (!spec.Equals(dutyResult.Employee.EmployeeSpecialize.SpecializeEmployee))                                                                                continue;
+                    if (IoC.Settings.Type.OriginalText != "Administrator" && dutyResult.Employee.EmployeeType.EmployeeRole == "Administrator") continue;
+
                     // put each taken item to list
                     Items.Add ( new DutyListItemViewModel
                     {

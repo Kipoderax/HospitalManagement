@@ -21,7 +21,15 @@ namespace HospitalManagement.Core
         /// </summary>
         public bool AttachmentMenuVisible { get; set; }
 
+        /// <summary>
+        /// If we are on register employee content return true, false otherwise
+        /// </summary>
         public bool InnerPageForm { get; set; }
+        
+        /// <summary>
+        /// True to show register employee button, false to hide it
+        /// </summary>
+        public bool IsEmployeeAdm { get; set; }
 
         #region Transactional Properties
 
@@ -141,7 +149,7 @@ namespace HospitalManagement.Core
         {
             // Create commands
             OpenCommand = new RelayCommand( async () => await OpenAsync() );
-            CloseCommand = new RelayCommand ( async () => await CloseAsync() );
+            CloseCommand = new RelayCommand ( CloseAsync );
             LogoutCommand = new RelayCommand( Logout );
             ClearUserDataCommand = new RelayCommand( ClearUserData );
             NewEmployeeCommand = new RelayCommand( NewEmployee );
@@ -161,7 +169,7 @@ namespace HospitalManagement.Core
         /// <summary>
         /// Closes the settings menu
         /// </summary>
-        private async Task CloseAsync ()
+        private void CloseAsync ()
         {
             // Close register form employee if is open
             if (IoC.Application.NewEmployeeFormVisible)
@@ -172,12 +180,8 @@ namespace HospitalManagement.Core
 
             // Otherwise close settings menu
             else
-            {
-                await IoC.Duties.LoadDuties();
-
                 // Replace auth employee duty list to duty list contain duties of all employee
                 IoC.Application.SettingsMenuVisible = false;
-            }
         }
 
         /// <summary>
@@ -188,7 +192,6 @@ namespace HospitalManagement.Core
             IoC.Application.SettingsMenuVisible = true;
             
             // Replace duty list of all employees to auth employee duty list
-            await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
         }
 
         /// <summary>
@@ -220,6 +223,7 @@ namespace HospitalManagement.Core
             PwdNumber = null;
             Password = null;
             IoC.Duties.Items = null;
+            IoC.Duties.EmployeeItems = null;
         }
 
         /// <summary>

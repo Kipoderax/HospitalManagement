@@ -148,7 +148,7 @@ namespace HospitalManagement.Core
                 
                 
                 // Check if no exist duty with specialize contain by employee add for
-                if( ! await DutyValidate.IsUniqueSpecialize ( SelectedDate, IoC.Settings.Specialize.OriginalText ) )
+                if( ! DutyValidate.IsUniqueSpecialize ( SelectedDate, IoC.Settings.Specialize.OriginalText ) )
                     return false;
                 
                 
@@ -176,11 +176,15 @@ namespace HospitalManagement.Core
                     },
                     bearerToken: IoC.Settings.Token
                 );
-                
 
-                if( result.Successful )
-                    await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+
+                // TODO: Add error messages
+                if( !result.Successful ) return true;
                 
+                // Reload seperated duties list
+                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+                await IoC.Duties.LoadDuties();
+
 
                 return true;
             } );

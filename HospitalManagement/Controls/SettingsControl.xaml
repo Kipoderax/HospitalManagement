@@ -124,7 +124,8 @@
                            FontSize="{StaticResource FontSizeRegular}"
                            Command="{Binding NewEmployeeCommand}"
                            Width="140"
-                           Padding="10"/>
+                           Padding="10"
+                           Visibility="{Binding IsEmployeeAdm, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"/>
                    
                    <!-- Logout Button -->
                    <Button Content="{Binding LogoutButtonText}"

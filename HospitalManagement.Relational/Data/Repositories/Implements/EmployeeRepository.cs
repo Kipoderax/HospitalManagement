@@ -65,6 +65,8 @@ namespace HospitalManagement.Relational
             // TODO: Localize string
             var noAdmEmployees = await _dataContext.Employees.
                 Include(d => d.EmployeeDuties).
+                Include ( t => t.EmployeeType ).
+                Include ( s => s.EmployeeSpecialize ).
                 Where( t => t.EmployeeType.EmployeeRole != "Administrator" ).
                 ToListAsync();
 

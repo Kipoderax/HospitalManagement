@@ -24,6 +24,13 @@ namespace HospitalManagement.Relational
         Task<IEnumerable<Duty>> GetEmployeeDuties();
 
         /// <summary>
+        /// Get duties list of all employees without administrators
+        /// if authentication employee isn't administrator
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Duty>> GetNoAdmEmployeeDuties();
+
+        /// <summary>
         /// Register employee duty
         /// </summary>
         /// <param name="dutyDto">The duty dto arrived from view form </param>

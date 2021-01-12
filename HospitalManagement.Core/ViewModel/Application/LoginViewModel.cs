@@ -81,9 +81,14 @@ namespace HospitalManagement.Core
                  IoC.Settings.PwdNumber = new TextEntryViewModel { Label = "Numer PWD", OriginalText = employeeData?.NumberPwz };
                  IoC.Settings.Password = new PasswordEntryViewModel { Label = "Hasło", FakePassword = "********" };
 
+                 if (employeeData != null && employeeData.Type == "Administrator")
+                     IoC.Settings.IsEmployeeAdm = true;
+
                  // and get employee data
                  await IoC.Employees.LoadEmployees();
+
                  await IoC.Duties.LoadDuties();
+                 await IoC.Duties.LoadEmployeeDuties(employeeData?.Username);
 
                  await Task.Delay( 2000 );
 

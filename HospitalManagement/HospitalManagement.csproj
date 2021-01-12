@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Images\Logo\virus.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Logo\logo-virus.ico</ApplicationIcon>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
@@ -38,10 +38,14 @@
     <Resource Include="Fonts\fontawesome-webfont.woff" />
     <Resource Include="Fonts\fontawesome-webfont.woff2" />
     <Resource Include="Fonts\FontAwesome.otf" />
-    <Resource Include="Images\EmployeeTypes\Doctor.jpg" />
+    <Resource Include="Images\EmployeeTypes\Doctor.png" />
+    <Resource Include="Images\EmployeeTypes\pielegniarka.jpg" />
+    <Resource Include="Images\EmployeeTypes\Administrator.png" />
     <Resource Include="Images\Backgrounds\main.png" />
+    <Resource Include="Images\Backgrounds\bloodcells.png" />
     <Resource Include="Images\Logo\virus-small.png" />
     <Resource Include="Images\Logo\virus.png" />
+    <Resource Include="Images\Logo\logo-virus.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -80,7 +84,6 @@
 
   <ItemGroup>
     <Folder Include="Images\Backgrounds" />
-    <Folder Include="ViewModel\" />
   </ItemGroup>
 
 </Project>
