@@ -1,4 +1,7 @@
-﻿namespace HospitalManagement.Core
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// A view model for each employee list item in the overview employee list
@@ -39,5 +42,38 @@
         public bool IsSelected { get; set; }
 
         #endregion
+
+        #region Public Commands
+
+        /// <summary>
+        /// The command to load duties of selected employee
+        /// </summary>
+        public ICommand OpenEmployeeDutiesCommand { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public EmployeeListItemViewModel()
+        {
+            OpenEmployeeDutiesCommand = new RelayParametrizedCommand ( 
+                    async selected => await DutiesSelectedEmployeeAsync(selected) 
+                );
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Load duties of the selected employee
+        /// </summary>
+        /// <param name="selected">The selected username employee</param>
+        /// <returns></returns>
+        private async Task DutiesSelectedEmployeeAsync(object selected)
+        {
+            await IoC.Duties.LoadDutiesBySelectedEmployee ( (string)selected );
+        }
     }
 }

@@ -17,9 +17,17 @@
                   
                   <!-- Content -->
                   <Border x:Name="background" Background="{StaticResource BackgroundLightBrush}">
+                     
+                        <!-- Click selected employee to load them duties -->
+                        <Border.InputBindings>
+                           <MouseBinding MouseAction="LeftClick"
+                                         Command="{Binding OpenEmployeeDutiesCommand}"
+                                         CommandParameter="{Binding Name}"/>
+                        </Border.InputBindings>
+                     
                      <Grid x:Name="container" Background="Transparent">
                            <Grid.ColumnDefinitions>
-               
+                              
                               <!-- Selected employee -->
                               <!--<ColumnDefinition Width="Auto"/>-->
                               <!-- Profile picture -->

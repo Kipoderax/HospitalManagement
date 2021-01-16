@@ -78,6 +78,10 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         public async Task LoadEmployees()
         {
+            // Reload list for avoid override exists
+            if (Items.Count > 0)
+                Items.Clear();
+            
             // Get result as the list of the employees for loading to app list
             var result = await WebRequests.PostAsync<ApiResponse<IEnumerable<EmployeeResultApiModel>>> (
                 "http://localhost:5000/api/employee/employees",
@@ -122,6 +126,10 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         public async Task SearchEmployee( object text )
         {
+            // Load again employee for access searching employee
+            await LoadEmployees();
+            
+            // Remove all duties which don't mismatch input text
             foreach ( var item in IoC.Employees.Items.ToList()
                 
                 .Where ( item => !item.Name.ToLower().Contains ( (string)text )
@@ -130,7 +138,7 @@ namespace HospitalManagement.Core
                 
                                     IoC.Employees.Items.Remove ( item );
 
-            
+            // If employee nothing write then load all duties
             if( text.ToString().IsNullOWhiteSpace() )
                 await LoadEmployees();
         }
