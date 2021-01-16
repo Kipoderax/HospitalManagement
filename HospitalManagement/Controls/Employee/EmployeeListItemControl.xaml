@@ -20,10 +20,17 @@
                      
                         <!-- Click selected employee to load them duties -->
                         <Border.InputBindings>
+                           
                            <MouseBinding MouseAction="LeftClick"
                                          Command="{Binding OpenEmployeeDutiesCommand}"
                                          CommandParameter="{Binding Name}"/>
+                           
+                           <MouseBinding MouseAction="LeftDoubleClick"
+                                         Command="{Binding OpenEmployeeSettingsCommand}"
+                                         CommandParameter="{Binding Name}"/>
+                           
                         </Border.InputBindings>
+                        
                      
                      <Grid x:Name="container" Background="Transparent">
                            <Grid.ColumnDefinitions>

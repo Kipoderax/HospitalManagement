@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Reflection.Emit;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HospitalManagement.Core
@@ -49,6 +50,11 @@ namespace HospitalManagement.Core
         /// The command to load duties of selected employee
         /// </summary>
         public ICommand OpenEmployeeDutiesCommand { get; set; }
+        
+        /// <summary>
+        /// The command to load settings of selected employee
+        /// </summary>
+        public ICommand OpenEmployeeSettingsCommand { get; set; }
 
         #endregion
 
@@ -62,6 +68,10 @@ namespace HospitalManagement.Core
             OpenEmployeeDutiesCommand = new RelayParametrizedCommand ( 
                     async selected => await DutiesSelectedEmployeeAsync(selected) 
                 );
+
+            OpenEmployeeSettingsCommand = new RelayParametrizedCommand(
+                    async selected => await SettingsSelectedEmployeeAsync ( selected )
+                );
         }
 
         #endregion
@@ -74,6 +84,18 @@ namespace HospitalManagement.Core
         private async Task DutiesSelectedEmployeeAsync(object selected)
         {
             await IoC.Duties.LoadDutiesBySelectedEmployee ( (string)selected );
+        }
+
+        /// <summary>
+        /// Load settings of the selected employee
+        /// </summary>
+        /// <param name="selected">The selected username employee</param>
+        /// <returns></returns>
+        private async Task SettingsSelectedEmployeeAsync( object selected )
+        {
+            if( IoC.Settings.Type.OriginalText != "Administrator" ) return;
+
+            IoC.Application.SettingsMenuVisible = true;
         }
     }
 }

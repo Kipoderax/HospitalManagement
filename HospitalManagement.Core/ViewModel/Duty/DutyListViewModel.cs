@@ -194,6 +194,11 @@ namespace HospitalManagement.Core
             ReloadDutyList();
         }
 
+        /// <summary>
+        /// Load duties of the selected employee
+        /// </summary>
+        /// <param name="username">The username selected employee</param>
+        /// <returns></returns>
         public async Task LoadDutiesBySelectedEmployee( string username )
         {
             // Load duties with the specialize

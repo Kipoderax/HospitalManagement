@@ -126,13 +126,15 @@
                            Command="{Binding NewEmployeeCommand}"
                            Width="140"
                            Padding="10"
-                           Visibility="{Binding IsEmployeeAdm, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                           Visibility="{Binding IsEmployeeAdm, 
+                                        Converter={local:BooleanToVisibilityConverter}, 
+                                        ConverterParameter=True}"/>
                    
                    <!-- Logout Button -->
                    <Button Content="{Binding LogoutButtonText}"
-                        Command="{Binding LogoutCommand}"
-                        FontSize="{StaticResource FontSizeRegular}"
-                        Margin="70 10 0 10"/>
+                            Command="{Binding LogoutCommand}"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            Margin="70 10 0 10"/>
 
                 </StackPanel>
                 
