@@ -139,6 +139,7 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         public async Task AddDutyAsync(string username = null)
         {
+            //await IoC.Duties.LoadDuties ( "Neurolog" );
             var employee = new Employee();
             await RunCommandAsync ( () => AddDutyIsRunning, async () =>
             { 
@@ -161,6 +162,7 @@ namespace HospitalManagement.Core
                 if( ! DutyValidate.IsDayAfterOrBefore ( SelectedDate ) )
                     return false;
                 
+                
                 // Check if employee in selected month have more than 10 duties
                 if( DutyValidate.AmountDutiesInMoth ( SelectedDate ) >= 10 )
                     return false;
@@ -180,11 +182,8 @@ namespace HospitalManagement.Core
 
                 // TODO: Add error messages
                 if( !result.Successful ) return true;
-                
-                // Reload seperated duties list
-                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
-                await IoC.Duties.LoadDuties();
 
+                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
 
                 return true;
             } );

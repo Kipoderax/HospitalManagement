@@ -87,6 +87,7 @@
              
              </Border>
              
+             <!-- Calendar content to add neew duty -->
              <local:DutyCalendarControl Grid.Row="0"
                          Panel.ZIndex="2"
                          VerticalAlignment="Bottom"

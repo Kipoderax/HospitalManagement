@@ -7,9 +7,11 @@ namespace HospitalManagement
     /// </summary>
     public partial class WorkPage : BasePage<DutyListViewModel>
     {
-        public WorkPage ()
+        public WorkPage()
         {
             InitializeComponent();
+            DataContext = IoC.Duties;
         }
+        
     }
 }

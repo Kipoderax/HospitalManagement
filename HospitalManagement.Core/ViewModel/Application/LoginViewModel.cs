@@ -87,7 +87,7 @@ namespace HospitalManagement.Core
                  // and get employee data
                  await IoC.Employees.LoadEmployees();
 
-                 await IoC.Duties.LoadDuties();
+                 await IoC.Duties.LoadDuties("Wszyscy");
                  await IoC.Duties.LoadEmployeeDuties(employeeData?.Username);
 
                  await Task.Delay( 2000 );

@@ -27,21 +27,25 @@
                     <Grid.ColumnDefinitions>
                        <ColumnDefinition Width="200"/>
                        <ColumnDefinition Width="*"/>
+                       <ColumnDefinition Width="40"/>
                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     
                     <!-- Employee input text -->
                     <TextBox Tag="Pracownicy..."
+                             
                              FontFamily="{StaticResource LatoThin}"
                              FontSize="{StaticResource FontSizeSmall}"/>
                     
                     <!-- Search button -->
-                    <Button Grid.Column="1"
+                    <Button Grid.Column="2"
+                            Height="40"
                             Style="{StaticResource IconButton}" 
                             Content="{StaticResource FontAwesomeSearchIcon}"/>
                     
                     <!-- Setting button -->
-                    <Button Grid.Column="2"
+                    <Button Grid.Column="3"
+                            Height="40"
                             Style="{StaticResource IconButton}"
                             Content="{StaticResource FontAwesomeCogIcon}"
                             Command="{Binding SettingsViewModel.OpenCommand,

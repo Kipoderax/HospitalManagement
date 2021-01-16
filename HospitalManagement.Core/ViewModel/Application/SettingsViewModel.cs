@@ -148,7 +148,7 @@ namespace HospitalManagement.Core
         public SettingsViewModel ()
         {
             // Create commands
-            OpenCommand = new RelayCommand( async () => await OpenAsync() );
+            OpenCommand = new RelayCommand( Open );
             CloseCommand = new RelayCommand ( CloseAsync );
             LogoutCommand = new RelayCommand( Logout );
             ClearUserDataCommand = new RelayCommand( ClearUserData );
@@ -187,11 +187,9 @@ namespace HospitalManagement.Core
         /// <summary>
         /// Open the settings menu
         /// </summary>
-        private async Task OpenAsync ()
+        private void Open ()
         {
             IoC.Application.SettingsMenuVisible = true;
-            
-            // Replace duty list of all employees to auth employee duty list
         }
 
         /// <summary>

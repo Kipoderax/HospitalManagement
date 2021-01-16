@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:HospitalManagement"
              xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
              mc:Ignorable="d" 
-             d:DesignWidth="300">
+             d:DesignWidth="300"
+             d:DataContext="{x:Static core:DutyListItemDesignModel.Instance}">
    
     <Border Padding="5" 
             Background="{StaticResource WordBlueBrush}"
-            d:DataContext="{x:Static core:DutyListItemDesignModel.Instance}">
+            >
             <Grid>
                
                <!-- Employee short name like Aga G. -->

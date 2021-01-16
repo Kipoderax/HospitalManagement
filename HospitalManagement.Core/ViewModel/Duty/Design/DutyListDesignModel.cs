@@ -27,7 +27,7 @@ namespace HospitalManagement.Core
         /// </summary>
         public DutyListDesignModel ()
         {
-            SectionNames = new List<string> { "", "Urolog", "Neurolog", "Kardiolog", "Laryngolog" };
+            SectionNames = new List<string> { "Wszyscy", "Urolog", "Neurolog", "Kardiolog", "Laryngolog" };
 
             Items = new ObservableCollection<DutyListItemViewModel>
             {

@@ -6,11 +6,12 @@
       xmlns:local="clr-namespace:HospitalManagement"
       xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="700">
+      d:DesignHeight="700" d:DesignWidth="700"
+      DataContext="{x:Static core:DutyListDesignModel.Instance}">
 
     <Border>
        
-       <Grid>
+       <Grid > 
           
           <Grid.RowDefinitions>
          
@@ -19,28 +20,42 @@
          <!-- Data container -->
          <RowDefinition Height="*"/>
          
-      </Grid.RowDefinitions>
+        </Grid.RowDefinitions>
           
           <Border Background="{StaticResource WordBlueBrush}">
          
-               <Grid Width="150"
-                     DataContext="{x:Static core:DutyListDesignModel.Instance}">
+              <Grid Width="200"
+                    >
 
-                  <ComboBox Height="40"
-                      Padding="7 12 0 0"
-                      FontFamily="{StaticResource LatoRegular}"
-                      FontSize="{StaticResource FontSizeRegular}"
-                      Foreground="{StaticResource ForegroundVeryDarkBrush}"
-                      VerticalAlignment="Center"
-                      ItemsSource="{Binding SectionNames}">
-               
-                   </ComboBox>
+                  <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto"/>
+                      <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+
+                  <ComboBox Height="40" Width="140"
+                            Padding="7 12 0 0"
+                            FontFamily="{StaticResource LatoRegular}"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            Foreground="{StaticResource ForegroundVeryDarkBrush}"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding SectionNames}"
+                            SelectedItem="{Binding SelectedSpecialize, UpdateSourceTrigger=PropertyChanged}">
+                  </ComboBox>
+
+                  <Button Grid.Column="1"
+                          Margin="5 0 0 0"
+                          Height="40"
+                          Style="{StaticResource IconButton}"
+                          Content="{StaticResource FontAwesomeSearchIcon}"
+                          Command="{Binding SpecializeCommand}"
+                          CommandParameter="{Binding SelectedSpecialize}"/>
+                  
+                  
+              </Grid>
             
-               </Grid>
-         
       </Border>
           
-          <local:DutyListControl Grid.Row="1"/>
+           <local:DutyListControl Grid.Row="1"/>
        </Grid>
        
     </Border>

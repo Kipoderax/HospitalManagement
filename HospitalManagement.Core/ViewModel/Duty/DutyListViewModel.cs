@@ -83,7 +83,7 @@ namespace HospitalManagement.Core
         {
             Items = new ObservableCollection<DutyListItemViewModel>();
             
-            SpecializeCommand = new RelayParametrizedCommand(async specialize => await LoadDuties(specialize));
+            SpecializeCommand = new RelayParametrizedCommand(async specialize => await LoadDutiesByType(specialize));
         }
 
         #endregion
@@ -125,12 +125,10 @@ namespace HospitalManagement.Core
         /// <summary>
         /// Load duties of each employee to main list
         /// </summary>
+        /// <param name="specialize">The property fire reload duties with selected specialize</param>
         /// <returns></returns>
-        public async Task LoadDuties(object specialize = null)
+        public async Task LoadDuties(string specialize = "Wszyscy")
         {
-            var spec = specialize as string;
-            if (specialize == null) spec = "Wszyscy";
-
             // Make sure duty list not null
             Items ??= new ObservableCollection<DutyListItemViewModel>();
 
@@ -147,11 +145,20 @@ namespace HospitalManagement.Core
             
             // If all right then
             if (result.Successful)
+                
+                // For each duty
                 foreach ( var dutyResult in result.ServerResponse.Response )
                 {
-                    if (spec != null && !spec.Equals("Wszyscy"))
-                        if (!spec.Equals(dutyResult.Employee.EmployeeSpecialize.SpecializeEmployee))                                                                                continue;
-                    if (IoC.Settings.Type.OriginalText != "Administrator" && dutyResult.Employee.EmployeeType.EmployeeRole == "Administrator") continue;
+                    // If user want duties of employees specialize other than all
+                    if (!specialize.Equals("Wszyscy"))
+                        
+                        // then check if specialize of loaded employees is the same as specialize login employee
+                        if (!specialize.Equals(dutyResult.Employee.EmployeeSpecialize.SpecializeEmployee))
+                            continue;
+                    
+                    // Don't load duties administrator employee for employee which doesn't administrator
+                    if (IoC.Settings.Type.OriginalText != "Administrator" 
+                        && dutyResult.Employee.EmployeeType.EmployeeRole == "Administrator") continue;
 
                     // put each taken item to list
                     Items.Add ( new DutyListItemViewModel
@@ -162,6 +169,28 @@ namespace HospitalManagement.Core
                         EndShift = dutyResult.EndShift
                     } );
                 }
+        }
+
+        /// <summary>
+        /// Load duties of all employees by specialize
+        /// </summary>
+        /// <param name="specialize">The specialize of employee</param>
+        /// <returns></returns>
+        private async Task LoadDutiesByType(object specialize = null)
+        {
+            // Load duties with the specialize
+            await LoadDuties ( (string)specialize );
+            
+            // Reload page of duty list with indicated specialize
+            ReloadDutyList();
+        }
+        
+        /// <summary>
+        /// Reload duty list if changes noticed
+        /// </summary>
+        private void ReloadDutyList()
+        {
+            IoC.Application.GoToPage ( ApplicationPage.Work, new DutyListViewModel{Items = Items} );
         }
     }
 }

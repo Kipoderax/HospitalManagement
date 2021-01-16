@@ -1,6 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using HospitalManagement.Core;
 
 namespace HospitalManagement
 {
@@ -25,6 +25,25 @@ namespace HospitalManagement
                 typeof( BasePage ), 
                 typeof( PageHost ), 
                 new UIPropertyMetadata( CurrentPagePropertyChanged ) );
+        
+        /// <summary>
+        /// The currert page to show in the page host
+        /// </summary>
+        public BaseViewModel CurrentPageViewModel
+        {
+            get => (BaseViewModel) GetValue( CurrentPageViewModelProperty );
+            set => SetValue( CurrentPageViewModelProperty, value );
+        }
+
+        /// <summary>
+        /// Registers <see cref="CurrentPageViewModel"/> as a dependency property
+        /// </summary>
+        public static readonly DependencyProperty CurrentPageViewModelProperty =
+            DependencyProperty.Register( 
+                nameof( CurrentPageViewModel ),
+     typeof( BaseViewModel ),
+            typeof( PageHost ),
+                new UIPropertyMetadata() );
 
         #endregion
 

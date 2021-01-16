@@ -68,6 +68,7 @@ namespace HospitalManagement.Relational
         /// <returns>new employee</returns>
         public async Task<Employee> Register(Employee employee, string password)
         {
+            
             // Declaration hash-salt password
             byte[] passwordHash, passwordSalt;
 
