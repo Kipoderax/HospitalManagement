@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using HospitalManagement.Core;
 
 namespace HospitalManagement
 {
@@ -10,6 +11,7 @@ namespace HospitalManagement
         public SearchEmployeesControl ()
         {
             InitializeComponent();
+            DataContext = IoC.Employees;
         }
     }
 }

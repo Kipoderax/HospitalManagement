@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Dna;
 
 namespace HospitalManagement.Core
@@ -10,12 +12,17 @@ namespace HospitalManagement.Core
     /// </summary>
     public class EmployeeListViewModel : BaseViewModel
     {
-        #region Protected Members
+        #region Private Members
 
         /// <summary>
         /// The employee list items for the list
         /// </summary>
         private ObservableCollection<EmployeeListItemViewModel> _items;
+
+        /// <summary>
+        /// The employee property to filter with this property
+        /// </summary>
+        private string _inputText = string.Empty;
 
         #endregion
         
@@ -34,11 +41,35 @@ namespace HospitalManagement.Core
             }
         }
 
+        /// <summary>
+        /// The employee property to filter with this property
+        /// </summary>
+        public string InputText
+        {
+            get => _inputText;
+            set
+            {
+                _inputText = value;
+                OnPropertyChanged ( InputText );
+            }
+        }
+
+        #endregion
+
+        #region Public Commands
+
+        /// <summary>
+        /// The command to search employee
+        /// </summary>
+        public ICommand SearchEmployeeCommand { get; set; }
+
         #endregion
 
         public EmployeeListViewModel()
         {
             Items = new ObservableCollection<EmployeeListItemViewModel>();
+
+            SearchEmployeeCommand = new RelayParametrizedCommand ( async text => await SearchEmployee ( text ) );
         }
         
         /// <summary>
@@ -82,6 +113,26 @@ namespace HospitalManagement.Core
         public void AddNewEmployee(EmployeeListItemViewModel employee)
         {
             Items.Add ( employee );
+        }
+
+        /// <summary>
+        /// Search employee by text represented properties of searching employee
+        /// </summary>
+        /// <param name="text">The property of searching employee</param>
+        /// <returns></returns>
+        public async Task SearchEmployee( object text )
+        {
+            foreach ( var item in IoC.Employees.Items.ToList()
+                
+                .Where ( item => !item.Name.ToLower().Contains ( (string)text )
+                              && !item.Job.ToLower().Contains ( (string)text )
+                              && !item.Who.ToLower().Contains ( (string)text ) ) )
+                
+                                    IoC.Employees.Items.Remove ( item );
+
+            
+            if( text.ToString().IsNullOWhiteSpace() )
+                await LoadEmployees();
         }
 
         /// <summary>

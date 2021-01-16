@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HospitalManagement"
+             xmlns:core="clr-namespace:HospitalManagement.Core;assembly=HospitalManagement.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="400">
+             d:DesignHeight="400" d:DesignWidth="400"
+             DataContext="{x:Static core:EmployeeListDesignModel.Instance}">
    
    <UserControl.Template>
       <ControlTemplate TargetType="UserControl">
@@ -33,13 +35,16 @@
                     
                     <!-- Employee input text -->
                     <TextBox Tag="Pracownicy..."
-                             
+                             x:Name="EmployeeText"
+                             Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}"
                              FontFamily="{StaticResource LatoThin}"
                              FontSize="{StaticResource FontSizeSmall}"/>
                     
                     <!-- Search button -->
                     <Button Grid.Column="2"
                             Height="40"
+                            Command="{Binding SearchEmployeeCommand}"
+                            CommandParameter="{Binding InputText}"
                             Style="{StaticResource IconButton}" 
                             Content="{StaticResource FontAwesomeSearchIcon}"/>
                     
