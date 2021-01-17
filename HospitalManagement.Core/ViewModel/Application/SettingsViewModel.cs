@@ -24,12 +24,17 @@ namespace HospitalManagement.Core
         /// <summary>
         /// If we are on register employee content return true, false otherwise
         /// </summary>
-        public bool InnerPageForm { get; set; }
+        public bool IsRegisterPageForm { get; set; }
         
         /// <summary>
         /// True to show register employee button, false to hide it
         /// </summary>
         public bool IsEmployeeAdm { get; set; }
+        
+        /// <summary>
+        /// True to hide buttons of other employee profiles, false to show
+        /// </summary>
+        public bool IsOtherProfile { get; set; }
 
         #region Transactional Properties
 
@@ -180,14 +185,23 @@ namespace HospitalManagement.Core
             if (IoC.Application.NewEmployeeFormVisible)
             {
                 IoC.Application.NewEmployeeFormVisible = false;
-                InnerPageForm = false;
+                IsRegisterPageForm = false;
             }
 
             // Otherwise close settings menu
             else
             {
                 IoC.Application.SettingsMenuVisible = false;
+
+                // Set to out from employee profile
+                IoC.Settings.IsOtherProfile = false;
+
+                // Retrieve back login data employee
                 await IoC.Employees.LoadEmployeeByPesel ( IoC.Settings.Pesel );
+                
+                // Set back administrator flag if employee as administrator out from other profile
+                if( IoC.Settings.Type.OriginalText == "Administrator" )
+                    IoC.Settings.IsEmployeeAdm = true;
             }
         }
 
@@ -227,6 +241,7 @@ namespace HospitalManagement.Core
             Specialize = null;
             PwdNumber = null;
             Password = null;
+            IsEmployeeAdm = false;
             IoC.Duties.Items = null;
             IoC.Duties.EmployeeItems = null;
         }
@@ -237,7 +252,7 @@ namespace HospitalManagement.Core
         private void NewEmployee()
         {
             IoC.Application.NewEmployeeFormVisible = true;
-            InnerPageForm = true;
+            IsRegisterPageForm = true;
         }
 
         /// <summary>

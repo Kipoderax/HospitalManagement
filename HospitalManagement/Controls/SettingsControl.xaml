@@ -104,7 +104,7 @@
                       HorizontalAlignment="Left"
                       Foreground="{StaticResource WordBlueBrush}"
                       Command="{Binding AttachmentButtonCommand}"
-                      Visibility="{Binding InnerPageForm, Converter={local:BooleanToVisibilityConverter}}"
+                      Visibility="{Binding IsRegisterPageForm, Converter={local:BooleanToVisibilityConverter}}"
                       />
           
              <!-- Personal details -->
@@ -126,15 +126,27 @@
                            Command="{Binding NewEmployeeCommand}"
                            Width="140"
                            Padding="10"
-                           Visibility="{Binding IsEmployeeAdm, 
-                                        Converter={local:BooleanToVisibilityConverter}, 
-                                        ConverterParameter=True}"/>
+                           >
+                      
+                      <!-- Hide buttons if administrator overview other profile -->
+                      <Button.Visibility>
+                         
+                         <MultiBinding Converter="{local:BooleanMultipleToVisibilityConverter}" ConverterParameter="True">
+                            <Binding Path="IsEmployeeAdm"/>
+                            <Binding Path="IsOtherProfile"/>
+                         </MultiBinding>
+                         
+                      </Button.Visibility>
+                      
+                   </Button>
                    
                    <!-- Logout Button -->
                    <Button Content="{Binding LogoutButtonText}"
                             Command="{Binding LogoutCommand}"
                             FontSize="{StaticResource FontSizeRegular}"
-                            Margin="70 10 0 10"/>
+                            Margin="70 10 0 10"
+                            Visibility="{Binding IsOtherProfile,
+                                         Converter={local:BooleanToVisibilityConverter}}"/>
 
                 </StackPanel>
                 

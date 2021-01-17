@@ -120,9 +120,16 @@ namespace HospitalManagement.Core
                 IoC.Settings.Type.OriginalText = dataEmployee.Type;
                 IoC.Settings.Specialize.OriginalText = dataEmployee.Specialize;
                 IoC.Settings.PwdNumber.OriginalText = dataEmployee.NumberPwz;
+                
+                HideButtonsInOtherProfile();
+                IoC.Application.SettingsMenuVisible = true;
             }
+        }
 
-            IoC.Application.SettingsMenuVisible = true;
+        private void HideButtonsInOtherProfile()
+        {
+            IoC.Settings.IsEmployeeAdm = false;
+            IoC.Settings.IsOtherProfile = true;
         }
     }
 }

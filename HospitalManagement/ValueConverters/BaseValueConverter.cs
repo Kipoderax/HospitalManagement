@@ -9,7 +9,7 @@ namespace HospitalManagement
     /// a base value converter that allows direct XAML usage
     /// </summary>
     /// <typeparam name="T">The type of this value converter</typeparam>
-    public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter
+    public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter, IMultiValueConverter
         where T : class, new()
     {
         #region Private Members
@@ -64,5 +64,15 @@ namespace HospitalManagement
         }
 
         #endregion
+
+        public virtual object Convert( object[] values, Type targetType, object parameter, CultureInfo culture )
+        {
+            throw new NotImplementedException();
+        }
+
+        public object[] ConvertBack( object value, Type[] targetTypes, object parameter, CultureInfo culture )
+        {
+            throw new NotImplementedException();
+        }
     }
 }
