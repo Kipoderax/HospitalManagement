@@ -165,7 +165,7 @@ namespace HospitalManagement
         /// <summary>
         /// Default constructor
         /// </summary>
-        public BasePage () : base()
+        public BasePage ()
         {
             // Create a default view model
             ViewModel = new VM();

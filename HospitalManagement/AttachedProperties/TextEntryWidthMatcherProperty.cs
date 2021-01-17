@@ -12,7 +12,7 @@ namespace HospitalManagement
         public override void OnValueChanged ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
         {
             // Get the frame (grid typically)
-            var panel = (sender as Panel);
+            var panel = sender as Panel;
 
             // Call SetWidths initially (this also helps design time to show the right to work)
             SetWidths(panel);

@@ -19,6 +19,15 @@
                   <Border CornerRadius="10"
                           Padding="15"
                           Background="{StaticResource BackgroundLightBrush}">
+                     
+                     <!-- Click selected duty to open calendar for edit -->
+                     <Border.InputBindings>
+                           
+                        <MouseBinding MouseAction="LeftDoubleClick"
+                                      Command="{Binding EditDutyCommand}"
+                                      CommandParameter="{Binding StartShift}"/>
+                           
+                     </Border.InputBindings>
                   
                      <!-- Duty Information -->
                      <Grid >

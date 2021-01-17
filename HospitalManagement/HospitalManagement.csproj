@@ -41,10 +41,7 @@
     <Resource Include="Images\EmployeeTypes\Doctor.png" />
     <Resource Include="Images\EmployeeTypes\pielegniarka.jpg" />
     <Resource Include="Images\EmployeeTypes\Administrator.png" />
-    <Resource Include="Images\Backgrounds\main.png" />
     <Resource Include="Images\Backgrounds\bloodcells.png" />
-    <Resource Include="Images\Logo\virus-small.png" />
-    <Resource Include="Images\Logo\virus.png" />
     <Resource Include="Images\Logo\logo-virus.png" />
   </ItemGroup>
 

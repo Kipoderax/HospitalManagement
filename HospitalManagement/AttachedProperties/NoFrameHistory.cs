@@ -11,7 +11,7 @@ namespace HospitalManagement
     {
         public override void OnValueChanged ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
         {
-            var frame = (sender as Frame);
+            var frame = sender as Frame;
 
             // Hide navigation bar
             frame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
