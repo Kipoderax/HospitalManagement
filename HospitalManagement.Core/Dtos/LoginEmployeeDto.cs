@@ -18,10 +18,5 @@
         public string Password { get; set; }
 
         #endregion
-
-        public LoginEmployeeDto ()
-        {
-
-        }
     }
 }

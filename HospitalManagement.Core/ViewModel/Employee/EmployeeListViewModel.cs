@@ -65,12 +65,46 @@ namespace HospitalManagement.Core
 
         #endregion
 
+        #region Constructor
+
         public EmployeeListViewModel()
         {
             Items = new ObservableCollection<EmployeeListItemViewModel>();
 
             SearchEmployeeCommand = new RelayParametrizedCommand ( async text => await SearchEmployee ( text ) );
         }
+        
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Search employee by text represented properties of searching employee
+        /// </summary>
+        /// <param name="text">The property of searching employee</param>
+        /// <returns></returns>
+        public async Task SearchEmployee( object text )
+        {
+            // Load again employee for access searching employee
+            await LoadEmployees();
+            
+            // Remove all duties which don't mismatch input text
+            foreach ( var item in IoC.Employees.Items.ToList()
+                
+                .Where ( item => !item.Name.ToLower().Contains ( (string)text )
+                                 && !item.Job.ToLower().Contains ( (string)text )
+                                 && !item.Who.ToLower().Contains ( (string)text ) ) )
+                
+                IoC.Employees.Items.Remove ( item );
+
+            // If employee nothing write then load all duties
+            if( text.ToString().IsNullOWhiteSpace() )
+                await LoadEmployees();
+        }
+
+        #endregion
+
+        #region Public Methods
         
         /// <summary>
         /// Loads employees to application list for overview by other employees
@@ -147,31 +181,11 @@ namespace HospitalManagement.Core
         {
             Items.Add ( employee );
         }
+        
+        #endregion
 
-        /// <summary>
-        /// Search employee by text represented properties of searching employee
-        /// </summary>
-        /// <param name="text">The property of searching employee</param>
-        /// <returns></returns>
-        public async Task SearchEmployee( object text )
-        {
-            // Load again employee for access searching employee
-            await LoadEmployees();
-            
-            // Remove all duties which don't mismatch input text
-            foreach ( var item in IoC.Employees.Items.ToList()
-                
-                .Where ( item => !item.Name.ToLower().Contains ( (string)text )
-                              && !item.Job.ToLower().Contains ( (string)text )
-                              && !item.Who.ToLower().Contains ( (string)text ) ) )
-                
-                                    IoC.Employees.Items.Remove ( item );
-
-            // If employee nothing write then load all duties
-            if( text.ToString().IsNullOWhiteSpace() )
-                await LoadEmployees();
-        }
-
+        #region Private Methods
+        
         /// <summary>
         /// Decorate initial profile in the employee list with picture and border color
         /// depend on type
@@ -199,5 +213,7 @@ namespace HospitalManagement.Core
                     break;
             }
         }
+        
+        #endregion
     }
 }

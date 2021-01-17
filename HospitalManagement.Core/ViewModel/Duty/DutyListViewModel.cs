@@ -13,14 +13,9 @@ namespace HospitalManagement.Core
     public class DutyListViewModel : BaseViewModel
     {
         #region Private Members
-
-        /// <summary>
-        /// The duty list items for the list
-        /// </summary>
+        
         private ObservableCollection<DutyListItemViewModel> _items;
-
         private ObservableCollection<DutyListItemViewModel> _employeeItems;
-
         private string _selectedSpecialize = "Wszyscy";
 
         #endregion
@@ -43,6 +38,9 @@ namespace HospitalManagement.Core
             }
         }
 
+        /// <summary>
+        /// The employee duty list items for the list with real-time update after each change on the user scope
+        /// </summary>
         public ObservableCollection<DutyListItemViewModel> EmployeeItems
         {
             get => _employeeItems;
@@ -56,6 +54,9 @@ namespace HospitalManagement.Core
             }
         }
 
+        /// <summary>
+        /// Specialize from combo box to overview employee list by selected 
+        /// </summary>
         public string SelectedSpecialize
         {
             get => _selectedSpecialize;
@@ -84,17 +85,50 @@ namespace HospitalManagement.Core
         {
             Items = new ObservableCollection<DutyListItemViewModel>();
             
-            SpecializeCommand = new RelayParametrizedCommand(async specialize => await LoadDutiesByType(specialize));
+            SpecializeCommand = new RelayParametrizedCommand(async specialize => await LoadDutiesByTypeAsync(specialize));
         }
 
         #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Load duties of all employees by specialize
+        /// </summary>
+        /// <param name="specialize">The specialize of employee</param>
+        /// <returns></returns>
+        private async Task LoadDutiesByTypeAsync(object specialize = null)
+        {
+            // Load duties with the specialize
+            await LoadDutiesAsync ();
+            
+            
+            // If clicked Wszyscy do nothing
+            if (specialize != null && specialize.Equals ( "Wszyscy" )) return;
+            
+
+            // For each employee duties which not contain selected specialize remove from list
+            foreach ( var itemViewModel in IoC.Duties.Items.ToList()
+                .Where ( itemViewModel => specialize != null 
+                                          && !specialize.Equals ( itemViewModel.JobName ) ) )
+            
+                IoC.Duties.Items.Remove(itemViewModel);
+            
+            
+            // Reload page of duty list with indicated specialize
+            ReloadDutyList();
+        }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Load employee duties to employee settings view
         /// </summary>
         /// <param name="username">The employee username</param>
         /// <returns></returns>
-        public async Task LoadEmployeeDuties(string username)
+        public async Task LoadEmployeeDutiesAsync(string username)
         {
             EmployeeItems ??= new ObservableCollection<DutyListItemViewModel>();
             
@@ -127,7 +161,7 @@ namespace HospitalManagement.Core
         /// Load duties of each employee to main list
         /// </summary>
         /// <returns></returns>
-        public async Task LoadDuties()
+        public async Task LoadDutiesAsync()
         {
             // Make sure duty list not null
             Items ??= new ObservableCollection<DutyListItemViewModel>();
@@ -166,43 +200,16 @@ namespace HospitalManagement.Core
                     
                 }
         }
-
-        /// <summary>
-        /// Load duties of all employees by specialize
-        /// </summary>
-        /// <param name="specialize">The specialize of employee</param>
-        /// <returns></returns>
-        private async Task LoadDutiesByType(object specialize = null)
-        {
-            // Load duties with the specialize
-            await LoadDuties ();
-            
-            
-            // If clicked Wszyscy do nothing
-            if (specialize != null && specialize.Equals ( "Wszyscy" )) return;
-            
-
-            // For each employee duties which not contain selected specialize remove from list
-            foreach ( var itemViewModel in IoC.Duties.Items.ToList()
-                .Where ( itemViewModel => specialize != null 
-                                       && !specialize.Equals ( itemViewModel.JobName ) ) )
-            
-                    IoC.Duties.Items.Remove(itemViewModel);
-            
-            
-            // Reload page of duty list with indicated specialize
-            ReloadDutyList();
-        }
-
+        
         /// <summary>
         /// Load duties of the selected employee
         /// </summary>
         /// <param name="username">The username selected employee</param>
         /// <returns></returns>
-        public async Task LoadDutiesBySelectedEmployee( string username )
+        public async Task LoadDutiesBySelectedEmployeeAsync( string username )
         {
             // Load duties with the specialize
-            await LoadDuties ();
+            await LoadDutiesAsync ();
 
             // Show duties for only one selected employee by username
             foreach ( var itemViewModel in IoC.Duties.Items.ToList()
@@ -216,6 +223,10 @@ namespace HospitalManagement.Core
             ReloadDutyList();
         }
 
+        #endregion
+
+        #region Private Methods
+
         /// <summary>
         /// Reload duty list if changes noticed
         /// </summary>
@@ -223,5 +234,7 @@ namespace HospitalManagement.Core
         {
             IoC.Application.GoToPage ( ApplicationPage.Work, new DutyListViewModel{Items = IoC.Duties.Items} );
         }
+
+        #endregion
     }
 }

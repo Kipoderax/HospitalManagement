@@ -95,6 +95,8 @@ namespace HospitalManagement.Core
 
         #endregion
 
+        #region Command Methods
+
         public async Task RegisterAsync()
         {
             await RunCommandAsync( () => RegisterIsRunning, async () =>
@@ -134,5 +136,7 @@ namespace HospitalManagement.Core
                 await Task.Delay( 1000 );
             } );
         }
+
+        #endregion
     }
 }

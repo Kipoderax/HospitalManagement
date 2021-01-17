@@ -40,7 +40,7 @@ namespace HospitalManagement.Web.Server
         [Route("employees")]
         public async Task<ApiResponse<IEnumerable<EmployeeResultApiModel>>> GetAllEmployees()
         {
-            var employee = await _employeeRepository.GetEmployees();
+            var employee = await _employeeRepository.GetEmployeesAsync();
 
             var employeeApi = _mapper.Map<IEnumerable<EmployeeResultApiModel>> ( employee );
             
@@ -54,7 +54,7 @@ namespace HospitalManagement.Web.Server
         public async Task<ApiResponse<LoginResultApiModel>> GetEmployeeByPesel( string pesel )
         {
             // Get employee from repo
-            var employee = await _employeeRepository.GetEmployeeByPesel ( pesel );
+            var employee = await _employeeRepository.GetEmployeeByPeselAsync ( pesel );
 
             // Make sure employee is not null
             if (employee == null)
@@ -84,7 +84,7 @@ namespace HospitalManagement.Web.Server
         public async Task<ApiResponse<LoginResultApiModel>> GetEmployeeByUsername( string username )
         {
             // Get employee from repo
-            var employee = await _employeeRepository.GetEmployeeByNameAndLastName ( username );
+            var employee = await _employeeRepository.GetEmployeeByNameAndLastNameAsync ( username );
 
             // Make sure employee is not null
             if (employee == null)

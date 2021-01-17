@@ -46,6 +46,8 @@ namespace HospitalManagement.Core
 
         #endregion
 
+        #region Command Methods
+
         /// <summary>
         /// Employee authentication
         /// </summary>
@@ -54,48 +56,50 @@ namespace HospitalManagement.Core
         public async Task LoginAsync(object parameter)
         {
             await RunCommandAsync( () => LoginIsRunning, async () =>
-             {
-                 // Call the server and attempt to login with credentials
-                 // TODO: Move all URLs and API routes to static class in core
-                 var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
-                     "http://localhost:5000/api/auth/login",
-                     new LoginEmployeeDto
-                     {
-                         Identify = MyIdentify,
-                         Password = (parameter as IHavePassword)?.SecurePassword.UnSecure()
-                     } );
+            {
+                // Call the server and attempt to login with credentials
+                // TODO: Move all URLs and API routes to static class in core
+                var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
+                    "http://localhost:5000/api/auth/login",
+                    new LoginEmployeeDto
+                    {
+                        Identify = MyIdentify,
+                        Password = (parameter as IHavePassword)?.SecurePassword.UnSecure()
+                    } );
 
-                 // If there was no response, bad data or a response with a error message
-                 if (result.DisplayErrorIfFailedAsync( "Login failed" ))
-                     return;
+                // If there was no response, bad data or a response with a error message
+                if (result.DisplayErrorIfFailedAsync( "Login failed" ))
+                    return;
 
-                 // Ok successfully logged in.. now get employee data
-                 var employeeData = result.ServerResponse.Response;
+                // Ok successfully logged in.. now get employee data
+                var employeeData = result.ServerResponse.Response;
 
-                 IoC.Settings.Pesel = employeeData.Pesel;
-                 IoC.Settings.Token = result.ServerResponse.Response.Token;
-                 IoC.Settings.FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = employeeData?.FirstName };
-                 IoC.Settings.LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = employeeData?.LastName };
-                 IoC.Settings.Identify = new TextEntryViewModel { Label = "Identyfikator", OriginalText = employeeData?.Username };
-                 IoC.Settings.Type = new TextEntryViewModel { Label = "Posada", OriginalText = employeeData?.Type };
-                 IoC.Settings.Specialize = new TextEntryViewModel { Label = "Specjalizacja", OriginalText = employeeData?.Specialize };
-                 IoC.Settings.PwdNumber = new TextEntryViewModel { Label = "Numer PWD", OriginalText = employeeData?.NumberPwz };
-                 IoC.Settings.Password = new PasswordEntryViewModel { Label = "Hasło", FakePassword = "********" };
+                IoC.Settings.Pesel = employeeData.Pesel;
+                IoC.Settings.Token = result.ServerResponse.Response.Token;
+                IoC.Settings.FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = employeeData?.FirstName };
+                IoC.Settings.LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = employeeData?.LastName };
+                IoC.Settings.Identify = new TextEntryViewModel { Label = "Identyfikator", OriginalText = employeeData?.Username };
+                IoC.Settings.Type = new TextEntryViewModel { Label = "Posada", OriginalText = employeeData?.Type };
+                IoC.Settings.Specialize = new TextEntryViewModel { Label = "Specjalizacja", OriginalText = employeeData?.Specialize };
+                IoC.Settings.PwdNumber = new TextEntryViewModel { Label = "Numer PWD", OriginalText = employeeData?.NumberPwz };
+                IoC.Settings.Password = new PasswordEntryViewModel { Label = "Hasło", FakePassword = "********" };
 
-                 if (employeeData != null && employeeData.Type == "Administrator")
-                     IoC.Settings.IsEmployeeAdm = true;
+                if (employeeData != null && employeeData.Type == "Administrator")
+                    IoC.Settings.IsEmployeeAdm = true;
 
-                 // and get employee data
-                 await IoC.Employees.LoadEmployees();
+                // and get employee data
+                await IoC.Employees.LoadEmployees();
 
-                 await IoC.Duties.LoadDuties();
-                 await IoC.Duties.LoadEmployeeDuties(employeeData?.Username);
+                await IoC.Duties.LoadDutiesAsync();
+                await IoC.Duties.LoadEmployeeDutiesAsync(employeeData?.Username);
 
-                 await Task.Delay( 2000 );
+                await Task.Delay( 2000 );
 
-                 // Go to work page
-                 IoC.Get<ApplicationViewModel>().GoToPage( ApplicationPage.Work );
-             } );
+                // Go to work page
+                IoC.Get<ApplicationViewModel>().GoToPage( ApplicationPage.Work );
+            } );
         }
+
+        #endregion
     }
 }

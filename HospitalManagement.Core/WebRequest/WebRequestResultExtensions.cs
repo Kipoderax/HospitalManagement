@@ -1,5 +1,4 @@
 ﻿using Dna;
-using System.Threading.Tasks;
 
 namespace HospitalManagement.Core
 {

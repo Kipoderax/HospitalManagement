@@ -40,7 +40,7 @@ namespace HospitalManagement.Relational
         /// <param name="username">Unique username</param>
         /// <param name="password">Employee password</param>
         /// <returns>login employee</returns>
-        public async Task<Employee> Login(string username, string password)
+        public async Task<Employee> LoginAsync(string username, string password)
         {
             // Find employee with username
             Employee employee = await _context.Employees
@@ -66,7 +66,7 @@ namespace HospitalManagement.Relational
         /// <param name="employee">Set data of employee to register</param>
         /// <param name="password">Password of the employee</param>
         /// <returns>new employee</returns>
-        public async Task<Employee> Register(Employee employee, string password)
+        public async Task<Employee> RegisterAsync(Employee employee, string password)
         {
             
             // Declaration hash-salt password
@@ -78,8 +78,7 @@ namespace HospitalManagement.Relational
             // Assign encrypt password before save to database
             employee.PasswordHash = passwordHash;
             employee.PasswordSalt = passwordSalt;
-
-            //
+            
             await _context.Employees.AddAsync(employee);
             await _context.SaveChangesAsync();
 
@@ -91,14 +90,9 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="username">username of the employee to register</param>
         /// <returns>True if employee with that username exist, otherwise false</returns>
-        public async Task<bool> EmployeeExists(string username)
+        public async Task<bool> EmployeeExistsAsync(string username)
         {
-            // If username exist in database
-            if (await _context.Employees.AnyAsync(u => u.Username == username))
-                return true;
-
-            // Otherwise
-            return false;
+            return await _context.Employees.AnyAsync(u => u.Username == username);
         }
 
         #endregion

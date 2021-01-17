@@ -5,9 +5,13 @@
     /// </summary>
     public class EmployeeResultApiModel
     {
+        #region Public Properties
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public EmployeeSpecializeDto EmployeeSpecialize { get; set; }
         public EmployeeTypeDto EmployeeType { get; set; }
+
+        #endregion
     }
 }

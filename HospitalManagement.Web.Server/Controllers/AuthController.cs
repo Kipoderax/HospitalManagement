@@ -46,6 +46,7 @@ namespace HospitalManagement.Web.Server
 
         #endregion
 
+        // TODO: Regex check for correct string properties to register
         /// <summary>
         /// Register new employee on the server
         /// </summary>
@@ -102,8 +103,8 @@ namespace HospitalManagement.Web.Server
 
             string username = employeeDto?.FirstName.Substring( 0, 1 ) + employeeDto.LastName.Substring( 0, 1 ) + employeeDto?.Pesel[6..];
             // Make sure that employee with this username not exist
-            if (await _authRepository.EmployeeExists( username ))
-                return new ApiResponse<RegisterResultApiModel>()
+            if (await _authRepository.EmployeeExistsAsync( username ))
+                return new ApiResponse<RegisterResultApiModel>
                 {
                     //TODO: Localize strings
                     ErrorMessage = "Pracownik z takim numerem pesel już istnieje"
@@ -143,7 +144,7 @@ namespace HospitalManagement.Web.Server
 
 
             // Saving new account to database
-            var createdEmployee = await _authRepository.Register( employeeToCreate, employeeDto.Pesel );
+            var createdEmployee = await _authRepository.RegisterAsync( employeeToCreate, employeeDto.Pesel );
 
             return new ApiResponse<RegisterResultApiModel>
             {
@@ -170,7 +171,7 @@ namespace HospitalManagement.Web.Server
         public async Task<ApiResponse<LoginResultApiModel>> LoginAsync( [FromBody] LoginEmployeeDto loginDto )
         {
             // Get employee from repo
-            var employee = await _authRepository.Login( loginDto?.Identify, loginDto?.Password );
+            var employee = await _authRepository.LoginAsync( loginDto?.Identify, loginDto?.Password );
 
             // Make sure employee is not null
             if (employee == null)
@@ -192,7 +193,7 @@ namespace HospitalManagement.Web.Server
             // Generate credentials of our token
             var tokenCredentials = new SigningCredentials( tokenKey, SecurityAlgorithms.HmacSha512Signature );
 
-            // 
+            // Token options
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity( claims ),
@@ -220,12 +221,13 @@ namespace HospitalManagement.Web.Server
             };
         }
 
+        // TODO: Regex check for correct string property to update
         [HttpPost("update")]
         public async Task<ApiResponse<UpdateEmployeeDto>> UpdateAsync(UpdateEmployeeDto updateDto)
         {
             #region Get Employee
 
-            var employee = await _employeeRepository.GetEmployeeByUsername( updateDto.Username );
+            var employee = await _employeeRepository.GetEmployeeByUsernameAsync( updateDto.Username );
 
             if (employee == null)
                 return new ApiResponse<UpdateEmployeeDto>

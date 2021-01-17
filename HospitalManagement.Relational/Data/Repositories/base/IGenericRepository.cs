@@ -32,6 +32,6 @@ namespace HospitalManagement.Relational
         /// Adding entity from repository to database
         /// </summary>
         /// <returns></returns>
-        Task<bool> SaveAll ();
+        Task<bool> SaveAllAsync ();
     }
 }

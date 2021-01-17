@@ -39,7 +39,7 @@ namespace HospitalManagement.Relational
         /// Get list of all employees
         /// </summary>
         /// <returns>All employees</returns>
-        public async Task<IEnumerable<Employee>> GetEmployees ()
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync ()
         {
             var employees = await _dataContext.Employees.
                 
@@ -59,7 +59,7 @@ namespace HospitalManagement.Relational
         /// NOTE: Should invoke while administrator of this application isn't login
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Employee>> GetNoAdmEmployees ()
+        public async Task<IEnumerable<Employee>> GetNoAdmEmployeesAsync ()
         {
             // Get no adm employees to list
             // TODO: Localize string
@@ -78,12 +78,13 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="username">Username of the employee</param>
         /// <returns></returns>
-        public async Task<Employee> GetEmployeeByUsername ( string username )
+        public async Task<Employee> GetEmployeeByUsernameAsync ( string username )
         {
             // Employee with his duties
             var employee = await _dataContext.Employees
                 .Include ( t => t.EmployeeType )
                 .Include ( s => s.EmployeeSpecialize )
+                .Include ( d => d.EmployeeDuties )
                 .FirstOrDefaultAsync( e => e.Username == username );
 
             return employee;
@@ -94,7 +95,7 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="username">Username of the employee</param>
         /// <returns></returns>
-        public async Task<Employee> GetEmployeeByNameAndLastName ( string username )
+        public async Task<Employee> GetEmployeeByNameAndLastNameAsync ( string username )
         {
             var fullName = username.Split ( ' ' );
             
@@ -114,7 +115,7 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="pesel">The employee pesel</param>
         /// <returns></returns>
-        public async Task<Employee> GetEmployeeByPesel( string pesel )
+        public async Task<Employee> GetEmployeeByPeselAsync( string pesel )
         {
             // Employee with his duties
             var employee = await _dataContext.Employees

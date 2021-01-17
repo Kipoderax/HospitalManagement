@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalManagement.Core;
@@ -39,13 +38,15 @@ namespace HospitalManagement.Relational
         }
         
         #endregion
-        
+
+        #region Implemented Methods
+
         /// <summary>
         /// Get list duties of the specify employee
         /// </summary>
         /// <param name="username">The employee username</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Duty>> FindEmployeeDutiesByUsername( string username )
+        public async Task<IEnumerable<Duty>> FindEmployeeDutiesByUsernameAsync( string username )
         {
             var duty = await _dataContext.Duties
                     
@@ -58,10 +59,27 @@ namespace HospitalManagement.Relational
         }
 
         /// <summary>
+        /// Get duty by username and start shift
+        /// </summary>
+        /// <param name="dutyDto">The employee duty information to find</param>
+        /// <returns></returns>
+        public async Task<Duty> FindEmployeeDutyByStartShiftAndUsernameAsync( DutyDto dutyDto )
+        {
+            var duty = await _dataContext.Duties
+
+                // filter by logged employee
+                .Where ( u => u.Employee.Username == dutyDto.Employee.Username )
+                .Where ( s => s.StartShift == dutyDto.Employee.EmployeeDuties.First().StartShift )
+                .FirstAsync();
+
+            return duty;
+        }
+
+        /// <summary>
         /// Get duties list of all employees
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Duty>> GetEmployeeDuties()
+        public async Task<IEnumerable<Duty>> GetEmployeeDutiesAsync()
         {
             var duties = await _dataContext.Duties
                 .Include ( e => e.Employee )
@@ -73,7 +91,11 @@ namespace HospitalManagement.Relational
             return duties;
         }
 
-        public async Task<IEnumerable<Duty>> GetNoAdmEmployeeDuties()
+        /// <summary>
+        /// Get duties of employees aren't administrator
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Duty>> GetNoAdmEmployeeDutiesAsync()
         {
             var duties = await _dataContext.Duties
                 .Include ( e => e.Employee )
@@ -96,7 +118,7 @@ namespace HospitalManagement.Relational
             var duty = new Duty();
             
             // Get id of the employee for connect with them duties   
-            var employeeId = await _employeeRepository.GetEmployeeByUsername ( dutyDto.Employee.Username );
+            var employeeId = await _employeeRepository.GetEmployeeByUsernameAsync ( dutyDto.Employee.Username );
 
             // Assign to duty model
             duty.StartShift = dutyDto.StartShift;
@@ -109,5 +131,7 @@ namespace HospitalManagement.Relational
             // Save finally
             return await _dataContext.SaveChangesAsync() > 0;
         }
+
+        #endregion
     }
 }

@@ -16,7 +16,7 @@ namespace HospitalManagement.Core
         public AutoMapperProfiles()
         {
             EmployeeForEmployeeResultApiModel();
-            EmployeeForDutyResultApiModel();
+            DutyForDutyResultApiModel();
         }
 
         #endregion
@@ -37,7 +37,10 @@ namespace HospitalManagement.Core
             
         }
 
-        private void EmployeeForDutyResultApiModel()
+        /// <summary>
+        /// Convert duty model to duty dto
+        /// </summary>
+        private void DutyForDutyResultApiModel()
         {
             CreateMap<Duty, DutyDto>()
                 .ForMember (

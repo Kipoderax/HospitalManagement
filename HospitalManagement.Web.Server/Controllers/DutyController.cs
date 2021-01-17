@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HospitalManagement.Core;
 using HospitalManagement.Relational;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace HospitalManagement.Web.Server
 {
@@ -16,7 +16,7 @@ namespace HospitalManagement.Web.Server
         #region Private Members
 
         private readonly IDutyRepository _dutyRepository;
-        private readonly IConfiguration _config;
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
@@ -25,12 +25,12 @@ namespace HospitalManagement.Web.Server
         #region Constructor
 
         public DutyController(IDutyRepository dutyRepository,
-            IConfiguration config,
+            IEmployeeRepository employeeRepository,
             DataContext context,
             IMapper mapper)
         {
             _dutyRepository = dutyRepository;
-            _config = config;
+            _employeeRepository = employeeRepository;
             _context = context;
             _mapper = mapper;
         }
@@ -40,7 +40,7 @@ namespace HospitalManagement.Web.Server
         [Route("{username}")]
         public async Task<ApiResponse<IEnumerable<DutyDto>>> GetAllEmployeeDutiesAsync(string username)
         {
-            var employeeDuties = await _dutyRepository.FindEmployeeDutiesByUsername(username);
+            var employeeDuties = await _dutyRepository.FindEmployeeDutiesByUsernameAsync(username);
 
             var employeeDutyApi = _mapper.Map<List<DutyDto>> ( employeeDuties );
             
@@ -52,7 +52,7 @@ namespace HospitalManagement.Web.Server
 
         public async Task<ApiResponse<IEnumerable<DutyDto>>> GetAllDutiesAsync()
         {
-            var duties = await _dutyRepository.GetEmployeeDuties();
+            var duties = await _dutyRepository.GetEmployeeDutiesAsync();
 
             var dutiesApi = _mapper.Map<List<DutyDto>> ( duties );
 
@@ -63,7 +63,7 @@ namespace HospitalManagement.Web.Server
         }
 
         [Route ( "add" )]
-        public async Task<ApiResponse<DutyDto>> Register( DutyDto dutyDto )
+        public async Task<ApiResponse<DutyDto>> RegisterAsync( DutyDto dutyDto )
         {
             // If something was wrong
             if( !await _dutyRepository.AddDutyAsync ( dutyDto ) )
@@ -72,6 +72,34 @@ namespace HospitalManagement.Web.Server
                 return new ApiResponse<DutyDto>();
 
             // Otherwise return new duty object
+            return new ApiResponse<DutyDto>
+            {
+                Response = new DutyDto
+                {
+                    StartShift = dutyDto.StartShift,
+                    EndShift = dutyDto.EndShift,
+                    Employee = dutyDto.Employee
+                }
+            };
+        }
+
+        [Route ("edit")]
+        public async Task<ApiResponse<DutyDto>> UpdateAsync( DutyDto dutyDto )
+        {
+            
+            var employee = await _employeeRepository.GetEmployeeByUsernameAsync ( dutyDto.Employee.Username );
+            var dutyToUpdate = await _dutyRepository.FindEmployeeDutyByStartShiftAndUsernameAsync ( dutyDto );
+            
+            if (dutyDto.StartShift == dutyDto.Employee.EmployeeDuties.First().StartShift)
+                return new ApiResponse<DutyDto>();
+
+            dutyToUpdate.StartShift = dutyDto.StartShift;
+            dutyToUpdate.EndShift = dutyDto.EndShift;
+            dutyToUpdate.Employee.UserId = employee.UserId;
+
+            _dutyRepository.Update ( dutyToUpdate );
+            await _context.SaveChangesAsync();
+
             return new ApiResponse<DutyDto>
             {
                 Response = new DutyDto

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HospitalManagement.Core
+﻿namespace HospitalManagement.Core
 {
     /// <summary>
     /// Simply object of our employee entity for use in view application

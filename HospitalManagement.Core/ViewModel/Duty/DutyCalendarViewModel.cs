@@ -1,5 +1,6 @@
 ﻿using Dna;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -122,7 +123,7 @@ namespace HospitalManagement.Core
             Start = DateTime.Now.AddDays( 30 );
             End = Start.AddMonths( 1 );
 
-            AddDutyCommand = new RelayCommand ( async () => await AddDutyAsync() );
+            AddDutyCommand = new RelayCommand ( async () => await DutyAsync() );
         }
 
         #endregion
@@ -131,21 +132,27 @@ namespace HospitalManagement.Core
 
         /// <summary>
         /// Add duty by login employee or administrator
+        /// or edit if edit mode is true
         /// NOTE: username null means that duty add by login employee
         ///       otherwise duty is adding by administrator for employee which have
         ///       this username
         /// </summary>
         /// <param name="username">The employee username</param>
         /// <returns></returns>
-        public async Task AddDutyAsync(string username = null)
+        public async Task DutyAsync(string username = null)
         {
-            //await IoC.Duties.LoadDuties ( "Neurolog" );
             var employee = new Employee();
+            var duty = new Duty();
+            
             await RunCommandAsync ( () => AddDutyIsRunning, async () =>
-            { 
-                
+            {
                 // Check if username is not null
                 employee.Username = username ?? IoC.Settings.Identify.OriginalText;
+
+
+                // Check if input time is correct
+                if( !DutyValidate.IsTimeCorrect(HourTime, MinutTime) )
+                    return false;
                 
                 
                 // Check if no exist duty with specialize contain by employee add for
@@ -166,24 +173,50 @@ namespace HospitalManagement.Core
                 // Check if employee in selected month have more than 10 duties
                 if( DutyValidate.AmountDutiesInMoth ( SelectedDate ) >= 10 )
                     return false;
-                
 
-                var result = await WebRequests.PostAsync<ApiResponse<DutyDto>> (
-                    "http://localhost:5000/api/duties/add",
-                    new DutyDto
-                    {
-                        StartShift = SelectedDate.Date.Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
-                        EndShift = SelectedDate.AddDays ( 1 ).Date.Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
-                        Employee = employee
-                    },
-                    bearerToken: IoC.Settings.Token
-                );
+                WebRequestResult<ApiResponse<DutyDto>> result;
+                
+                // Go to add request if edit mode is true
+                if (!IoC.Settings.IsEditMode)
+                    
+                     result = await WebRequests.PostAsync<ApiResponse<DutyDto>> (
+                        "http://localhost:5000/api/duties/add",
+                        new DutyDto
+                        {
+                            StartShift = SelectedDate.Date.Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
+                            EndShift = SelectedDate.AddDays ( 1 ).Date.Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
+                            Employee = employee
+                        },
+                        bearerToken: IoC.Settings.Token
+                    );
+                
+                // Otherwise go to edit request
+                else
+                {
+                    
+                    duty.StartShift = DateTime.Parse ( IoC.Settings.SelectedDate );
+                    employee.EmployeeDuties = new List<Duty> { duty };
+                    
+                    result = await WebRequests.PostAsync<ApiResponse<DutyDto>> (
+                        "http://localhost:5000/api/duties/edit",
+                        new DutyDto
+                        {
+                            StartShift = SelectedDate.Date.Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
+                            EndShift = SelectedDate.AddDays ( 1 ).Date
+                                .Add ( TimeSpan.Parse ( HourTime + ":" + MinutTime ) ),
+                            Employee = employee
+                        },
+                        bearerToken: IoC.Settings.Token
+                    );
+                    
+                }
 
 
                 // TODO: Add error messages
-                if( !result.Successful ) return true;
+                if( !result.Successful ) return false;
 
-                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+                await IoC.Duties.LoadDutiesAsync();
+                await IoC.Duties.LoadEmployeeDutiesAsync ( IoC.Settings.Identify.OriginalText );
 
                 return true;
             } );

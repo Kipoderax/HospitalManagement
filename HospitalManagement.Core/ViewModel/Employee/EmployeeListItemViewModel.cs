@@ -85,7 +85,7 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         private async Task DutiesSelectedEmployeeAsync(object selected)
         {
-            await IoC.Duties.LoadDutiesBySelectedEmployee ( (string)selected );
+            await IoC.Duties.LoadDutiesBySelectedEmployeeAsync ( (string)selected );
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace HospitalManagement.Core
                 IoC.Settings.Specialize.OriginalText = dataEmployee.Specialize;
                 IoC.Settings.PwdNumber.OriginalText = dataEmployee.NumberPwz;
 
-                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+                await IoC.Duties.LoadEmployeeDutiesAsync ( IoC.Settings.Identify.OriginalText );
                 
                 HideButtonsInOtherProfile();
                 IoC.Application.SettingsMenuVisible = true;

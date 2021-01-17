@@ -65,7 +65,7 @@ namespace HospitalManagement.Relational
         /// Adding entity from repository to database
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> SaveAll ()
+        public async Task<bool> SaveAllAsync ()
         {
             // Greater than zero means that something with success saved to database
             return await _dataContext.SaveChangesAsync() > 0;

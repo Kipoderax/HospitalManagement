@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Dna;
 
 namespace HospitalManagement.Core
 {
@@ -50,7 +51,6 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         public static bool IsDayAfterOrBefore( DateTime selectedDate )
         {
-            // Get employee duties
             var items = IoC.Duties.EmployeeItems;
 
             return ( 
@@ -67,10 +67,29 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         public static int AmountDutiesInMoth( DateTime selectedDate )
         {
-            // Get employee duties
             var items = IoC.Duties.EmployeeItems;
 
             return items.Count ( item => item.StartShift.Month == selectedDate.Month );
+        }
+
+        public static bool IsTimeCorrect( string hour, string minute )
+        {
+            if( hour.IsNullOWhiteSpace() || minute.IsNullOWhiteSpace() )
+                return false;
+
+            if( int.Parse ( hour ) < 0 || int.Parse ( hour ) > 24 )
+                return false;
+
+            if( hour.Any ( h => !char.IsDigit ( h ) ) )
+                return false;
+            
+            if( minute.Any ( m => !char.IsDigit ( m ) ) )
+                return false;
+            
+            if( int.Parse ( minute ) < 0 || int.Parse ( minute ) > 60 )
+                return false;
+
+            return true;
         }
     }
 }

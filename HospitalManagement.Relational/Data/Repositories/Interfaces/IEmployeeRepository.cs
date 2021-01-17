@@ -13,27 +13,27 @@ namespace HospitalManagement.Relational
         /// Get list of all employees
         /// </summary>
         /// <returns>All employees</returns>
-        Task<IEnumerable<Employee>> GetEmployees ();
+        Task<IEnumerable<Employee>> GetEmployeesAsync ();
 
         /// <summary>
         /// Get list of all employees which aren't administrator type
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Employee>> GetNoAdmEmployees ();
+        Task<IEnumerable<Employee>> GetNoAdmEmployeesAsync ();
 
         /// <summary>
         /// Get specify employee
         /// </summary>
         /// <param name="username">Primary key of the employee</param>
         /// <returns></returns>
-        Task<Employee> GetEmployeeByUsername ( string username );
+        Task<Employee> GetEmployeeByUsernameAsync ( string username );
 
         /// <summary>
         /// Get employee by first and last name
         /// </summary>
         /// <param name="username">The first and last name of the employee</param>
         /// <returns></returns>
-        Task<Employee> GetEmployeeByNameAndLastName( string username );
+        Task<Employee> GetEmployeeByNameAndLastNameAsync( string username );
 
         /// <summary>
         /// Get employee by pesel
@@ -41,6 +41,6 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="pesel">The employee pesel</param>
         /// <returns></returns>
-        Task<Employee> GetEmployeeByPesel( string pesel );
+        Task<Employee> GetEmployeeByPeselAsync( string pesel );
     }
 }

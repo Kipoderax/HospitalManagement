@@ -1,4 +1,5 @@
-﻿using Dna;
+﻿using System;
+using Dna;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -35,6 +36,10 @@ namespace HospitalManagement.Core
         /// True to hide buttons of other employee profiles, false to show
         /// </summary>
         public bool IsOtherProfile { get; set; }
+
+        public bool IsEditMode { get; set; }
+        
+        public string SelectedDate { get; set; } 
 
         #region Transactional Properties
 
@@ -198,7 +203,7 @@ namespace HospitalManagement.Core
 
                 // Retrieve back login data employee
                 await IoC.Employees.LoadEmployeeByPesel ( IoC.Settings.Pesel );
-                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
+                await IoC.Duties.LoadEmployeeDutiesAsync ( IoC.Settings.Identify.OriginalText );
                 
                 // Set back administrator flag if employee as administrator out from other profile
                 if( IoC.Settings.Type.OriginalText == "Administrator" )
@@ -219,8 +224,6 @@ namespace HospitalManagement.Core
         /// </summary>
         private void Logout ()
         {
-            // TODO: Confirm the user wants to logout
-
             // Clean all application level view models that contain
             // any information about the current user
             ClearUserData();
@@ -261,12 +264,15 @@ namespace HospitalManagement.Core
         /// </summary>
         private void AttachmentButton ()
         {
+            IsEditMode = false;
+            SelectedDate = null;
+            
             // Toggle menu visibility
             AttachmentMenuVisible ^= true;
         }
 
         /// <summary>
-        /// Saves the new First Name to the server
+        /// Saves the changes employee properties to the server
         /// </summary>
         /// <returns>Returns true if successful, false otherwise</returns>
         public async Task<bool> UpdateEmployeeDetailAsync()
@@ -295,10 +301,11 @@ namespace HospitalManagement.Core
                 if (result.DisplayErrorIfFailedAsync( "Update first name" ))
                     return false;
 
-                var username = result.ServerResponse.Response;
+                // Get employee data from result
+                var employee = result.ServerResponse.Response;
                 
                 // Store the new employee first name to data store
-                IoC.Settings.Identify.OriginalText = username.Username;
+                IoC.Settings.Identify.OriginalText = employee.Username;
                 await IoC.Employees.LoadEmployees();
 
                 return true;
