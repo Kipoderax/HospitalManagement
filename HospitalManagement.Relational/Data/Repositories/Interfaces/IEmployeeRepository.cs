@@ -26,6 +26,21 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="username">Primary key of the employee</param>
         /// <returns></returns>
-        Task<Employee> GetEmployee ( string username );
+        Task<Employee> GetEmployeeByUsername ( string username );
+
+        /// <summary>
+        /// Get employee by first and last name
+        /// </summary>
+        /// <param name="username">The first and last name of the employee</param>
+        /// <returns></returns>
+        Task<Employee> GetEmployeeByNameAndLastName( string username );
+
+        /// <summary>
+        /// Get employee by pesel
+        /// NOTE: Better way is get employee by token
+        /// </summary>
+        /// <param name="pesel">The employee pesel</param>
+        /// <returns></returns>
+        Task<Employee> GetEmployeeByPesel( string pesel );
     }
 }

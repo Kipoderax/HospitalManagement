@@ -1,6 +1,8 @@
-﻿using System.Reflection.Emit;
+﻿using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Dna;
 
 namespace HospitalManagement.Core
 {
@@ -93,7 +95,32 @@ namespace HospitalManagement.Core
         /// <returns></returns>
         private async Task SettingsSelectedEmployeeAsync( object selected )
         {
+            // Not allowed for other employees than administrator
             if( IoC.Settings.Type.OriginalText != "Administrator" ) return;
+            
+            
+            // Get selected employee data
+            var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>> (
+                // TODO: Localize URL
+                $"http://localhost:5000/api/employee/{selected}",
+                bearerToken: IoC.Settings.Token
+            );
+            
+
+            var dataEmployee = result.ServerResponse.Response;
+   
+            // If all right then
+            if( result.Successful )
+            {
+                // load all need properties
+                // TODO: Load duties of this employee
+                IoC.Settings.FirstName.OriginalText = dataEmployee.FirstName;
+                IoC.Settings.LastName.OriginalText = dataEmployee.LastName;
+                IoC.Settings.Identify.OriginalText = dataEmployee.Username;
+                IoC.Settings.Type.OriginalText = dataEmployee.Type;
+                IoC.Settings.Specialize.OriginalText = dataEmployee.Specialize;
+                IoC.Settings.PwdNumber.OriginalText = dataEmployee.NumberPwz;
+            }
 
             IoC.Application.SettingsMenuVisible = true;
         }

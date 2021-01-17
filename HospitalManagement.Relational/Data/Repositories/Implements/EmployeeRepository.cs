@@ -56,7 +56,7 @@ namespace HospitalManagement.Relational
 
         /// <summary>
         /// Get list of all employees which aren't administrator type
-        /// NOTE: Should invoke while administrator of this application is login
+        /// NOTE: Should invoke while administrator of this application isn't login
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Employee>> GetNoAdmEmployees ()
@@ -78,13 +78,49 @@ namespace HospitalManagement.Relational
         /// </summary>
         /// <param name="username">Username of the employee</param>
         /// <returns></returns>
-        public async Task<Employee> GetEmployee ( string username )
+        public async Task<Employee> GetEmployeeByUsername ( string username )
         {
             // Employee with his duties
             var employee = await _dataContext.Employees
                 .Include ( t => t.EmployeeType )
                 .Include ( s => s.EmployeeSpecialize )
                 .FirstOrDefaultAsync( e => e.Username == username );
+
+            return employee;
+        }
+        
+        /// <summary>
+        /// Get specify employee
+        /// </summary>
+        /// <param name="username">Username of the employee</param>
+        /// <returns></returns>
+        public async Task<Employee> GetEmployeeByNameAndLastName ( string username )
+        {
+            var fullName = username.Split ( ' ' );
+            
+            // Employee with his duties
+            var employee = await _dataContext.Employees
+                .Include ( t => t.EmployeeType )
+                .Include ( s => s.EmployeeSpecialize )
+                .Include ( d => d.EmployeeDuties )
+                .FirstOrDefaultAsync( e => e.FirstName == fullName[0] && e.LastName == fullName[1] );
+
+            return employee;
+        }
+
+        /// <summary>
+        /// Get employee by pesel
+        /// TODO: Change pesel property to token
+        /// </summary>
+        /// <param name="pesel">The employee pesel</param>
+        /// <returns></returns>
+        public async Task<Employee> GetEmployeeByPesel( string pesel )
+        {
+            // Employee with his duties
+            var employee = await _dataContext.Employees
+                .Include ( t => t.EmployeeType )
+                .Include ( s => s.EmployeeSpecialize )
+                .FirstOrDefaultAsync( e => e.Pesel == pesel );
 
             return employee;
         }

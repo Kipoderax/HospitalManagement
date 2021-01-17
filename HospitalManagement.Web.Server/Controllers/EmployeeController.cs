@@ -49,5 +49,65 @@ namespace HospitalManagement.Web.Server
                 Response = employeeApi
             };
         }
+        
+        [Route("retrieve/{pesel}")]
+        public async Task<ApiResponse<LoginResultApiModel>> GetEmployeeByPesel( string pesel )
+        {
+            // Get employee from repo
+            var employee = await _employeeRepository.GetEmployeeByPesel ( pesel );
+
+            // Make sure employee is not null
+            if (employee == null)
+                return new ApiResponse<LoginResultApiModel>
+                {
+                    ErrorMessage = "To tak nie moze byc"
+                };
+            
+
+            return new ApiResponse<LoginResultApiModel> 
+            {
+                //TODO: Add employes duties to result response
+                Response = new LoginResultApiModel
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Username = employee.Username,
+                    Pesel = employee.Pesel,
+                    Type = employee.EmployeeType.EmployeeRole,
+                    Specialize = employee.EmployeeSpecialize.SpecializeEmployee,
+                    NumberPwz = employee.EmployeeSpecialize.NumberPwz
+                }
+            };
+        }
+        
+        [Route("{username}")]
+        public async Task<ApiResponse<LoginResultApiModel>> GetEmployeeByUsername( string username )
+        {
+            // Get employee from repo
+            var employee = await _employeeRepository.GetEmployeeByNameAndLastName ( username );
+
+            // Make sure employee is not null
+            if (employee == null)
+                return new ApiResponse<LoginResultApiModel>
+                {
+                    ErrorMessage = "To tak nie moze byc"
+                };
+            
+
+            return new ApiResponse<LoginResultApiModel> 
+            {
+                //TODO: Add employes duties to result response
+                Response = new LoginResultApiModel
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Username = employee.Username,
+                    Pesel = employee.Pesel,
+                    Type = employee.EmployeeType.EmployeeRole,
+                    Specialize = employee.EmployeeSpecialize.SpecializeEmployee,
+                    NumberPwz = employee.EmployeeSpecialize.NumberPwz
+                }
+            };
+        }
     }
 }

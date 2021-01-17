@@ -77,6 +77,11 @@ namespace HospitalManagement.Core
         /// </summary>
         public PasswordEntryViewModel Password { get; set; }
 
+        /// <summary>
+        /// The current users Pesel
+        /// </summary>
+        public string Pesel { get; set; }
+
         #endregion
 
         #region Button Texts
@@ -149,7 +154,7 @@ namespace HospitalManagement.Core
         {
             // Create commands
             OpenCommand = new RelayCommand( Open );
-            CloseCommand = new RelayCommand ( CloseAsync );
+            CloseCommand = new RelayCommand ( async () => await CloseAsync() );
             LogoutCommand = new RelayCommand( Logout );
             ClearUserDataCommand = new RelayCommand( ClearUserData );
             NewEmployeeCommand = new RelayCommand( NewEmployee );
@@ -169,7 +174,7 @@ namespace HospitalManagement.Core
         /// <summary>
         /// Closes the settings menu
         /// </summary>
-        private void CloseAsync ()
+        private async Task CloseAsync ()
         {
             // Close register form employee if is open
             if (IoC.Application.NewEmployeeFormVisible)
@@ -180,8 +185,10 @@ namespace HospitalManagement.Core
 
             // Otherwise close settings menu
             else
-                // Replace auth employee duty list to duty list contain duties of all employee
+            {
                 IoC.Application.SettingsMenuVisible = false;
+                await IoC.Employees.LoadEmployeeByPesel ( IoC.Settings.Pesel );
+            }
         }
 
         /// <summary>

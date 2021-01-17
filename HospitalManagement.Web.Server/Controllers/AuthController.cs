@@ -225,7 +225,7 @@ namespace HospitalManagement.Web.Server
         {
             #region Get Employee
 
-            var employee = await _employeeRepository.GetEmployee( updateDto.Username );
+            var employee = await _employeeRepository.GetEmployeeByUsername( updateDto.Username );
 
             if (employee == null)
                 return new ApiResponse<UpdateEmployeeDto>

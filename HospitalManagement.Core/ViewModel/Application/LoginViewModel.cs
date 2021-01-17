@@ -72,6 +72,7 @@ namespace HospitalManagement.Core
                  // Ok successfully logged in.. now get employee data
                  var employeeData = result.ServerResponse.Response;
 
+                 IoC.Settings.Pesel = employeeData.Pesel;
                  IoC.Settings.Token = result.ServerResponse.Response.Token;
                  IoC.Settings.FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = employeeData?.FirstName };
                  IoC.Settings.LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = employeeData?.LastName };

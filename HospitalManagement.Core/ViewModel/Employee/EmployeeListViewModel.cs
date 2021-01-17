@@ -109,6 +109,35 @@ namespace HospitalManagement.Core
                 } );
             }
         }
+
+        /// <summary>
+        /// Retrieve login employee data by pesel
+        /// TODO: Change property to Token for retrieve data
+        /// </summary>
+        /// <param name="pesel"></param>
+        /// <returns></returns>
+        public async Task LoadEmployeeByPesel( string pesel )
+        {
+            var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>> (
+                // TODO: Localize URL
+                $"http://localhost:5000/api/employee/retrieve/{pesel}",
+                bearerToken: IoC.Settings.Token
+            );
+
+            var retrieveDataEmployee = result.ServerResponse.Response;
+            
+            // If all right then
+            if( result.Successful )
+            {
+                // retrive back login employee data
+                IoC.Settings.FirstName.OriginalText = retrieveDataEmployee.FirstName;
+                IoC.Settings.LastName.OriginalText = retrieveDataEmployee.LastName;
+                IoC.Settings.Identify.OriginalText = retrieveDataEmployee.Username;
+                IoC.Settings.Type.OriginalText = retrieveDataEmployee.Type;
+                IoC.Settings.Specialize.OriginalText = retrieveDataEmployee.Specialize;
+                IoC.Settings.PwdNumber.OriginalText = retrieveDataEmployee.NumberPwz;
+            }
+        }
         
         /// <summary>
         /// Adding specify employee

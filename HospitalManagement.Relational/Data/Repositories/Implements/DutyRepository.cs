@@ -96,7 +96,7 @@ namespace HospitalManagement.Relational
             var duty = new Duty();
             
             // Get id of the employee for connect with them duties   
-            var employeeId = await _employeeRepository.GetEmployee ( dutyDto.Employee.Username );
+            var employeeId = await _employeeRepository.GetEmployeeByUsername ( dutyDto.Employee.Username );
 
             // Assign to duty model
             duty.StartShift = dutyDto.StartShift;
