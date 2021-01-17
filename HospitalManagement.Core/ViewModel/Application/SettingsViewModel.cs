@@ -198,6 +198,7 @@ namespace HospitalManagement.Core
 
                 // Retrieve back login data employee
                 await IoC.Employees.LoadEmployeeByPesel ( IoC.Settings.Pesel );
+                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
                 
                 // Set back administrator flag if employee as administrator out from other profile
                 if( IoC.Settings.Type.OriginalText == "Administrator" )

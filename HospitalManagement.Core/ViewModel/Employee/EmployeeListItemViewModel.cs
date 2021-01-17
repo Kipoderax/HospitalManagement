@@ -113,13 +113,14 @@ namespace HospitalManagement.Core
             if( result.Successful )
             {
                 // load all need properties
-                // TODO: Load duties of this employee
                 IoC.Settings.FirstName.OriginalText = dataEmployee.FirstName;
                 IoC.Settings.LastName.OriginalText = dataEmployee.LastName;
                 IoC.Settings.Identify.OriginalText = dataEmployee.Username;
                 IoC.Settings.Type.OriginalText = dataEmployee.Type;
                 IoC.Settings.Specialize.OriginalText = dataEmployee.Specialize;
                 IoC.Settings.PwdNumber.OriginalText = dataEmployee.NumberPwz;
+
+                await IoC.Duties.LoadEmployeeDuties ( IoC.Settings.Identify.OriginalText );
                 
                 HideButtonsInOtherProfile();
                 IoC.Application.SettingsMenuVisible = true;
