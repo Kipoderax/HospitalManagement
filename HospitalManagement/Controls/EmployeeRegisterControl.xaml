@@ -30,6 +30,7 @@
                            Padding="8"
                            Margin="15 10 15 0"/>
           </local:RegisterTextEntryControl>
+           
           <local:RegisterTextEntryControl>
                   <TextBox Text="{Binding LastName}"
                            Tag="Nazwisko pracownika"
@@ -37,6 +38,7 @@
                            Padding="8"
                            Margin="15 0 15 0"/>
           </local:RegisterTextEntryControl>
+           
           <local:RegisterTextEntryControl>
                   <TextBox Text="{Binding Pesel}"
                            Tag="Pesel pracownika"
@@ -44,6 +46,7 @@
                            Padding="8"
                            Margin="15 0 15 0"/>
           </local:RegisterTextEntryControl>
+           
           <local:RegisterTextEntryControl>
                   <TextBox Text="{Binding PwzNumber}"
                            Tag="Numer prawa wykonywanego zawodu"
@@ -51,23 +54,29 @@
                            Padding="8"
                            Margin="15 0 15 0"/>
           </local:RegisterTextEntryControl>
+           
           <local:RegisterTextEntryControl>
-               <ComboBox ItemsSource="{Binding Types}"
-                         SelectedValue="{Binding Type}"
-                         SelectedIndex="0"
-                  FontSize="{StaticResource FontSizeLarge}"
-                   Padding="8"
-                   Margin="15 0 15 0">
+              
+              <ComboBox ItemsSource="{Binding Types}"
+                        SelectedValue="{Binding Type}"
+                        SelectedIndex="0"
+                        FontSize="{StaticResource FontSizeLarge}"
+                        Padding="8"
+                        Margin="15 0 15 0">
                </ComboBox>
+              
           </local:RegisterTextEntryControl>
-                    <local:RegisterTextEntryControl>
-               <ComboBox ItemsSource="{Binding Specializes}"
-                         SelectedValue="{Binding Specialize}"
-                         SelectedIndex="0"
-                  FontSize="{StaticResource FontSizeLarge}"
-                   Padding="8"
-                   Margin="15 0 15 0">
+           
+          <local:RegisterTextEntryControl>
+              
+              <ComboBox ItemsSource="{Binding Specializes}"
+                        SelectedValue="{Binding Specialize}"
+                        SelectedIndex="0"
+                        FontSize="{StaticResource FontSizeLarge}"
+                        Padding="8"
+                        Margin="15 0 15 0">
                </ComboBox>
+              
           </local:RegisterTextEntryControl>
 
           <!-- ===================================== -->
@@ -102,7 +111,7 @@
                          Visibility="{Binding Success, Converter={local:BooleanToVisibilityConverter}}"/>
                
               <!-- Successful message -->  
-              <TextBlock Text="Dodano nowego pracownika" 
+              <TextBlock Text="{Binding SuccessMessage}" 
                        HorizontalAlignment="Center"
                        Foreground="{StaticResource WordGreenBrush}"
                        Margin="0 0 0 15"

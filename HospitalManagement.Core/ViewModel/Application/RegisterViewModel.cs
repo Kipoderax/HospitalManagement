@@ -1,7 +1,7 @@
-﻿using Dna;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Dna;
 
 namespace HospitalManagement.Core
 {
@@ -26,12 +26,6 @@ namespace HospitalManagement.Core
         /// </summary>
         public bool RegisterIsRunning { get; set; }
 
-        /// <summary>
-        /// Something wrong with register new employee
-        /// </summary>
-        public string ErrorMessage { get; set; }
-
-        public bool Success { get; set; }
 
         #region Combo Box Items In Register Forms
 
@@ -115,26 +109,34 @@ namespace HospitalManagement.Core
                         NumberPwz = PwzNumber
                     } 
                 );
+                
 
-                if (result.DisplayErrorIfFailedAsync( "Rejestracja nieudana" ))
+                if (result.DisplayErrorIfFailedAsync())
                 {
                     Success = false;
                     ErrorMessage = result.ErrorMessage;
                     return;
                 }
                 
+                
+                Success = true;
+                var dataEmployee = result.ServerResponse.Response;
+                SuccessMessage = $"Zarejestrowano pracownika - {dataEmployee.FirstName} {dataEmployee.LastName}";
+                
                 // Update employee list with this new
                 IoC.Employees.AddNewEmployee ( new EmployeeListItemViewModel
                 {
-                    Name = result.ServerResponse.Response.FirstName + " " + result.ServerResponse.Response.LastName,
-                    Who = result.ServerResponse.Response.Type,
-                    Job = result.ServerResponse.Response.Specialize,
+                    Name = dataEmployee.FirstName + " " + dataEmployee.LastName,
+                    Who = dataEmployee.Type,
+                    Job = dataEmployee.Specialize,
                     ProfilePictureRGB = "cceeff",
                     JobPicture = @"pack://application:,,,/Images/EmployeeTypes/Doctor.jpg"
                 });
-                    
-                await Task.Delay( 1000 );
             } );
+            
+            await Task.Delay( 2000 );
+            SuccessMessage = "";
+            ErrorMessage = "";
         }
 
         #endregion

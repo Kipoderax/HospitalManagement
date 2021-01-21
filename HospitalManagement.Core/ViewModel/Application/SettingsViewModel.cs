@@ -1,7 +1,6 @@
-﻿using System;
-using Dna;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using Dna;
 
 namespace HospitalManagement.Core
 {
@@ -282,7 +281,7 @@ namespace HospitalManagement.Core
             {
                 // Get the current known credentials
                 var credentials = IoC.Settings;
-
+                
                 // Update the server with the details
                 var result = await WebRequests.PostAsync<ApiResponse<UpdateEmployeeDto>>(
                     // TODO: Move URLs into better place

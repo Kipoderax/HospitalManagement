@@ -38,6 +38,11 @@ namespace HospitalManagement.Core
         public string ConfirmPasswordHintText { get; set; }
 
         /// <summary>
+        /// The current user password
+        /// </summary>
+        public SecureString UserPassword { get; set; }
+        
+        /// <summary>
         /// The current saved password
         /// </summary>
         public SecureString CurrentPassword { get; set; }
@@ -72,12 +77,6 @@ namespace HospitalManagement.Core
         /// </summary>
         public bool Updating { get; set; }
 
-        /// <summary>
-        /// The action to run when saving information
-        /// Returns true if the commis was successful or false otherwise
-        /// </summary>
-        public Func<Task<bool>> CommitAction { get; set; }
-
         #endregion
 
         #region Public Commands
@@ -97,6 +96,12 @@ namespace HospitalManagement.Core
         /// as well as goes back to non-edit mode
         /// </summary>
         public ICommand SaveCommand { get; set; }
+        
+        /// <summary>
+        /// The action to run when saving information
+        /// Returns true if the commis was successful or false otherwise
+        /// </summary>
+        public Func<Task<bool>> CommitAction { get; set; }
 
         #endregion
 
@@ -128,29 +133,40 @@ namespace HospitalManagement.Core
         /// </summary>
         private void Save ()
         {
+            var t = CurrentPassword.UnSecure();
+            var s = NewPassword.UnSecure();
+            var r = ConfirmPassword.UnSecure();
+
             // Store the result of a commit call
             var result = default(bool);
 
+            // Save currently saved value
+            var currentSavedValue = CurrentPassword;
+
             RunCommandAsync( () => Updating, async () =>
-             {
-                 // While working, come out of edit mode
-                 Editing = false;
+            {
+                // While updating, come out of edit mode
+                Editing = false;
 
+                // Get new value to update
+                //OriginalText = EditedText;
+                CommitAction = IoC.Settings.UpdateEmployeeDetailAsync;
+                // Try and do the work
+                result = CommitAction == null || await CommitAction();
+            } ).ContinueWith( t =>
+            {
+                // If we succeeded
+                // Nothing to do
+                // If we fail
+                if (!result)
+                {
+                    // Restore original value
+                    //EditedText = currentSavedValue;
 
-                 // Try and do the work
-                 result = CommitAction == null || await CommitAction();
-
-             } ).ContinueWith( t =>
-              {
-                  // If we succeeded
-                  // Nothing to do
-                  // If we fail
-                  if (!result)
-                  {
-                      // Go back into edit mode
-                      Editing = true;
-                  }
-              } );
+                    // Go back into edit mode
+                    Editing = true;
+                }
+            } );
         }
 
         /// <summary>
@@ -170,6 +186,7 @@ namespace HospitalManagement.Core
             // Clear all password
             NewPassword = new SecureString();
             ConfirmPassword = new SecureString();
+            
 
             // Go into edited mode
             Editing ^= true;

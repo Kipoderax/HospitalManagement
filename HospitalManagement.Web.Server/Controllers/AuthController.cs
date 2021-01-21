@@ -5,8 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HospitalManagement.Web.Server
@@ -55,28 +57,36 @@ namespace HospitalManagement.Web.Server
         [HttpPost( "register" )]
         public async Task<ApiResponse<RegisterResultApiModel>> Register([FromBody] RegisterEmployeeDto employeeDto )
         {
-            #region Empty Validates
+            #region Data Validates
+            
+            // ^[\\p{L} \\.\\-]{3,}$
+            // Regex pattern for first and lastname with no less than 3 characters
+            
+            if ( string.IsNullOrWhiteSpace(employeeDto.FirstName) || 
+                 !Regex.IsMatch(employeeDto.FirstName, "^[\\p{L} \\.\\-]{3,}$") ) 
+                    return new ApiResponse<RegisterResultApiModel>
+                    {
+                        //TODO: Localize strings
+                        ErrorMessage = "Imie pracownika składa się z przynajmniej trzech liter"
+                    };
 
-            if (string.IsNullOrWhiteSpace(employeeDto.FirstName))
-                return new ApiResponse<RegisterResultApiModel>
-                {
-                    //TODO: Localize strings
-                    ErrorMessage = "Pole imię pracownika jest puste"
-                };
+            
+            if (string.IsNullOrWhiteSpace( employeeDto.LastName ) || 
+                 !Regex.IsMatch(employeeDto.LastName, "^[\\p{L} \\.\\-]{3,}$") ) 
+                     return new ApiResponse<RegisterResultApiModel>
+                     {
+                         //TODO: Localize strings
+                         ErrorMessage = "Nazwisko pracownika składa się z przynajmniej trzech liter"
+                     };
+            
 
-            if (string.IsNullOrWhiteSpace( employeeDto.LastName ))
-                return new ApiResponse<RegisterResultApiModel>
-                {
-                    //TODO: Localize strings
-                    ErrorMessage = "Pole nazwisko pracownika jest puste"
-                };
-
-            if (string.IsNullOrWhiteSpace( employeeDto.Pesel ))
-                return new ApiResponse<RegisterResultApiModel>
-                {
-                    //TODO: Localize strings
-                    ErrorMessage = "Pole pesel pracownika jest puste"
-                };
+            if (string.IsNullOrWhiteSpace( employeeDto.Pesel ) ||
+                 !EmployeeValidate.PeselValidate( employeeDto.Pesel ))
+                    return new ApiResponse<RegisterResultApiModel>
+                    {
+                        ErrorMessage = "Pesel pracownika jest nie poprawny."
+                    };
+            
 
             if (string.IsNullOrWhiteSpace( employeeDto.Type ))
                 return new ApiResponse<RegisterResultApiModel>
@@ -84,24 +94,31 @@ namespace HospitalManagement.Web.Server
                     //TODO: Localize strings
                     ErrorMessage = "Pole posada pracownika jest puste"
                 };
+            
 
             if (string.IsNullOrWhiteSpace( employeeDto.Specialize ))
-                return new ApiResponse<RegisterResultApiModel>
-                {
-                    //TODO: Localize strings
-                    ErrorMessage = "Pole specjalizacja pracownika jest puste"
-                };
+                    return new ApiResponse<RegisterResultApiModel>
+                    {
+                        //TODO: Localize strings
+                        ErrorMessage = "Pole specjalizacja pracownika jest puste"
+                    };
+            
 
-            if (string.IsNullOrWhiteSpace( employeeDto.NumberPwz ))
-                return new ApiResponse<RegisterResultApiModel>
-                {
-                    //TODO: Localize strings
-                    ErrorMessage = "Pole numer pwz pracownika jest puste"
-                };
+            if (string.IsNullOrWhiteSpace( employeeDto.NumberPwz ) ||
+                 !EmployeeValidate.NumberPwzValidate( employeeDto.NumberPwz )) 
+                
+                    return new ApiResponse<RegisterResultApiModel>
+                    {
+                        ErrorMessage = "Wpisano nie prawidłowo numer pwz pracownika"
+                    };
 
             #endregion
+            
 
-            string username = employeeDto?.FirstName.Substring( 0, 1 ) + employeeDto.LastName.Substring( 0, 1 ) + employeeDto?.Pesel[6..];
+            var username = employeeDto.FirstName.Substring( 0, 1 ) + 
+                                employeeDto.LastName.Substring( 0, 1 ) + 
+                                employeeDto.Pesel[6..];
+            
             // Make sure that employee with this username not exist
             if (await _authRepository.EmployeeExistsAsync( username ))
                 return new ApiResponse<RegisterResultApiModel>
@@ -110,35 +127,23 @@ namespace HospitalManagement.Web.Server
                     ErrorMessage = "Pracownik z takim numerem pesel już istnieje"
                 };
 
-            if (!EmployeeValidate.PeselValidate( employeeDto.Pesel ))
-                return new ApiResponse<RegisterResultApiModel>()
-                {
-                    ErrorMessage = "Pesel pracownika jest nie poprawny."
-                };
-
-            if (!EmployeeValidate.NumberPwzValidate( employeeDto.NumberPwz ))
-                return new ApiResponse<RegisterResultApiModel>()
-                {
-                    ErrorMessage = "Wpisano nie prawidłowo numer pwz pracownika"
-                };
-
             // Create employee
             var employeeToCreate = new Employee
             {
-                FirstName = employeeDto?.FirstName,
-                LastName = employeeDto?.LastName,
-                Pesel = employeeDto?.Pesel,
+                FirstName = employeeDto.FirstName,
+                LastName = employeeDto.LastName,
+                Pesel = employeeDto.Pesel,
                 Username = employeeDto.FirstName.Substring( 0, 1 ) + employeeDto.LastName.Substring( 0, 1 ) + employeeDto.Pesel[6..],
                 IsFirstLogin = true,
                 AccountCreated = DateTime.Now,
                 EmployeeType = new EmployeeType
                 {
-                    EmployeeRole = employeeDto?.Type
+                    EmployeeRole = employeeDto.Type
                 },
                 EmployeeSpecialize = new EmployeeSpecialize
                 {
-                    SpecializeEmployee = employeeDto?.Specialize,
-                    NumberPwz = employeeDto?.NumberPwz
+                    SpecializeEmployee = employeeDto.Specialize,
+                    NumberPwz = employeeDto.NumberPwz
                 }
             };
 
@@ -170,6 +175,8 @@ namespace HospitalManagement.Web.Server
         [HttpPost("login")]
         public async Task<ApiResponse<LoginResultApiModel>> LoginAsync( [FromBody] LoginEmployeeDto loginDto )
         {
+            #region Get Employee
+
             // Get employee from repo
             var employee = await _authRepository.LoginAsync( loginDto?.Identify, loginDto?.Password );
 
@@ -180,6 +187,10 @@ namespace HospitalManagement.Web.Server
                     ErrorMessage = "Zły login lub hasło"
                 };
 
+            #endregion
+
+            #region Token
+            
             // Create token for id and username
             var claims = new[]
             {
@@ -203,10 +214,11 @@ namespace HospitalManagement.Web.Server
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken( tokenDescriptor );
+            
+            #endregion
 
             return new ApiResponse<LoginResultApiModel> 
             {
-                //TODO: Add employes duties to result response
                 Response = new LoginResultApiModel
                 {
                     Token = tokenHandler.WriteToken(token),

@@ -4,7 +4,6 @@ using AutoMapper;
 using HospitalManagement.Core;
 using HospitalManagement.Relational;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace HospitalManagement.Web.Server
 {
@@ -16,8 +15,6 @@ namespace HospitalManagement.Web.Server
         #region Private Members
 
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly IConfiguration _config;
-        private readonly DataContext _context;
         private readonly IMapper _mapper;
 
         #endregion
@@ -25,13 +22,9 @@ namespace HospitalManagement.Web.Server
         #region Constructor
 
         public EmployeeController(IEmployeeRepository employeeRepository,
-                                  IConfiguration config,
-                                  DataContext context,
                                   IMapper mapper)
         {
             _employeeRepository = employeeRepository;
-            _config = config;
-            _context = context;
             _mapper = mapper;
         }
 
@@ -96,7 +89,6 @@ namespace HospitalManagement.Web.Server
 
             return new ApiResponse<LoginResultApiModel> 
             {
-                //TODO: Add employes duties to result response
                 Response = new LoginResultApiModel
                 {
                     FirstName = employee.FirstName,

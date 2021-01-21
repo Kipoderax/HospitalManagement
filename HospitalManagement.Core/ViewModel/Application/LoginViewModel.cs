@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Dna;
 
@@ -20,11 +21,7 @@ namespace HospitalManagement.Core
         /// A flag indicating if the login command is running
         /// </summary>
         public bool LoginIsRunning { get; set; }
-
-        /// <summary>
-        /// Something wrong with login to application
-        /// </summary>
-        public string ErrorMessage { get; set; }
+        
 
         #endregion
 
@@ -68,8 +65,13 @@ namespace HospitalManagement.Core
                     } );
 
                 // If there was no response, bad data or a response with a error message
-                if (result.DisplayErrorIfFailedAsync( "Login failed" ))
+                if( result.DisplayErrorIfFailedAsync () )
+                {
+                    Success = false;
+                    ErrorMessage = result.ErrorMessage;
                     return;
+                }
+                Success = true;
 
                 // Ok successfully logged in.. now get employee data
                 var employeeData = result.ServerResponse.Response;
@@ -82,7 +84,7 @@ namespace HospitalManagement.Core
                 IoC.Settings.Type = new TextEntryViewModel { Label = "Posada", OriginalText = employeeData?.Type };
                 IoC.Settings.Specialize = new TextEntryViewModel { Label = "Specjalizacja", OriginalText = employeeData?.Specialize };
                 IoC.Settings.PwdNumber = new TextEntryViewModel { Label = "Numer PWD", OriginalText = employeeData?.NumberPwz };
-                IoC.Settings.Password = new PasswordEntryViewModel { Label = "Hasło", FakePassword = "********" };
+                IoC.Settings.Password = new PasswordEntryViewModel { Label = "Hasło", FakePassword = "********", UserPassword = (parameter as IHavePassword)?.SecurePassword };
 
                 if (employeeData != null && employeeData.Type == "Administrator")
                     IoC.Settings.IsEmployeeAdm = true;

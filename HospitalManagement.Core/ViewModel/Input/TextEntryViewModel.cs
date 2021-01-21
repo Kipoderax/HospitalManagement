@@ -99,9 +99,7 @@ namespace HospitalManagement.Core
 
                  // Get new value to update
                  OriginalText = EditedText;
-                 //await IoC.Settings.UpdateEmployee();
                  CommitAction = IoC.Settings.UpdateEmployeeDetailAsync;
-                 //CommitAction = IoC.Settings.SaveLastNameAsync;
                  // Try and do the work
                  result = CommitAction == null || await CommitAction();
              } ).ContinueWith( t =>

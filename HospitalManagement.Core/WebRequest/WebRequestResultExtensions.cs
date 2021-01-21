@@ -13,7 +13,7 @@ namespace HospitalManagement.Core
         /// <typeparam name="T">The type of Api Response</typeparam>
         /// <param name="response">The response to check</param>
         /// <returns>Returns true if there was an error, or false if all was ok</returns>
-        public static bool DisplayErrorIfFailedAsync ( this WebRequestResult response, string errorMessage )
+        public static bool DisplayErrorIfFailedAsync ( this WebRequestResult response, string errorMessage = null )
         {
             // If there was no response, bad data or a response with a error message
             if (response == null || response.ServerResponse == null || (response.ServerResponse as ApiResponse)?.Successful == false)
@@ -30,7 +30,7 @@ namespace HospitalManagement.Core
                 // If we have a result but deserialize failed
                 else if (string.IsNullOrWhiteSpace( response?.RawServerResponse ))
                     // Set error message
-                    message = $"Unexpected response from server. {response.RawServerResponse}";
+                    message = $"Unexpected response from server. {response?.RawServerResponse}";
 
                 // If we have a result but no server response details at all...
                 else if (response != null)
@@ -39,7 +39,10 @@ namespace HospitalManagement.Core
 
                 // Display error
                 //TODO: Localize string
-                response.ErrorMessage = $" {errorMessage} - {message}.";
+                if( response != null )
+                    response.ErrorMessage = errorMessage != null
+                        ? $"{errorMessage} - {message}."
+                        : $"{message}.";
 
                 // Enough failures
                 return true;

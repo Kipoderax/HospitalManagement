@@ -1,4 +1,6 @@
-﻿namespace HospitalManagement.Core
+﻿using System.Security;
+
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// Employee details to change
@@ -15,6 +17,8 @@
         public string Type { get; set; }
         public string Specialize { get; set; }
         public string PwzNumber { get; set; }
+
+        public SecureString Password { get; set; }
 
         #endregion
     }

@@ -1,4 +1,6 @@
-﻿namespace HospitalManagement.Core
+﻿using System.Security;
+
+namespace HospitalManagement.Core
 {
     /// <summary>
     /// The result of a successful login request via API
@@ -12,11 +14,6 @@
         /// </summary>
         public string Token { get; set; }
 
-        /// <summary>
-        /// Something wrong with request
-        /// </summary>
-        public string ErrorMessage { get; set; }
-
         #region Employee Personal Information
 
         public string FirstName { get; set; }
@@ -26,6 +23,8 @@
         public string Specialize { get; set; }
         public string NumberPwz { get; set; }
         public string Username { get; set; }
+
+        public string Password { get; set; }
 
         #endregion
 

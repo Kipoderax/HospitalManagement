@@ -20,6 +20,21 @@ namespace HospitalManagement.Core
         /// Considering how fast this check will always be it isn't an issue to globally lock all callers.
         /// </summary>
         protected object _propertyValueCheckLock = new object();
+        
+        /// <summary>
+        /// True if user get success result from web request, false otherwise
+        /// </summary>
+        public bool Success { get; set; }
+        
+        /// <summary>
+        /// Let know user what is wrong
+        /// </summary>
+        public string ErrorMessage { get; set; }
+        
+        /// <summary>
+        /// Let know user everything is fine
+        /// </summary>
+        public string SuccessMessage { get; set; }
 
         #endregion
         

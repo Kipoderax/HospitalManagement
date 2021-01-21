@@ -53,6 +53,12 @@
                                     local:IsBusyProperty.Value="{Binding LoginIsRunning}"
                                     Command="{Binding LoginCommand}"
                                     CommandParameter="{Binding ElementName=Page}"/>
+                            
+                            <!-- Error message -->
+                            <TextBlock Text="{Binding ErrorMessage}"
+                                       FontFamily="{StaticResource LatoRegular}"
+                                       Foreground="{StaticResource WordRedBrush}"
+                                       Visibility="{Binding Success, Converter={local:BooleanToVisibilityConverter}}"/>
 
                         </StackPanel>
 
