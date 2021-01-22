@@ -1,5 +1,4 @@
-﻿using System.Security;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Dna;
 
@@ -77,7 +76,7 @@ namespace HospitalManagement.Core
                 var employeeData = result.ServerResponse.Response;
 
                 IoC.Settings.Pesel = employeeData.Pesel;
-                IoC.Settings.Token = result.ServerResponse.Response.Token;
+                IoC.Settings.Token = employeeData.Token;
                 IoC.Settings.FirstName = new TextEntryViewModel { Label = "Imię", OriginalText = employeeData?.FirstName };
                 IoC.Settings.LastName = new TextEntryViewModel { Label = "Nazwisko", OriginalText = employeeData?.LastName };
                 IoC.Settings.Identify = new TextEntryViewModel { Label = "Identyfikator", OriginalText = employeeData?.Username };
@@ -93,7 +92,7 @@ namespace HospitalManagement.Core
                 await IoC.Employees.LoadEmployees();
 
                 await IoC.Duties.LoadDutiesAsync();
-                await IoC.Duties.LoadEmployeeDutiesAsync(employeeData?.Username);
+                await IoC.Duties.LoadEmployeeDutiesAsync(employeeData.Username);
 
                 await Task.Delay( 2000 );
 

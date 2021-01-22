@@ -1,5 +1,4 @@
-﻿using System.Security;
-
+﻿
 namespace HospitalManagement.Core
 {
     /// <summary>
@@ -17,8 +16,7 @@ namespace HospitalManagement.Core
         public string Type { get; set; }
         public string Specialize { get; set; }
         public string PwzNumber { get; set; }
-
-        public SecureString Password { get; set; }
+        public string Password { get; set; }
 
         #endregion
     }

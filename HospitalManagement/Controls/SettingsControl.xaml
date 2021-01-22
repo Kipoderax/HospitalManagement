@@ -117,6 +117,13 @@
                <local:TextEntryControl DataContext="{Binding Specialize}"/>
                <local:PasswordEntryControl DataContext="{Binding Password}"/>
                <local:TextEntryControl DataContext="{Binding PwdNumber}"/>
+               <TextBlock
+                          Text="{Binding ErrorMessage}"
+                          HorizontalAlignment="Center"
+                          FontSize="{StaticResource FontSizeSmall}"
+                          Foreground="{StaticResource WordRedBrush}"
+                          Visibility="{Binding Success,
+                                    Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"/>
                 
                 <StackPanel Orientation="Horizontal">
 

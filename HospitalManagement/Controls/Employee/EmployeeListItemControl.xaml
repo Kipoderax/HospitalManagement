@@ -25,7 +25,7 @@
                                          Command="{Binding OpenEmployeeDutiesCommand}"
                                          CommandParameter="{Binding Name}"/>
                            
-                           <MouseBinding MouseAction="LeftDoubleClick"
+                           <MouseBinding MouseAction="RightClick"
                                          Command="{Binding OpenEmployeeSettingsCommand}"
                                          CommandParameter="{Binding Name}"/>
                            

@@ -69,6 +69,7 @@ namespace HospitalManagement.Web.Server
                     Type = employee.EmployeeType.EmployeeRole,
                     Specialize = employee.EmployeeSpecialize.SpecializeEmployee,
                     NumberPwz = employee.EmployeeSpecialize.NumberPwz
+                    
                 }
             };
         }

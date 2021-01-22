@@ -43,7 +43,7 @@ namespace HospitalManagement.Relational
         public async Task<Employee> LoginAsync(string username, string password)
         {
             // Find employee with username
-            Employee employee = await _context.Employees
+            var employee = await _context.Employees
                 .Include(t => t.EmployeeType)
                 .Include(s => s.EmployeeSpecialize)
                 .Include(d => d.EmployeeDuties)
@@ -54,10 +54,7 @@ namespace HospitalManagement.Relational
                 return null;
 
             // If validation is wrong, return
-            if (!VerifyPasswordHash(password, employee.PasswordHash, employee.PasswordSalt))
-                return null;
-
-            return employee;
+            return VerifyPasswordHash(password, employee.PasswordHash, employee.PasswordSalt) ? employee : null;
         }
 
         /// <summary>

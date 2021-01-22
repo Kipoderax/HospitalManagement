@@ -170,6 +170,7 @@ namespace HospitalManagement.Core
                 IoC.Settings.Type.OriginalText = retrieveDataEmployee.Type;
                 IoC.Settings.Specialize.OriginalText = retrieveDataEmployee.Specialize;
                 IoC.Settings.PwdNumber.OriginalText = retrieveDataEmployee.NumberPwz;
+                
             }
         }
         

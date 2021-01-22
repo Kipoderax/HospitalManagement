@@ -7,7 +7,7 @@ namespace HospitalManagement.Core
     /// <summary>
     /// The view model for a text entry to edit a string value
     /// </summary>
-    public class TextEntryViewModel : BaseViewModel
+    public class TextEntryViewModel : SettingsViewModel
     {
         #region Public Properties
 
@@ -111,7 +111,6 @@ namespace HospitalManagement.Core
                   {
                       // Restore original value
                       EditedText = currentSavedValue;
-
                       // Go back into edit mode
                       Editing = true;
                   }

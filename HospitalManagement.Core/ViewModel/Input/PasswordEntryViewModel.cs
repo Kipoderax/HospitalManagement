@@ -63,16 +63,6 @@ namespace HospitalManagement.Core
         public bool Editing { get; set; }
 
         /// <summary>
-        /// True if input password is correct, otherwise false
-        /// </summary>
-        public bool IsNotCorrect { get; set; }
-
-        /// <summary>
-        /// Inform user about incorrect input password
-        /// </summary>
-        public string BadRequestMessage { get; set; }
-
-        /// <summary>
         /// Indicates if the current control is pending an update
         /// </summary>
         public bool Updating { get; set; }
@@ -133,24 +123,29 @@ namespace HospitalManagement.Core
         /// </summary>
         private void Save ()
         {
-            var t = CurrentPassword.UnSecure();
-            var s = NewPassword.UnSecure();
-            var r = ConfirmPassword.UnSecure();
-
             // Store the result of a commit call
             var result = default(bool);
 
-            // Save currently saved value
-            var currentSavedValue = CurrentPassword;
+            if( CurrentPassword.UnSecure() != UserPassword.UnSecure() )
+            {
+                ErrorMessage = "Hasło nie poprawne";
+                return;
+            }
 
+            if( NewPassword.UnSecure() != ConfirmPassword.UnSecure() )
+            {
+                ErrorMessage = "Hasła do siebie nie pasują";
+                return;
+            }
+            
             RunCommandAsync( () => Updating, async () =>
             {
                 // While updating, come out of edit mode
                 Editing = false;
 
                 // Get new value to update
-                //OriginalText = EditedText;
                 CommitAction = IoC.Settings.UpdateEmployeeDetailAsync;
+                
                 // Try and do the work
                 result = CommitAction == null || await CommitAction();
             } ).ContinueWith( t =>
@@ -160,8 +155,6 @@ namespace HospitalManagement.Core
                 // If we fail
                 if (!result)
                 {
-                    // Restore original value
-                    //EditedText = currentSavedValue;
 
                     // Go back into edit mode
                     Editing = true;
@@ -175,7 +168,6 @@ namespace HospitalManagement.Core
         private void Cancel ()
         {
             Editing = false;
-            IsNotCorrect = false;
         }
 
         /// <summary>

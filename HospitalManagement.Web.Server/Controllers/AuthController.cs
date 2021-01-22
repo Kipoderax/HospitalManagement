@@ -250,44 +250,67 @@ namespace HospitalManagement.Web.Server
             #endregion
     
             #region Update Employee
+            
+            if( string.IsNullOrWhiteSpace ( updateDto.FirstName ) || 
+                 !Regex.IsMatch ( updateDto.FirstName, "^[\\p{L} \\.\\-]{3,}$" ) )
+                    return new ApiResponse<UpdateEmployeeDto>
+                    {
+                        ErrorMessage = "Imie składa się z przynajmniej trzech liter"
+                    };
+            
 
-            if (updateDto.FirstName != employee.FirstName)
-            {
-                employee.FirstName = updateDto.FirstName;
-                employee.Username = employee.Username.Replace( 
-                    employee.Username.Substring( 0, 1 ), 
-                    updateDto.FirstName.Substring( 0, 1 ) );
-            }
+            if( string.IsNullOrWhiteSpace ( updateDto.LastName ) ||
+                 !Regex.IsMatch ( updateDto.LastName, "^[\\p{L} \\.\\-]{3,}$" ) )
+                    return new ApiResponse<UpdateEmployeeDto>
+                    {
+                        ErrorMessage = "Nazwisko składa się z przynajmniej trzech liter"
+                    };
+            
+            
+            if (updateDto.Type == null)
+                return new ApiResponse<UpdateEmployeeDto>
+                {
+                    ErrorMessage = "Zrob z tego Combo boxa"
+                };
 
-            if (updateDto.LastName != employee.LastName)
-            {
-                employee.LastName = updateDto.LastName;
-                employee.Username = employee.Username.Replace( 
-                    employee.Username.Substring( 1, 1 ), 
-                    updateDto.LastName.Substring( 0, 1 ) );
-            }
+            
+            if (updateDto.Specialize == null)
+                return new ApiResponse<UpdateEmployeeDto>
+                {
+                    ErrorMessage = "Zrob z tego Combo boxa"
+                };
 
-            if (updateDto.Type != null)
-                employee.EmployeeType.EmployeeRole = updateDto.Type;
+            
+            if (string.IsNullOrWhiteSpace( updateDto.PwzNumber ) ||
+                !EmployeeValidate.NumberPwzValidate( updateDto.PwzNumber )) 
+                return new ApiResponse<UpdateEmployeeDto>
+                {
+                    ErrorMessage = "Wpisano nie prawidłowo numer pwz"
+                };
+            
+            var hasNumber = new Regex(@"[0-9]+");
+            var hasUpperChar = new Regex(@"[A-Z]+");
+            var hasMinimum8Chars = new Regex(@".{8,}");
 
-            if (updateDto.Specialize != null)
-                employee.EmployeeSpecialize.SpecializeEmployee = updateDto.Specialize;
-
-            if (updateDto.PwzNumber != null)
-                employee.EmployeeSpecialize.NumberPwz = updateDto.PwzNumber;
+            if( !hasNumber.IsMatch ( updateDto.Password ) || !hasUpperChar.IsMatch ( updateDto.Password ) || !hasMinimum8Chars.IsMatch ( updateDto.Password ) )
+                return new ApiResponse<UpdateEmployeeDto>
+                {
+                    ErrorMessage = "Kryteria hasła: 1 duża litera, 1 cyfra, minimum 8 znaków"
+                };
+            
 
             #endregion
 
             #region Value Validation
 
             if (!EmployeeValidate.PeselValidate( employee.Pesel ))
-                return new ApiResponse<UpdateEmployeeDto>()
+                return new ApiResponse<UpdateEmployeeDto>
                 {
-                    ErrorMessage = "Pesel pracownika jest nie poprawny."
+                    ErrorMessage = "Pesel pracownika jest nie poprawny"
                 };
 
             if (!EmployeeValidate.NumberPwzValidate( employee.EmployeeSpecialize.NumberPwz ))
-                return new ApiResponse<UpdateEmployeeDto>()
+                return new ApiResponse<UpdateEmployeeDto>
                 {
                     ErrorMessage = "Wpisano nie prawidłowo numer pwz pracownika"
                 };
@@ -295,7 +318,21 @@ namespace HospitalManagement.Web.Server
             #endregion
 
             #region Save Changes
-
+            
+            employee.FirstName = updateDto.FirstName;
+            employee.LastName = updateDto.LastName;
+            employee.EmployeeType.EmployeeRole = updateDto.Type;
+            employee.EmployeeSpecialize.SpecializeEmployee = updateDto.Specialize;
+            employee.EmployeeSpecialize.NumberPwz = updateDto.PwzNumber;
+            
+            employee.Username = updateDto.FirstName.Substring ( 0, 1 ) + 
+                                updateDto.LastName.Substring ( 0, 1 ) +
+                                employee.Pesel[6..];
+            
+            CreatePasswordHashSalt ( updateDto.Password, out byte[] passwordHash, out byte[] passwordSalt );
+            employee.PasswordHash = passwordHash;
+            employee.PasswordSalt = passwordSalt;
+            
             _employeeRepository.Update( employee );
             var result = await _context.SaveChangesAsync();
            
@@ -322,6 +359,21 @@ namespace HospitalManagement.Web.Server
             };
 
             #endregion
+        }
+        
+        /// <summary>
+        /// Created encrypt hash-salt password of password from application
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="passwordHash"></param>
+        /// <param name="passwordSalt"></param>
+        private void CreatePasswordHashSalt(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
         }
     }
 }

@@ -281,6 +281,8 @@ namespace HospitalManagement.Core
             {
                 // Get the current known credentials
                 var credentials = IoC.Settings;
+
+                var passwordToSave = Password.NewPassword.UnSecure();
                 
                 // Update the server with the details
                 var result = await WebRequests.PostAsync<ApiResponse<UpdateEmployeeDto>>(
@@ -290,15 +292,23 @@ namespace HospitalManagement.Core
                     {
                         FirstName = credentials.FirstName.OriginalText,
                         LastName = credentials.LastName.OriginalText,
-                        Username = IoC.Settings.Identify.OriginalText,
-                        Type =  IoC.Settings.Type.OriginalText,
-                        Specialize = IoC.Settings.Specialize.OriginalText,
-                        PwzNumber = IoC.Settings.PwdNumber.OriginalText
+                        Username = credentials.Identify.OriginalText,
+                        Type =  credentials.Type.OriginalText,
+                        Specialize = credentials.Specialize.OriginalText,
+                        PwzNumber = credentials.PwdNumber.OriginalText,
+                        Password = passwordToSave
                     }, bearerToken: credentials.Token );
 
                 // If the response has an error
-                if (result.DisplayErrorIfFailedAsync( "Update first name" ))
+                if( result.DisplayErrorIfFailedAsync() )
+                {
+                    Success = true;
+                    ErrorMessage = result.ErrorMessage;
+                    await Task.Delay ( 3000 );
+                    ErrorMessage = "";
+                    Success = false;
                     return false;
+                }
 
                 // Get employee data from result
                 var employee = result.ServerResponse.Response;
